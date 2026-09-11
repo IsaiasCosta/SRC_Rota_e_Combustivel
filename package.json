@@ -1,0 +1,12 @@
+{
+  "name": "rota-combustivel",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Rota & Combustível — localizador de postos e planejamento de autonomia",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "start": "node scripts/serve.cjs",
+    "test": "node --test tests/domain.test.cjs tests/armazenamento.test.cjs tests/server.test.cjs",
+    "test:browser": "node tests/browser.cjs"
+  }
+}

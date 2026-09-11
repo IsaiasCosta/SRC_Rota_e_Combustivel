@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rota &amp; Combustível | Painel de controle</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<div class="dashboard-container">
+    <header class="header">
+        <div class="brand-mark">
+            <img src="assets/images/logo-rota-combustivel-transparente.png" alt="RC — Rota &amp; Combustível" width="1774" height="887">
+        </div>
+        <div>
+        <p class="eyebrow">OPERAÇÃO NA ESTRADA</p>
+        <h1>ROTA &amp; COMBUSTÍVEL</h1>
+        <span>PAINEL DE CONTROLE - LOCALIZADOR DE POSTOS & GESTÃO DE COMBUSTÍVEL</span>
+        </div>
+        <span class="version-badge">Painel do veículo</span>
+    </header>
+
+    <nav class="navigation" aria-label="Navegação do painel"><a href="#veiculo">Veículo e autonomia</a><a href="#localizador">Localizar postos</a></nav>
+    <p id="statusArmazenamento" class="helper" role="status">Parâmetros salvos neste navegador. Busca de endereço e rotas requer internet.</p>
+
+    <div class="section-box" id="veiculo">
+        <div class="section-heading"><div><p class="eyebrow">01 / CONFIGURAÇÃO</p><h2>Parâmetros do veículo</h2></div><span class="tag">Veículo · Bitruck</span></div>
+        <div class="inputs-grid">
+            <div class="input-group">
+                <label for="inpCapacidade">Capacidade do tanque (L)</label>
+                <input type="number" id="inpCapacidade" value="560" min="1" step="1" required aria-describedby="ajudaCapacidade">
+                <small id="ajudaCapacidade" class="helper">Informe a capacidade total, por exemplo, 100 ou 600 L.</small>
+            </div>
+            <div class="input-group">
+                <label for="inpNivel">Nível no Painel</label>
+                <select id="inpNivel">
+                    <option value="0">Vazio (0%)</option>
+                    <option value="0.10">Reserva (10%)</option>
+                    <option value="0.25">1/4 (25%)</option>
+                    <option value="0.50">1/2 (50%)</option>
+                    <option value="0.75">3/4 (75%)</option>
+                    <option value="1.00" selected>Cheio (100%)</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="inpCarga">Carga</label>
+                <select id="inpCarga">
+                    <option value="CARREGADO" selected>CARREGADO</option>
+                    <option value="PARCIAL">PARCIAL</option>
+                    <option value="VAZIO">VAZIO</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="inpConsumo">Consumo estimado (km/L)</label>
+                <input type="number" id="inpConsumo" value="2.0" step="0.1" min="0.1" max="20">
+            </div>
+            <div class="input-group">
+                <label for="inpMargem">Margem de segurança</label>
+                <select id="inpMargem">
+                    <option value="0.10">10%</option>
+                    <option value="0.15" selected>15%</option>
+                    <option value="0.20">20%</option>
+                    <option value="0.25">25%</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-box">
+        <h2>Combustível a bordo</h2><p class="helper">O combustível disponível é calculado pela capacidade e pelo nível informado. Exemplo: 600 L a 50% = 300 L disponíveis.</p>
+        <div class="gauge-wrap" id="gaugeContainer"></div>
+        <div class="gauge-readout" id="gaugeReadout" style="text-align:center; margin-top:10px; font-size:13px; color:#94a3b8;"></div>
+    </div>
+
+    <div class="section-box section-purple" id="localizador">
+        <div class="section-heading"><div><p class="eyebrow">02 / PRÓXIMA PARADA</p><h2>Localizar postos</h2></div><span class="tag" id="quantidadePostos"></span></div><p class="helper">Busca na lista cadastrada de MG e ES. Endereços e coordenadas do cadastro ainda precisam de conferência.</p>
+        <div class="inputs-grid">
+            <div class="input-group" style="grid-column:1 / -1;">
+                <label for="inpOrigem">Onde o veículo está agora?</label>
+                <input type="text" id="inpOrigem"
+                       placeholder="Ex.: Av. Juscelino Kubitschek, Contagem, MG ou apenas Contagem">
+                <small style="display:block;color:#94a3b8;margin-top:5px;">
+                    Endereço = localização aproximada pelo mapa. Cidade = estimativa; GPS é mais preciso.
+                </small>
+            </div>
+        </div>
+        <button class="btn-calc" id="btnBuscarCidade" style="margin-top:15px;">
+            🔎 Localizar Postos
+        </button>
+        <button class="btn-gps" id="btnGPS">
+            📡 Usar Minha Localização Atual (GPS)
+        </button>
+        <div id="statusBusca" role="status" aria-live="polite" style="margin-top:10px;color:#94a3b8;font-size:12px;"></div>
+    </div>
+
+    <div class="section-box" id="resultadosPostos" style="display:none;"></div>
+
+    <div class="results-grid">
+        <div class="info-card">
+            <div class="info-item">
+                <label>Capacidade do tanque</label>
+                <div class="value" id="outCapacidadeTotal">0.0 L</div>
+            </div>
+        </div>
+        <div class="info-card">
+            <div class="info-item">
+                <label>Litros no Momento</label>
+                <div class="value" id="outLitros">0.0 L</div>
+            </div>
+        </div>
+        <div class="info-card">
+            <div class="info-item">
+                <label>Autonomia estimada</label>
+                <div class="value" id="outAutonomia">0.0 km</div>
+            </div>
+        </div>
+        <div class="info-card">
+            <div class="info-item">
+                <label>Autonomia com margem</label>
+                <div class="value" id="outAutonomiaSegura">0.0 km</div>
+            </div>
+        </div>
+
+        <div class="status-alert status-success" id="outStatusPosto" role="status" style="grid-column:1 / -1;">
+            🟢 TANQUE CHEIO - SEM ALERTAS NO MOMENTO
+        </div>
+    </div>
+</div>
+
+<script src="src/config.js" defer></script>
+<script src="src/data/postos.js" defer></script>
+<script src="src/utils/formatacao.js" defer></script>
+<script src="src/domain/combustivel.js" defer></script>
+<script src="src/domain/distancia.js" defer></script>
+<script src="src/services/armazenamento.js" defer></script>
+<script src="src/services/mapas.js" defer></script>
+<script src="src/ui/medidor.js" defer></script>
+<script src="src/ui/veiculo.js" defer></script>
+<script src="src/ui/postos.js" defer></script>
+<script src="src/controllers/painel.js" defer></script>
+<script src="src/controllers/localizador.js" defer></script>
+<script src="src/app.js" defer></script>
+<footer>
+    <div class="footer-project">
+        <strong>ROTA &amp; COMBUSTÍVEL</strong>
+        <span>Planejamento de combustível e paradas</span>
+    </div>
+    <p class="developer-credit">
+        Desenvolvido por <strong>Isaias Costa e Silva</strong>
+        <a href="mailto:isaiascssilva@gmail.com">isaiascssilva@gmail.com</a>
+    </p>
+</footer>
+</body>
+</html>
