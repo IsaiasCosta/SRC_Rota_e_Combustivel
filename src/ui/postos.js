@@ -19,15 +19,19 @@ function exibirResultadosPostos(listaPostos, local, parametros) {
         <h3 style="color:#38bdf8;margin-bottom:6px;">🚚 ${listaPostos.length} postos entre os candidatos mais próximos</h3>
         <div style="color:#94a3b8;font-size:11px;margin-bottom:15px;">
             A distância abaixo é por rota quando o roteador está disponível.
-            Caso contrário, aparece como estimativa.
-            Os links usam as coordenadas cadastradas do posto para abrir o ponto exato no mapa.
+            Se o serviço falhar, aparece como estimativa. Quando o roteador não encontra trajeto, a autonomia não é avaliada.
+            Os links priorizam o endereço completo do posto. Confira o número e o estabelecimento no mapa.
+            As distâncias do painel usam as coordenadas cadastradas e podem diferir das rotas do Google Maps.
             Rotas comuns não consideram as restrições do bitruck; confira o trajeto e o cadastro do posto antes de seguir.
         </div>
         <ul style="list-style:none;padding:0;margin:0;">
     `;
 
     listaPostos.forEach((p, indice) => {
-        const analise = app.domain.combustivel.analisarAutonomia(p.distancia, parametros);
+        const semRota = p.tipoDistancia === 'SEM_ROTA';
+        const analise = semRota
+            ? { classe: 'status-danger', texto: 'ROTA NÃO ENCONTRADA — autonomia não avaliada; confira o trajeto no mapa.', margemKm: null }
+            : app.domain.combustivel.analisarAutonomia(p.distancia, parametros);
 
         const mapsUrl = criarLinkRota(p, local);
         const postoUrl = criarLinkPosto(p);
@@ -35,7 +39,7 @@ function exibirResultadosPostos(listaPostos, local, parametros) {
         const tipo =
             p.tipoDistancia === "ROTA"
                 ? "🛣️ rota rodoviária"
-                : "📏 estimativa";
+                : semRota ? "Roteador não encontrou trajeto" : "📏 estimativa";
 
         html += `
         <li style="
@@ -44,7 +48,7 @@ function exibirResultadosPostos(listaPostos, local, parametros) {
             margin-bottom:10px;
             padding:12px 15px;
             border-radius:8px;
-            border-left:4px solid ${indice === 0 ? "#22c55e" : "#a855f7"};
+            border-left:4px solid ${semRota ? "#ef4444" : indice === 0 ? "#22c55e" : "#a855f7"};
         ">
             <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;">
                 <div>
@@ -66,7 +70,7 @@ function exibirResultadosPostos(listaPostos, local, parametros) {
                     font-size:12px;
                     font-weight:bold;
                     white-space:nowrap;">
-                    ~${p.distancia.toFixed(1)} km
+                    ${semRota ? 'Sem rota' : `~${p.distancia.toFixed(1)} km`}
                 </span>
             </div>
 

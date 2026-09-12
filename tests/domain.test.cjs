@@ -44,3 +44,19 @@ test('distância nula no mesmo ponto e simetria entre os pontos', () => {
     assert.ok(ida > 100 && ida < 110);
     assert.equal(ida, volta);
 });
+
+test('valida coordenadas geográficas e o intervalo esperado do cadastro brasileiro', () => {
+    assert.equal(distancia.coordenadasValidas({ lat: 0, lon: 0 }), true);
+    assert.equal(distancia.coordenadasValidas({ lat: -90, lon: 180 }), true);
+    for (const local of [null, {}, { lat: null, lon: 0 }, { lat: '-19.9', lon: -44 },
+        { lat: 91, lon: 0 }, { lat: 0, lon: -181 }, { lat: NaN, lon: 0 }, { lat: 0, lon: Infinity }]) {
+        assert.equal(distancia.coordenadasValidas(local), false);
+    }
+    for (const local of [{ lat: -19.9, lon: -44 }, { lat: -35, lon: -75 }, { lat: 6, lon: -30 }]) {
+        assert.equal(distancia.coordenadasNoBrasil(local), true);
+    }
+    for (const local of [{ lat: 0, lon: 0 }, { lat: -35.1, lon: -44 }, { lat: 6.1, lon: -44 },
+        { lat: -20, lon: -75.1 }, { lat: -20, lon: -29.9 }]) {
+        assert.equal(distancia.coordenadasNoBrasil(local), false);
+    }
+});

@@ -12,7 +12,11 @@ function parametrosValidos() {
     return ['inpCapacidade', 'inpConsumo'].every(id => {
         const campo = document.getElementById(id);
         return campo.value !== '' && campo.checkValidity();
-    }) && obterNumero('inpConsumo') > 0 && obterNumero('inpCapacidade') > 0;
+    }) && obterNumero('inpConsumo') > 0 && obterNumero('inpCapacidade') > 0 &&
+        ['inpNivel', 'inpCarga', 'inpMargem'].every(id => {
+            const campo = document.getElementById(id);
+            return [...campo.options].some(opcao => opcao.value === campo.value);
+        });
 }
 
 function lerParametros() {
@@ -25,21 +29,33 @@ function lerParametros() {
 }
 
 function aplicarParametros(salvos) {
-        for (const id of PARAMETROS) {
-            const campo = document.getElementById(id);
-            const valor = salvos?.[id];
-            if (typeof valor !== 'string') continue;
-            if (campo.tagName === 'SELECT') {
-                if ([...campo.options].some(opcao => opcao.value === valor)) campo.value = valor;
-            } else if (valor.trim() && Number.isFinite(Number(valor)) && Number(valor) >= Number(campo.min) && (!campo.max || Number(valor) <= Number(campo.max))) {
-                campo.value = valor;
-            }
+    const rejeitados = [];
+    for (const id of PARAMETROS) {
+        if (!Object.hasOwn(salvos, id)) continue;
+        const campo = document.getElementById(id);
+        const valor = salvos[id];
+        let valido = typeof valor === 'string' && valor.trim() !== '';
+        if (campo.tagName === 'SELECT') {
+            valido = valido && [...campo.options].some(opcao => opcao.value === valor);
+        } else {
+            valido = valido && Number.isFinite(Number(valor));
         }
+        campo.value = valido ? valor : '';
+        if (!valido || campo.value === '' || !campo.checkValidity()) {
+            campo.value = '';
+            rejeitados.push(id);
+        }
+    }
+    return rejeitados;
+}
+
+function limparParametros() {
+    for (const id of PARAMETROS) document.getElementById(id).value = '';
 }
 
 function obterValoresCampos() {
     return Object.fromEntries(PARAMETROS.map(id => [id, document.getElementById(id).value]));
 }
 
-app.ui.veiculo = { lerParametros, aplicarParametros, obterValoresCampos };
+app.ui.veiculo = { lerParametros, aplicarParametros, limparParametros, obterValoresCampos };
 })(window.IvecoTector);

@@ -5,15 +5,20 @@ const CONSUMOS = app.config.consumos;
 
 function restaurarParametros() {
     try {
-        app.ui.veiculo.aplicarParametros(app.services.armazenamento.carregarParametros());
+        const rejeitados = app.ui.veiculo.aplicarParametros(app.services.armazenamento.carregarParametros());
+        if (rejeitados.length) {
+            document.getElementById('statusArmazenamento').textContent = 'Há parâmetros salvos inválidos. Preencha os campos vazios; os dados salvos serão preservados até a correção.';
+        }
     } catch {
-        document.getElementById('statusArmazenamento').textContent = 'Não foi possível recuperar os parâmetros salvos. Confira os valores antes de usar.';
+        app.ui.veiculo.limparParametros();
+        document.getElementById('statusArmazenamento').textContent = 'Não foi possível recuperar os parâmetros salvos. Preencha os campos; os dados salvos serão preservados até a correção.';
     }
 }
 
 function salvarParametros() {
     try {
         app.services.armazenamento.salvarParametros(app.ui.veiculo.obterValoresCampos());
+        document.getElementById('statusArmazenamento').textContent = 'Parâmetros salvos neste navegador. Busca de endereço e rotas requer internet.';
     } catch {
         document.getElementById('statusArmazenamento').textContent = 'Armazenamento indisponível. Os parâmetros serão mantidos somente enquanto esta página estiver aberta.';
     }
@@ -36,7 +41,7 @@ function calcular() {
     const status = document.getElementById("outStatusPosto");
     if (!parametros.validos) {
         status.className = "status-alert status-danger";
-        status.textContent = "Informe uma capacidade do tanque e um consumo válidos, ambos maiores que zero.";
+        status.textContent = "Confira os parâmetros: capacidade e consumo devem ser válidos e maiores que zero; selecione nível, carga e margem.";
         for (const id of ['outCapacidadeTotal', 'outLitros', 'outAutonomia', 'outAutonomiaSegura']) document.getElementById(id).textContent = '—';
     } else if (combustivelAtual <= capacidadeTotal * 0.15) {
         status.className = "status-alert status-danger";

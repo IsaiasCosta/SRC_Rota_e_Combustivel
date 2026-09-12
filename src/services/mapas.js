@@ -1,7 +1,12 @@
 /* src/services/mapas.js */
 (function (app) {
 'use strict';
+const { coordenadasValidas } = app.domain.distancia;
 
+function converterCoordenada(valor) {
+    if (typeof valor !== 'number' && (typeof valor !== 'string' || valor.trim() === '')) return NaN;
+    return Number(valor);
+}
 
 async function geocodificarOrigem(texto) {
     /*
@@ -19,10 +24,10 @@ async function geocodificarOrigem(texto) {
         throw new Error("Endereço/cidade não encontrado. Tente informar também MG ou ES.");
     }
 
-    const lat = Number(dados[0].lat);
-    const lon = Number(dados[0].lon);
+    const lat = converterCoordenada(dados[0]?.lat);
+    const lon = converterCoordenada(dados[0]?.lon);
 
-    if (!Number.isFinite(lat) || !Number.isFinite(lon)) {
+    if (!coordenadasValidas({ lat, lon })) {
         throw new Error("O mapa retornou coordenadas inválidas.");
     }
 
@@ -45,6 +50,9 @@ async function consultarJSON(url) {
 }
 
 async function obterRotaOSRM(local, posto) {
+    if (!coordenadasValidas(local) || !coordenadasValidas(posto)) {
+        throw new Error('Coordenadas inválidas para calcular a rota.');
+    }
     const url =
         `https://router.project-osrm.org/route/v1/driving/` +
         `${local.lon},${local.lat};${posto.lon},${posto.lat}` +
@@ -56,9 +64,14 @@ async function obterRotaOSRM(local, posto) {
     try {
         const resposta = await fetch(url, { signal: controller.signal });
 
-        if (!resposta.ok) throw new Error("Falha no roteador.");
-
         const dados = await resposta.json();
+
+        if (dados.code === 'NoRoute') {
+            const erro = new Error('O roteador não encontrou um trajeto para este posto.');
+            erro.code = 'NoRoute';
+            throw erro;
+        }
+        if (!resposta.ok) throw new Error("Falha no roteador.");
 
         if (dados.code !== "Ok" || !dados.routes?.length) {
             throw new Error("Rota não encontrada.");
@@ -79,12 +92,14 @@ function identificarPosto(posto) {
         .join(', ');
 }
 
-function coordenadasValidas(posto) {
-    return Number.isFinite(posto?.lat) && Number.isFinite(posto?.lon) &&
-        Math.abs(posto.lat) <= 90 && Math.abs(posto.lon) <= 180;
-}
-
 function identificarDestino(posto) {
+    const endereco = [posto.Endereço, posto.Cidade, posto.Estado]
+        .map(valor => String(valor ?? '').trim());
+    // O endereço completo prevalece sobre coordenadas que podem ser aproximadas.
+    // Nomes internos (ex.: POSTO 621) não devem desviar a busca do número informado.
+    if (endereco.every(Boolean)) {
+        return [String(posto.nomeMapa ?? '').trim(), ...endereco, 'Brasil'].filter(Boolean).join(', ');
+    }
     return coordenadasValidas(posto) ? `${posto.lat},${posto.lon}` : identificarPosto(posto);
 }
 
@@ -93,8 +108,7 @@ function criarLinkRota(posto, origem) {
     url.searchParams.set('api', '1');
     url.searchParams.set('destination', identificarDestino(posto));
     url.searchParams.set('travelmode', 'driving');
-    if (origem && Number.isFinite(origem.lat) && Number.isFinite(origem.lon) &&
-        Math.abs(origem.lat) <= 90 && Math.abs(origem.lon) <= 180) {
+    if (coordenadasValidas(origem)) {
         url.searchParams.set('origin', `${origem.lat},${origem.lon}`);
     }
     if (posto.placeId) url.searchParams.set('destination_place_id', posto.placeId);

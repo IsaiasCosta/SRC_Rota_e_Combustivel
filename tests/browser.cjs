@@ -78,7 +78,12 @@ async function main() {
         }
         assert.equal(await evaluate("document.querySelectorAll('#resultadosPostos li').length"), 5);
         assert.equal(await evaluate("document.querySelectorAll('#resultadosPostos a[href*=\"/maps/search/\"]').length"), 5);
-        assert.equal(await evaluate("[...document.querySelectorAll('#resultadosPostos a[href*=\"/maps/dir/\"]')].every(a => {const url=new URL(a.href); return /^-?\\d+(\\.\\d+)?,-?\\d+(\\.\\d+)?$/.test(url.searchParams.get('destination')) && url.searchParams.get('origin') === '-19.9,-44';})"), true);
+        assert.equal(await evaluate("[...document.querySelectorAll('#resultadosPostos li')].every(li => {const posto=IvecoTector.postos.find(p=>li.querySelector('strong').textContent.trim().endsWith(p.Nome)); const destino=[posto.nomeMapa,posto.Endereço,posto.Cidade,posto.Estado,'Brasil'].filter(Boolean).join(', '); const rota=new URL(li.querySelector('a[href*=\"/maps/dir/\"]').href); const mapa=new URL(li.querySelector('a[href*=\"/maps/search/\"]').href); return rota.searchParams.get('destination')===destino && mapa.searchParams.get('query')===destino && rota.searchParams.get('origin')==='-19.9,-44';})"), true);
+        // Reproduzir o caso informado com o cartão e os dois links reais da interface.
+        await evaluate("window.resultadosBuscaTeste=document.getElementById('resultadosPostos').innerHTML; const posto=IvecoTector.postos.find(p=>p.Nome==='POSTO 621 PADRE EUSTAQUIO'); IvecoTector.ui.postos.exibirResultadosPostos([{...posto,distancia:5,tempoMin:10,tipoDistancia:'ROTA'}],{lat:-19.9,lon:-44},IvecoTector.ui.veiculo.lerParametros())");
+        assert.equal(await evaluate("new URL(document.querySelector('#resultadosPostos a[href*=\"/maps/dir/\"]').href).searchParams.get('destination')"), 'Posto Bretas Duarte, Rua Pará de Minas, 788, Belo Horizonte, MG, Brasil');
+        assert.equal(await evaluate("new URL(document.querySelector('#resultadosPostos a[href*=\"/maps/search/\"]').href).searchParams.get('query')"), 'Posto Bretas Duarte, Rua Pará de Minas, 788, Belo Horizonte, MG, Brasil');
+        await evaluate("document.getElementById('resultadosPostos').innerHTML=window.resultadosBuscaTeste; delete window.resultadosBuscaTeste");
         assert.equal(await evaluate("document.querySelector('#resultadosPostos .status-success') !== null"), true);
         await evaluate("document.getElementById('inpNivel').value='0'; document.getElementById('inpNivel').dispatchEvent(new Event('change'))");
         assert.equal(await evaluate("document.querySelectorAll('#resultadosPostos .status-danger').length"), 5);
@@ -93,6 +98,16 @@ async function main() {
         assert.equal(await evaluate("document.getElementById('btnGPS').disabled || document.getElementById('btnBuscarCidade').disabled"), false);
         await evaluate("window.fetch=async url=>({ok:true,json:async()=>String(url).includes('nominatim')?[{lat:'-19.9',lon:'-44.0',display_name:'Contagem, MG'}]:{code:'Ok',routes:[{distance:null,duration:30}]}}); IvecoTector.controllers.localizador.buscarPostos()");
         assert.equal(await evaluate("(document.getElementById('resultadosPostos').textContent.match(/📏 estimativa/g)||[]).length"), 5);
+        await evaluate("window.fetch=async url=>({ok:true,json:async()=>String(url).includes('nominatim')?[{lat:'-19.9',lon:'-44.0',display_name:'Contagem, MG'}]:{code:'NoRoute'}}); IvecoTector.controllers.localizador.buscarPostos()");
+        assert.equal(await evaluate("document.querySelectorAll('#resultadosPostos .status-danger').length"), 5);
+        assert.equal(await evaluate("document.querySelectorAll('#resultadosPostos .status-success').length"), 0);
+        assert.equal(await evaluate("document.getElementById('resultadosPostos').textContent.includes('autonomia não avaliada')"), true);
+        await evaluate("document.getElementById('inpNivel').value='0.50'; document.getElementById('inpNivel').dispatchEvent(new Event('change'))");
+        assert.equal(await evaluate("document.querySelectorAll('#resultadosPostos .status-success').length"), 0);
+        await evaluate("window.fetch=async()=>({ok:true,json:async()=>[{lat:null,lon:''}]}); IvecoTector.controllers.localizador.buscarPostos()");
+        assert.equal(await evaluate("document.getElementById('statusBusca').textContent"), 'O mapa retornou coordenadas inválidas.');
+        assert.equal(await evaluate("document.getElementById('resultadosPostos').style.display"), 'none');
+        assert.equal(await evaluate("document.getElementById('btnGPS').disabled || document.getElementById('btnBuscarCidade').disabled"), false);
         // Um cadastro anterior deve manter os litros e a autonomia após a migração.
         await evaluate("localStorage.setItem(IvecoTector.config.storageKey, JSON.stringify({inpCapacidade1:'100',inpCapacidade2:'500',inpNivel:'0.50',inpConsumo:'2',inpMargem:'0.15',inpCarga:'CARREGADO'}))");
         await call('Page.reload');
@@ -118,6 +133,34 @@ async function main() {
             assert.equal(await evaluate("JSON.parse(localStorage.getItem(IvecoTector.config.storageKey)).inpCapacidade"), '100');
         }
         await evaluate("document.getElementById('inpCapacidade').value='600'; document.getElementById('inpNivel').value='0.50'; document.getElementById('inpCapacidade').dispatchEvent(new Event('input'))");
+        // Recuperação inválida não pode calcular com padrões nem sobrescrever o conteúdo salvo.
+        const parametrosValidos = { inpCapacidade: '600', inpNivel: '0.50', inpConsumo: '2', inpMargem: '0.15', inpCarga: 'CARREGADO' };
+        const casosInvalidos = [
+            ...[['inpCapacidade', '-100'], ['inpConsumo', '2.75'], ['inpNivel', 'invalido'], ['inpMargem', null], ['inpCarga', 'invalida']]
+                .map(([id, valor]) => ({ raw: JSON.stringify({ ...parametrosValidos, [id]: valor }), vazio: id })),
+            ...['{quebrado', '', '[]', 'null', JSON.stringify({ inpCapacidade1: '-100', inpCapacidade2: '500' })]
+                .map(raw => ({ raw, vazio: 'inpCapacidade' }))
+        ];
+        for (const { raw, vazio } of casosInvalidos) {
+            await evaluate(`localStorage.setItem(IvecoTector.config.storageKey, ${JSON.stringify(raw)})`);
+            await call('Page.reload');
+            for (let i = 0; i < 100; i++) {
+                if (await evaluate("document.getElementById('outAutonomia')?.textContent === '—'")) break;
+                await new Promise(resolve => setTimeout(resolve, 50));
+            }
+            assert.equal(await evaluate("document.getElementById('outAutonomia').textContent"), '—');
+            assert.equal(await evaluate(`document.getElementById(${JSON.stringify(vazio)}).value`), '');
+            assert.equal(await evaluate("document.getElementById('statusArmazenamento').textContent.includes('preservados até a correção')"), true);
+            assert.equal(await evaluate("localStorage.getItem(IvecoTector.config.storageKey)"), raw);
+            await evaluate("document.getElementById('inpCapacidade').value='100'; document.getElementById('inpCapacidade').dispatchEvent(new Event('input'))");
+            if (vazio !== 'inpCapacidade' || raw[0] !== '{' || raw.includes('quebrado') || raw.includes('inpCapacidade1')) {
+                assert.equal(await evaluate("localStorage.getItem(IvecoTector.config.storageKey)"), raw);
+            }
+            await evaluate(`for (const [id, valor] of Object.entries(${JSON.stringify(parametrosValidos)})) document.getElementById(id).value=valor; document.getElementById('inpCapacidade').dispatchEvent(new Event('input'))`);
+            assert.equal(await evaluate("document.getElementById('outAutonomiaSegura').textContent"), '510.0 km');
+            assert.deepEqual(await evaluate("JSON.parse(localStorage.getItem(IvecoTector.config.storageKey))"), parametrosValidos);
+            assert.equal(await evaluate("document.getElementById('statusArmazenamento').textContent.includes('preservados até a correção')"), false);
+        }
         for (const width of [1366, 768, 390, 320]) {
             await call('Emulation.setDeviceMetricsOverride', { width, height: 1000, deviceScaleFactor: 1, mobile: width < 700 });
             assert.equal(await evaluate('document.documentElement.scrollWidth <= window.innerWidth'), true, `Layout excedeu a tela em ${width}px`);

@@ -43,3 +43,9 @@ test('não transforma dados antigos inválidos em uma capacidade utilizável', (
     }
     assert.equal(Object.keys(armazenamento().carregarParametros()).length, 0);
 });
+
+test('rejeita formatos de armazenamento inválidos sem substituir por padrões', () => {
+    for (const dados of [null, [], false, 100, 'texto']) {
+        assert.throws(() => armazenamento(dados).carregarParametros(), /inválidos/);
+    }
+});

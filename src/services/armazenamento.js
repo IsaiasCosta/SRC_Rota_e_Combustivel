@@ -3,8 +3,11 @@
 const chave = app.config.storageKey;
 
 function carregarParametros() {
-    const salvos = JSON.parse(localStorage.getItem(chave) || '{}');
-    if (!salvos || typeof salvos !== 'object' || Array.isArray(salvos)) return {};
+    const valor = localStorage.getItem(chave);
+    const salvos = valor === null ? {} : JSON.parse(valor);
+    if (!salvos || typeof salvos !== 'object' || Array.isArray(salvos)) {
+        throw new Error('Parâmetros salvos inválidos.');
+    }
     // Preservar a capacidade total da versão com dois campos, sem somar novamente.
     if (!Object.hasOwn(salvos, 'inpCapacidade') &&
         (Object.hasOwn(salvos, 'inpCapacidade1') || Object.hasOwn(salvos, 'inpCapacidade2'))) {

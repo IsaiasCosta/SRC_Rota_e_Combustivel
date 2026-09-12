@@ -18,6 +18,8 @@ Acesse `http://localhost:3000`. Encerre o servidor com `Ctrl+C`. Não é necess�
 
 Os parâmetros ficam no armazenamento do navegador. A abertura por arquivo e por `localhost` usa armazenamentos separados; mantenha a mesma forma de acesso para recuperar seus valores.
 
+Se um parâmetro salvo for inválido, seu campo fica vazio e o painel informa a necessidade de correção. Se o conteúdo salvo não puder ser lido, todos os campos precisam ser preenchidos novamente. O conteúdo anterior é preservado até que os parâmetros estejam válidos; valores inválidos não são substituídos automaticamente pelos padrões do veículo.
+
 ## Organização
 
 ```text
@@ -73,9 +75,10 @@ O primeiro comando testa as regras e o servidor. O segundo abre o Chrome em modo
 
 - O sistema funciona no navegador, sem backend ou banco de dados compartilhado.
 - O cadastro de postos é estático e ainda precisa de conferência dos endereços e coordenadas.
-- Os links do Google Maps usam as coordenadas cadastradas do posto para abrir o ponto exato. O botão “Ver posto no mapa” permite conferir o estabelecimento antes de abrir a rota. Sem coordenadas, o sistema usa nome, endereço, cidade e estado como fallback. As distâncias do painel ainda podem diferir das apresentadas pelo Google Maps.
+- Os links do Google Maps priorizam endereço, cidade e estado, com o nome do mapa quando confirmado. Assim, coordenadas aproximadas não substituem o número do endereço no destino. Sem endereço completo, usam coordenadas válidas ou a identificação disponível. O botão “Ver posto no mapa” permite conferir o estabelecimento antes de abrir a rota. As distâncias do painel ainda usam as coordenadas cadastradas e podem diferir das apresentadas pelo Google Maps.
 - As consultas de endereço e rota dependem de internet. O GPS depende da permissão do navegador.
-- Quando a consulta de rota falha, a interface identifica a distância como estimativa.
+- Quando a consulta de rota falha por indisponibilidade do serviço, a interface identifica a distância como estimativa. Se o roteador responder que não encontrou trajeto (`NoRoute`), o posto aparece como sem rota, sem distância ou avaliação de autonomia, depois dos candidatos com distância disponível.
+- A origem precisa ter coordenadas numéricas dentro dos limites geográficos. Postos fora do intervalo aproximado brasileiro já usado na validação do cadastro são excluídos da busca; essa verificação não confirma a posição real do estabelecimento.
 - Os testes de navegador simulam os serviços externos; não verificam sua disponibilidade real.
 
 Consulte [a arquitetura e as orientações de evolução](docs/arquitetura.md) antes de acrescentar funcionalidades.

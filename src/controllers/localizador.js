@@ -3,7 +3,7 @@
 'use strict';
 const postos = app.postos;
 const { normalizarTexto } = app.utils;
-const { calcularDistancia, distanciaEstimadaRodoviaria } = app.domain.distancia;
+const { calcularDistancia, distanciaEstimadaRodoviaria, coordenadasValidas, coordenadasNoBrasil } = app.domain.distancia;
 const { geocodificarOrigem, obterRotaOSRM } = app.services.mapas;
 let localizacaoAtual = null;
 let origemDescricao = '';
@@ -52,6 +52,13 @@ function buscarGPS() {
                 lat: position.coords.latitude,
                 lon: position.coords.longitude
             };
+
+            if (!coordenadasValidas(localizacaoAtual)) {
+                setStatusBusca('O GPS retornou coordenadas inválidas. Tente novamente ou busque por endereço.');
+                definirBusca(false);
+                btn.textContent = '📡 Usar Minha Localização Atual (GPS)';
+                return;
+            }
 
             origemDescricao = `GPS (${localizacaoAtual.lat.toFixed(5)}, ${localizacaoAtual.lon.toFixed(5)})`;
             origemFoiGPS = true;
@@ -118,7 +125,7 @@ async function buscarPostos() {
 }
 
 async function buscarPostosMaisProximos(local) {
-    if (!local || !Number.isFinite(local.lat) || !Number.isFinite(local.lon)) {
+    if (!coordenadasValidas(local)) {
         throw new Error("Localização inválida.");
     }
 
@@ -127,7 +134,7 @@ async function buscarPostosMaisProximos(local) {
      * Depois tentamos obter distância de rota para os candidatos.
      */
     const candidatos = postos
-        .filter(p => Number.isFinite(p.lat) && Number.isFinite(p.lon))
+        .filter(coordenadasNoBrasil)
         .map(p => ({
             ...p,
             distanciaGeografica: calcularDistancia(local.lat, local.lon, p.lat, p.lon)
@@ -147,7 +154,10 @@ async function buscarPostosMaisProximos(local) {
                     tempoMin: rota.tempoMin,
                     tipoDistancia: "ROTA"
                 };
-            } catch {
+            } catch (erro) {
+                if (erro.code === 'NoRoute') {
+                    return { ...posto, distancia: null, tempoMin: null, tipoDistancia: 'SEM_ROTA' };
+                }
                 return {
                     ...posto,
                     distancia: distanciaEstimadaRodoviaria(local, posto),
@@ -158,7 +168,9 @@ async function buscarPostosMaisProximos(local) {
         })
     );
 
-    resultados.sort((a, b) => a.distancia - b.distancia);
+    resultados.sort((a, b) =>
+        Number(a.tipoDistancia === 'SEM_ROTA') - Number(b.tipoDistancia === 'SEM_ROTA') ||
+        (a.distancia ?? 0) - (b.distancia ?? 0));
 
     ultimosResultados = resultados.slice(0, 5);
     atualizarResultados();
@@ -173,11 +185,9 @@ function validarCadastroPostos() {
     const nomes = new Set();
 
     postos.forEach((p, i) => {
-        if (!Number.isFinite(p.lat) || !Number.isFinite(p.lon)) {
+        if (!coordenadasValidas(p)) {
             problemas.push(`Posto ${i + 1}: coordenada inválida.`);
-        }
-
-        if (p.lat < -35 || p.lat > 6 || p.lon < -75 || p.lon > -30) {
+        } else if (!coordenadasNoBrasil(p)) {
             problemas.push(`${p.Nome}: coordenada fora do intervalo esperado para Brasil.`);
         }
 
