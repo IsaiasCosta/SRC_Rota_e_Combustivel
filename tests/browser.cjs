@@ -77,6 +77,8 @@ async function main() {
             await new Promise(resolve => setTimeout(resolve, 50));
         }
         assert.equal(await evaluate("document.querySelectorAll('#resultadosPostos li').length"), 5);
+        assert.equal(await evaluate("document.querySelectorAll('#resultadosPostos a[href*=\"/maps/search/\"]').length"), 5);
+        assert.equal(await evaluate("[...document.querySelectorAll('#resultadosPostos a[href*=\"/maps/dir/\"]')].every(a => {const url=new URL(a.href); return /^-?\\d+(\\.\\d+)?,-?\\d+(\\.\\d+)?$/.test(url.searchParams.get('destination')) && url.searchParams.get('origin') === '-19.9,-44';})"), true);
         assert.equal(await evaluate("document.querySelector('#resultadosPostos .status-success') !== null"), true);
         await evaluate("document.getElementById('inpNivel').value='0'; document.getElementById('inpNivel').dispatchEvent(new Event('change'))");
         assert.equal(await evaluate("document.querySelectorAll('#resultadosPostos .status-danger').length"), 5);

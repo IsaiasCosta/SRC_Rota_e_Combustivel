@@ -50,6 +50,7 @@ IVECO TECTOR/
 ├── tests/
 │   ├── domain.test.cjs           # Regras e limites de autonomia
 │   ├── armazenamento.test.cjs    # Migração e preservação dos parâmetros salvos
+│   ├── mapas.test.cjs            # Identificação dos postos nos links de mapas
 │   ├── server.test.cjs           # Entrega dos recursos da página
 │   └── browser.cjs               # Fluxos e layout no Chrome
 ├── docs/arquitetura.md
@@ -72,6 +73,7 @@ O primeiro comando testa as regras e o servidor. O segundo abre o Chrome em modo
 
 - O sistema funciona no navegador, sem backend ou banco de dados compartilhado.
 - O cadastro de postos é estático e ainda precisa de conferência dos endereços e coordenadas.
+- Os links do Google Maps usam as coordenadas cadastradas do posto para abrir o ponto exato. O botão “Ver posto no mapa” permite conferir o estabelecimento antes de abrir a rota. Sem coordenadas, o sistema usa nome, endereço, cidade e estado como fallback. As distâncias do painel ainda podem diferir das apresentadas pelo Google Maps.
 - As consultas de endereço e rota dependem de internet. O GPS depende da permissão do navegador.
 - Quando a consulta de rota falha, a interface identifica a distância como estimativa.
 - Os testes de navegador simulam os serviços externos; não verificam sua disponibilidade real.

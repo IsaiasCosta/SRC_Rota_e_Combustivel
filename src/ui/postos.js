@@ -2,6 +2,7 @@
 (function (app) {
 'use strict';
 const { escaparHTML, formatarTempo } = app.utils;
+const { criarLinkRota, criarLinkPosto } = app.services.mapas;
 
 function exibirResultadosPostos(listaPostos, local, parametros) {
     const container = document.getElementById("resultadosPostos");
@@ -19,6 +20,7 @@ function exibirResultadosPostos(listaPostos, local, parametros) {
         <div style="color:#94a3b8;font-size:11px;margin-bottom:15px;">
             A distância abaixo é por rota quando o roteador está disponível.
             Caso contrário, aparece como estimativa.
+            Os links usam as coordenadas cadastradas do posto para abrir o ponto exato no mapa.
             Rotas comuns não consideram as restrições do bitruck; confira o trajeto e o cadastro do posto antes de seguir.
         </div>
         <ul style="list-style:none;padding:0;margin:0;">
@@ -27,11 +29,8 @@ function exibirResultadosPostos(listaPostos, local, parametros) {
     listaPostos.forEach((p, indice) => {
         const analise = app.domain.combustivel.analisarAutonomia(p.distancia, parametros);
 
-        const mapsUrl =
-            `https://www.google.com/maps/dir/?api=1` +
-            `&origin=${encodeURIComponent(`${local.lat},${local.lon}`)}` +
-            `&destination=${encodeURIComponent(`${p.lat},${p.lon}`)}` +
-            `&travelmode=driving`;
+        const mapsUrl = criarLinkRota(p, local);
+        const postoUrl = criarLinkPosto(p);
 
         const tipo =
             p.tipoDistancia === "ROTA"
@@ -91,8 +90,12 @@ function exibirResultadosPostos(listaPostos, local, parametros) {
                         : ` • faltariam aproximadamente: ${analise.margemKm.toFixed(0)} km`}
             </div>
 
-            <div style="margin-top:8px;">
-                <a href="${mapsUrl}" target="_blank" rel="noopener noreferrer"
+            <div class="posto-links" style="margin-top:8px;">
+                <a href="${escaparHTML(postoUrl)}" target="_blank" rel="noopener noreferrer"
+                   style="color:#38bdf8;font-size:12px;text-decoration:none;">
+                    📍 Ver posto no mapa
+                </a>
+                <a href="${escaparHTML(mapsUrl)}" target="_blank" rel="noopener noreferrer"
                    style="color:#38bdf8;font-size:12px;text-decoration:none;">
                     🗺️ Abrir rota no Google Maps
                 </a>

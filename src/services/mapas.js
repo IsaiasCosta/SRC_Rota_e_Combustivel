@@ -72,5 +72,42 @@ async function obterRotaOSRM(local, posto) {
     }
 }
 
-app.services.mapas = { geocodificarOrigem, obterRotaOSRM };
+function identificarPosto(posto) {
+    return [posto.nomeMapa || posto.Nome, posto.Endereço, posto.Cidade, posto.Estado, 'Brasil']
+        .map(valor => String(valor ?? '').trim())
+        .filter(Boolean)
+        .join(', ');
+}
+
+function coordenadasValidas(posto) {
+    return Number.isFinite(posto?.lat) && Number.isFinite(posto?.lon) &&
+        Math.abs(posto.lat) <= 90 && Math.abs(posto.lon) <= 180;
+}
+
+function identificarDestino(posto) {
+    return coordenadasValidas(posto) ? `${posto.lat},${posto.lon}` : identificarPosto(posto);
+}
+
+function criarLinkRota(posto, origem) {
+    const url = new URL('https://www.google.com/maps/dir/');
+    url.searchParams.set('api', '1');
+    url.searchParams.set('destination', identificarDestino(posto));
+    url.searchParams.set('travelmode', 'driving');
+    if (origem && Number.isFinite(origem.lat) && Number.isFinite(origem.lon) &&
+        Math.abs(origem.lat) <= 90 && Math.abs(origem.lon) <= 180) {
+        url.searchParams.set('origin', `${origem.lat},${origem.lon}`);
+    }
+    if (posto.placeId) url.searchParams.set('destination_place_id', posto.placeId);
+    return url.href;
+}
+
+function criarLinkPosto(posto) {
+    const url = new URL('https://www.google.com/maps/search/');
+    url.searchParams.set('api', '1');
+    url.searchParams.set('query', identificarDestino(posto));
+    if (posto.placeId) url.searchParams.set('query_place_id', posto.placeId);
+    return url.href;
+}
+
+app.services.mapas = { geocodificarOrigem, obterRotaOSRM, criarLinkRota, criarLinkPosto };
 })(window.IvecoTector);

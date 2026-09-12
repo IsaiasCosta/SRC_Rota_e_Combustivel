@@ -467,6 +467,7 @@ button {
 .gauge-wrap { height: 230px; }
 #resultadosPostos li > div:first-child { flex-wrap: wrap; }
 #resultadosPostos a { padding: 8px 0; }
+.posto-links { display: flex; flex-wrap: wrap; gap: 4px 20px; }
 footer { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; width: min(1180px, calc(100% - 30px)); margin: 0 auto 24px; padding-top: 16px; border-top: 1px solid #252a38; color: #94a3b8; font-size: 11px; }
 .footer-project { display: flex; flex-direction: column; gap: 4px; }
 .footer-project > strong { color: #e2e8f0; letter-spacing: 0.7px; }

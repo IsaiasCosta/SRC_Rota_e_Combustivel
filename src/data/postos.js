@@ -1,7 +1,7 @@
 (function (app) {
 'use strict';
 const postos = [
-    {"Nome":"Caxuxa I","Endereço":"BR-262, km 523","Cidade":"Luz","Estado":"MG","lat":-19.7997,"lon":-45.6856},
+    {"Nome":"Caxuxa I","nomeMapa":"Posto Caxuxa Luz","Endereço":"BR-262, km 523","Cidade":"Luz","Estado":"MG","lat":-19.7997,"lon":-45.6856},
     {"Nome":"Caxuxa III (Dorjó)","Endereço":"BR-262, km 526","Cidade":"Luz","Estado":"MG","lat":-19.8015,"lon":-45.6890},
     {"Nome":"Caxuxa Rodão","Endereço":"BR-262, km 482","Cidade":"Bom Despacho","Estado":"MG","lat":-19.7358,"lon":-45.2519},
     {"Nome":"Caxuxa Lombada","Endereço":"BR-262, km 478,5","Cidade":"Bom Despacho","Estado":"MG","lat":-19.7310,"lon":-45.2490},
