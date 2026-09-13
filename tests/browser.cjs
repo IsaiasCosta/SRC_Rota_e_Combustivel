@@ -159,7 +159,7 @@ async function main() {
         assert.equal(await evaluate("document.getElementById('resultadosPostos').style.display"), 'none');
         assert.equal(await evaluate("document.getElementById('btnGPS').disabled || document.getElementById('btnBuscarCidade').disabled"), false);
         // Um cadastro anterior deve manter os litros e a autonomia após a migração.
-        await evaluate("localStorage.setItem(src-rota-e-combustivel.config.storageKey, JSON.stringify({inpCapacidade1:'100',inpCapacidade2:'500',inpNivel:'0.50',inpConsumo:'2',inpMargem:'0.15',inpCarga:'CARREGADO'}))");
+        await evaluate("localStorage.setItem(window['src-rota-e-combustivel'].config.storageKey, JSON.stringify({inpCapacidade1:'100',inpCapacidade2:'500',inpNivel:'0.50',inpConsumo:'2',inpMargem:'0.15',inpCarga:'CARREGADO'}))");
         await call('Page.reload');
         for (let i = 0; i < 100; i++) {
             if (await evaluate("document.getElementById('outAutonomiaSegura')?.textContent === '510.0 km'")) break;
@@ -168,7 +168,7 @@ async function main() {
         assert.equal(await evaluate("document.getElementById('inpCapacidade').value"), '600');
         assert.equal(await evaluate("document.getElementById('outLitros').textContent"), '300.0 L');
         assert.equal(await evaluate("document.getElementById('outAutonomiaSegura').textContent"), '510.0 km');
-        assert.equal(await evaluate("Object.hasOwn(JSON.parse(localStorage.getItem(src-rota-e-combustivel.config.storageKey)), 'inpCapacidade2')"), false);
+        assert.equal(await evaluate("Object.hasOwn(JSON.parse(localStorage.getItem(window['src-rota-e-combustivel'].config.storageKey)), 'inpCapacidade2')"), false);
         await evaluate("document.getElementById('inpCapacidade').value='100'; document.getElementById('inpNivel').value='1.00'; document.getElementById('inpCapacidade').dispatchEvent(new Event('input'))");
         assert.equal(await evaluate("document.getElementById('outAutonomia').textContent"), '200.0 km');
         await call('Page.reload');
@@ -180,7 +180,7 @@ async function main() {
         for (const valor of ['', '0', '-100']) {
             await evaluate(`document.getElementById('inpCapacidade').value=${JSON.stringify(valor)}; document.getElementById('inpCapacidade').dispatchEvent(new Event('input'))`);
             assert.equal(await evaluate("document.getElementById('outAutonomia').textContent"), '—');
-            assert.equal(await evaluate("JSON.parse(localStorage.getItem(src-rota-e-combustivel.config.storageKey)).inpCapacidade"), '100');
+            assert.equal(await evaluate("JSON.parse(localStorage.getItem(window['src-rota-e-combustivel'].config.storageKey)).inpCapacidade"), '100');
         }
         await evaluate("document.getElementById('inpCapacidade').value='600'; document.getElementById('inpNivel').value='0.50'; document.getElementById('inpCapacidade').dispatchEvent(new Event('input'))");
         // Recuperação inválida não pode calcular com padrões nem sobrescrever o conteúdo salvo.
@@ -192,7 +192,7 @@ async function main() {
                 .map(raw => ({ raw, vazio: 'inpCapacidade' }))
         ];
         for (const { raw, vazio } of casosInvalidos) {
-            await evaluate(`localStorage.setItem(src-rota-e-combustivel.config.storageKey, ${JSON.stringify(raw)})`);
+            await evaluate(`localStorage.setItem(window['src-rota-e-combustivel'].config.storageKey, ${JSON.stringify(raw)})`);
             await call('Page.reload');
             for (let i = 0; i < 100; i++) {
                 if (await evaluate("document.getElementById('outAutonomia')?.textContent === '—'")) break;
@@ -201,14 +201,14 @@ async function main() {
             assert.equal(await evaluate("document.getElementById('outAutonomia').textContent"), '—');
             assert.equal(await evaluate(`document.getElementById(${JSON.stringify(vazio)}).value`), '');
             assert.equal(await evaluate("document.getElementById('statusArmazenamento').textContent.includes('preservados até a correção')"), true);
-            assert.equal(await evaluate("localStorage.getItem(src-rota-e-combustivel.config.storageKey)"), raw);
+            assert.equal(await evaluate("localStorage.getItem(window['src-rota-e-combustivel'].config.storageKey)"), raw);
             await evaluate("document.getElementById('inpCapacidade').value='100'; document.getElementById('inpCapacidade').dispatchEvent(new Event('input'))");
             if (vazio !== 'inpCapacidade' || raw[0] !== '{' || raw.includes('quebrado') || raw.includes('inpCapacidade1')) {
-                assert.equal(await evaluate("localStorage.getItem(src-rota-e-combustivel.config.storageKey)"), raw);
+                assert.equal(await evaluate("localStorage.getItem(window['src-rota-e-combustivel'].config.storageKey)"), raw);
             }
             await evaluate(`for (const [id, valor] of Object.entries(${JSON.stringify(parametrosValidos)})) document.getElementById(id).value=valor; document.getElementById('inpCapacidade').dispatchEvent(new Event('input'))`);
             assert.equal(await evaluate("document.getElementById('outAutonomiaSegura').textContent"), '510.0 km');
-            assert.deepEqual(await evaluate("JSON.parse(localStorage.getItem(src-rota-e-combustivel.config.storageKey))"), parametrosValidos);
+            assert.deepEqual(await evaluate("JSON.parse(localStorage.getItem(window['src-rota-e-combustivel'].config.storageKey))"), parametrosValidos);
             assert.equal(await evaluate("document.getElementById('statusArmazenamento').textContent.includes('preservados até a correção')"), false);
         }
         // Importação real pela interface, com banco de teste e sem simular a API.
@@ -228,7 +228,7 @@ async function main() {
         }
         await selecionarCSV(csvImportacao);
         assert.equal(await evaluate("document.getElementById('btnImportarPostos').disabled"), false);
-        assert.equal(await evaluate("src-rota-e-combustivel.postos.length"), 49);
+        assert.equal(await evaluate("window['src-rota-e-combustivel'].postos.length"), 49);
         assert.equal(await evaluate("document.querySelectorAll('#linhasImportacao img').length"), 0);
         await evaluate("document.getElementById('btnCancelarImportacao').click()");
         assert.equal(await evaluate("document.getElementById('previaImportacao').hidden"), true);
@@ -238,7 +238,7 @@ async function main() {
         await selecionarCSV(csvImportacao);
         await evaluate("document.getElementById('btnImportarPostos').click()");
         await esperarImportacao();
-        assert.equal(await evaluate("src-rota-e-combustivel.postos.length"), 50);
+        assert.equal(await evaluate("window['src-rota-e-combustivel'].postos.length"), 50);
         assert.equal(await evaluate("document.getElementById('statusImportacao').textContent.includes('1 postos salvos')"), true);
         await selecionarCSV(csvImportacao);
         assert.equal(await evaluate("document.getElementById('btnImportarPostos').disabled"), true);
@@ -265,18 +265,18 @@ async function main() {
         await salvarManual();
         assert.equal(await evaluate("document.getElementById('cadCidade').getAttribute('aria-invalid')"), 'true');
         assert.equal(await evaluate("document.getElementById('cadNome').value"), postoManual.cadNome);
-        assert.equal(await evaluate("src-rota-e-combustivel.postos.length"), 50);
+        assert.equal(await evaluate("window['src-rota-e-combustivel'].postos.length"), 50);
         postoManual.cadCidade = 'Belo Horizonte';
         await preencherManual();
         await salvarManual();
         assert.equal(await evaluate("document.getElementById('statusCadastro').textContent.includes('Posto salvo com sucesso')"), true);
         assert.equal(await evaluate("document.getElementById('cadNome').value"), '');
-        assert.equal(await evaluate("src-rota-e-combustivel.postos.length"), 51);
+        assert.equal(await evaluate("window['src-rota-e-combustivel'].postos.length"), 51);
         await preencherManual();
         await salvarManual();
         assert.equal(await evaluate("document.getElementById('statusCadastro').textContent.includes('já está cadastrado')"), true);
         assert.equal(await evaluate("document.getElementById('cadNome').value"), postoManual.cadNome);
-        assert.equal(await evaluate("src-rota-e-combustivel.postos.length"), 51);
+        assert.equal(await evaluate("window['src-rota-e-combustivel'].postos.length"), 51);
         await evaluate("window.fetchAntesFalhaCadastro = window.fetch; window.fetch = async () => { throw new Error('Sem conexão'); }");
         await salvarManual();
         assert.equal(await evaluate("document.getElementById('statusCadastro').textContent.includes('Falha de conexão')"), true);

@@ -530,5 +530,62 @@ footer { display: flex; justify-content: space-between; align-items: center; fle
 .developer-credit strong { color: #38bdf8; font-weight: 600; }
 .developer-credit a { display: block; width: fit-content; margin-top: 4px; color: #bae6fd; text-decoration: underline; text-underline-offset: 3px; }
 .developer-credit a:hover { color: #38bdf8; }
-@media (max-width: 700px) { .header { gap: 12px; flex-wrap: wrap; } .header .version-badge { display: none; } .brand-mark { flex-basis: 96px; padding: 6px; border-radius: 8px; } footer { flex-direction: column; align-items: flex-start; gap: 12px; } }
+@media (max-width: 700px) {
+    .header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .header > div:nth-child(2) {
+        width: 100%;
+    }
+
+    .header .version-badge {
+        display: none;
+    }
+
+    .brand-mark {
+        flex: 0 0 auto;
+        width: 96px;
+        padding: 6px;
+        border-radius: 8px;
+    }
+
+    .navigation {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px 16px;
+        padding: 0 4px 14px;
+    }
+
+    .navigation a {
+        min-width: 0;
+        line-height: 1.35;
+    }
+
+    .navigation a:last-child {
+        grid-column: 1 / -1;
+    }
+
+    footer {
+        flex-direction: column;
+        align-items: flex-start;
+        width: min(100% - 18px, 1180px);
+        margin-bottom: 18px;
+        padding: 18px 4px 4px;
+        gap: 12px;
+        line-height: 1.5;
+    }
+
+    .footer-project,
+    .developer-credit {
+        width: 100%;
+    }
+
+    .developer-credit {
+        padding-top: 12px;
+        border-top: 1px solid #252a38;
+    }
+}
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition: none !important; } }
