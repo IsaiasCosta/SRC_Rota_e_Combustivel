@@ -32,4 +32,8 @@ O [registro público do Waze](https://www.waze.com/live-map/directions/br/mg/pos
 
 A construção das URLs segue a [documentação oficial do Google Maps](https://developers.google.com/maps/documentation/urls/get-started). Um Place ID confirmado identifica o estabelecimento com mais precisão; a validação dos demais endereços e coordenadas permanece necessária.
 
+## Correção do Cinquentenário — 12/09/2026
+
+O registro `POSTO 623 CINQUENTENARIO` foi conferido no Google Maps como **Posto Shell**, na Rua Úrsula Paulino, 763, Belo Horizonte/MG. O cadastro passou a usar as coordenadas `-19.9550962, -43.9840226` e `nomeMapa: "Posto Shell"`. Como os dois links usam o mesmo destino textual e as rotas do painel usam as coordenadas cadastradas, a correção vale para o botão de mapa, o botão de rota e o cálculo rodoviário.
+
 Os testes verificam os parâmetros dos links de todos os registros, caracteres especiais, identificação por Place ID e os links renderizados na interface. Eles não comprovam que todos os estabelecimentos do cadastro foram encontrados corretamente pelo Google Maps. A conferência física das coordenadas e dos acessos rodoviários permanece pendente.

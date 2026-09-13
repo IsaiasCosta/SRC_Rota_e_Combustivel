@@ -63,6 +63,15 @@ test('Padre Eustáquio usa o número 788 nas duas ações mesmo recebendo as coo
     assert.equal(cadastrado.lon, -43.9889773);
 });
 
+test('Cinquentenário usa o Posto Shell e o ponto confirmado no Google Maps', () => {
+    const cadastrado = app.postos.find(p => p.Nome === 'POSTO 623 CINQUENTENARIO');
+    const destino = 'Posto Shell, Rua Úrsula Paulino, 763, Belo Horizonte, MG, Brasil';
+    assert.equal(new URL(criarLinkRota(cadastrado)).searchParams.get('destination'), destino);
+    assert.equal(new URL(criarLinkPosto(cadastrado)).searchParams.get('query'), destino);
+    assert.equal(cadastrado.lat, -19.9550962);
+    assert.equal(cadastrado.lon, -43.9840226);
+});
+
 test('sem endereço completo, usa coordenadas válidas ou a identificação disponível', () => {
     const posto = { Nome: 'Posto sem endereço', lat: -20, lon: -44 };
     assert.equal(new URL(criarLinkRota(posto)).searchParams.get('destination'), '-20,-44');
