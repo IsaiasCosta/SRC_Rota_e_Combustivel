@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "description": "Rota & Combustível — localizador de postos e planejamento de autonomia",
-  "engines": { "node": ">=22" },
+  "engines": { "node": ">=22.13" },
   "scripts": {
     "start": "node scripts/serve.cjs",
-    "test": "node --test tests/domain.test.cjs tests/armazenamento.test.cjs tests/mapas.test.cjs tests/server.test.cjs",
+    "db:init": "node scripts/init-db.cjs",
+    "test": "node --test tests/domain.test.cjs tests/armazenamento.test.cjs tests/mapas.test.cjs tests/server.test.cjs tests/database.test.cjs tests/postos.test.cjs tests/importacao.test.cjs tests/cadastro.test.cjs",
     "test:browser": "node tests/browser.cjs"
   }
 }

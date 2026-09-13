@@ -278,11 +278,13 @@ button {
     min-height: 52px;
     display: flex;
     align-items: center;
+    justify-content: center;
     padding: 13px 16px;
     border-radius: 10px;
     font-size: 12px;
     font-weight: 800;
     letter-spacing: 0.15px;
+    text-align: center;
 }
 
 .status-success {
@@ -445,6 +447,56 @@ button {
 }
 
 /* Integração com os controles e a navegação do painel. */
+.btn-secondary { padding: 10px 14px; border: 1px solid #475569; border-radius: 8px; background: #172033; color: #bae6fd; text-decoration: none; }
+a.btn-secondary { display: inline-block; }
+.cadastro-cabecalho { text-align: center; margin-bottom: 20px; }
+.cadastro-cabecalho h2 { margin-bottom: 6px; }
+.cadastro-cabecalho .helper { margin: 0; }
+.cadastro-opcoes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; max-width: 760px; margin: 0 auto; }
+.cadastro-opcao { display: flex; justify-content: center; align-items: center; gap: 14px; padding: 22px 16px; color: #e2e8f0; background: #111a29; border: 1px solid #334155; border-radius: 12px; text-align: left; }
+.cadastro-opcao:hover, .cadastro-opcao[aria-expanded="true"] { border-color: #38bdf8; background: #132337; }
+.cadastro-opcao strong { display: block; font-size: 15px; }
+.cadastro-opcao small { display: block; margin-top: 4px; color: #94a3b8; font-size: 12px; }
+.cadastro-icone { display: grid; place-items: center; width: 40px; height: 40px; flex-shrink: 0; background: #183449; border-radius: 10px; color: #38bdf8; font-size: 26px; }
+.cadastro-manual { margin: 20px 0 0; padding: 14px; border: 1px solid #303646; border-radius: 8px; }
+.cadastro-manual:not([open]) { display: none; }
+.csv-dialog { width: min(760px, calc(100% - 32px)); max-height: calc(100dvh - 32px); padding: 0; border: 1px solid #334155; border-radius: 14px; background: #0f141f; color: #e2e8f0; box-shadow: 0 24px 90px #0009; }
+.csv-dialog[open] { display: flex; flex-direction: column; }
+.csv-dialog::backdrop { background: #020617bb; backdrop-filter: blur(3px); }
+.csv-dialog-cabecalho { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 22px; border-bottom: 1px solid #273244; }
+.csv-dialog-cabecalho h2 { margin: 0; font-size: 17px; }
+.csv-fechar { display: grid; place-items: center; width: 34px; height: 34px; flex-shrink: 0; padding: 0; border: 1px solid #334155; border-radius: 8px; color: #cbd5e1; background: transparent; font-size: 24px; }
+.csv-fechar:hover { background: #1e293b; }
+.csv-dialog-conteudo { padding: 20px 22px; min-height: 0; overflow: auto; }
+.csv-modelo { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin: 12px 0 18px; font-size: 12px; color: #94a3b8; }
+.csv-modelo a { color: #7dd3fc; text-underline-offset: 3px; }
+.csv-ajuda { padding: 14px; border: 1px solid #273244; border-radius: 8px; background: #111c2b; font-size: 12px; color: #a9b8cd; }
+.csv-ajuda h3 { margin: 0 0 8px; color: #e2e8f0; font-size: 13px; }
+.csv-ajuda p { margin: 8px 0 0; }
+.csv-dialog-acoes { display: flex; justify-content: flex-end; gap: 12px; padding: 16px 22px; border-top: 1px solid #273244; }
+.csv-dialog-acoes .btn-calc { width: auto; margin: 0; padding: 10px 18px; }
+body:has(.csv-dialog[open]) { overflow: hidden; }
+@media (max-width: 480px) {
+    .cadastro-opcoes { gap: 10px; }
+    .cadastro-opcao { flex-direction: column; text-align: center; gap: 10px; padding: 16px 8px; }
+    .cadastro-opcao strong { font-size: 13px; }
+    .cadastro-opcao small { font-size: 11px; }
+    .csv-dialog-cabecalho, .csv-dialog-conteudo, .csv-dialog-acoes { padding: 14px; }
+}
+.cadastro-manual summary { cursor: pointer; color: #bae6fd; font-weight: 600; }
+.cadastro-manual form { margin-top: 18px; }
+.cadastro-manual fieldset { margin: 0; padding: 0; border: 0; min-width: 0; }
+.cadastro-acoes { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin: 16px 0; }
+.cadastro-acoes .btn-calc { width: auto; margin: 0; }
+.cadastro-manual [aria-invalid="true"] { border-color: #f87171; }
+button:disabled { cursor: default; opacity: 0.5; }
+.importacao-status { margin: 14px 0; }
+.importacao-erros { color: #fca5a5; max-height: 220px; overflow: auto; padding-left: 22px; }
+.importacao-tabela { max-width: 100%; overflow: auto; margin-bottom: 12px; }
+.importacao-tabela table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.importacao-tabela caption { text-align: left; padding: 8px 0; color: #94a3b8; }
+.importacao-tabela th, .importacao-tabela td { text-align: left; padding: 10px; border-bottom: 1px solid #303646; min-width: 100px; max-width: 280px; overflow-wrap: anywhere; }
+#btnCancelarImportacao { margin-top: 12px; }
 :root { color-scheme: dark; }
 :focus-visible { outline: 2px solid #38bdf8; outline-offset: 3px; }
 .header { display: flex; align-items: center; gap: 18px; }
@@ -460,6 +512,9 @@ button {
 .section-heading { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 18px; }
 .section-box h2 { margin: 0 0 17px; color: #e2e8f0; font-size: 17px; }
 .section-heading h2 { margin-bottom: 0; }
+.titulo-centralizado h2,
+h2.titulo-centralizado { text-align: center; }
+.section-heading.titulo-centralizado h2 { flex: 1 1 100%; }
 .section-purple h2 { color: #d8b4fe; }
 .tag { padding: 5px 9px; border: 1px solid #303646; border-radius: 7px; color: #94a3b8; font-size: 11px; }
 .section-box { scroll-margin-top: 20px; }

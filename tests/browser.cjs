@@ -9,7 +9,7 @@ const { criarServidor } = require('../scripts/server.cjs');
 async function main() {
     const root = path.resolve(__dirname, '..');
     const html = 'painel-iveco-tector.html';
-    const server = criarServidor();
+    const server = criarServidor({ arquivoBanco: ':memory:' });
     await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
     const profile = fs.mkdtempSync(path.join(os.tmpdir(), 'iveco-browser-'));
     const chromePath = process.env.CHROME_PATH || 'C:/Program Files/Google/Chrome/Application/chrome.exe';
@@ -48,13 +48,63 @@ async function main() {
         };
         await call('Runtime.enable');
         await call('Page.enable');
+        async function abrirFormulario() {
+            await evaluate("if (document.getElementById('modalImportacao').open) document.getElementById('modalImportacao').close(); if (!document.getElementById('cadastroManual').open) document.getElementById('btnAbrirFormulario').click()");
+        }
+        async function conferirDigitacaoCadastro(cenario) {
+            await abrirFormulario();
+            for (const [id, valor] of Object.entries({ cadNome: 'Posto Digitação', cadEndereco: 'Rua São João, 123', cadCidade: 'Belo Horizonte', cadLatitude: '-19.9', cadLongitude: '-43.94', cadNomeMapa: 'Nome no mapa' })) {
+                const ponto = await evaluate(`(() => { const campo = document.getElementById(${JSON.stringify(id)}); campo.scrollIntoView({behavior:'instant', block:'center'}); const r = campo.getBoundingClientRect(); return {x:r.x+r.width/2, y:r.y+r.height/2}; })()`);
+                await call('Input.dispatchMouseEvent', { type: 'mousePressed', ...ponto, button: 'left', clickCount: 1 });
+                await call('Input.dispatchMouseEvent', { type: 'mouseReleased', ...ponto, button: 'left', clickCount: 1 });
+                assert.equal(await evaluate('document.activeElement.id'), id, `${cenario}: foco em ${id}`);
+                await call('Input.dispatchKeyEvent', { type: 'keyDown', key: 'a', code: 'KeyA', windowsVirtualKeyCode: 65, modifiers: 2 });
+                await call('Input.dispatchKeyEvent', { type: 'keyUp', key: 'a', code: 'KeyA', windowsVirtualKeyCode: 65, modifiers: 2 });
+                await call('Input.insertText', { text: valor });
+                assert.equal(await evaluate(`document.getElementById(${JSON.stringify(id)}).value`), valor, `${cenario}: digitação em ${id}`);
+            }
+            await evaluate("document.getElementById('formCadastroPosto').reset(); document.getElementById('cadastroManual').open = false; window.scrollTo({top:0, behavior:'instant'})");
+        }
+        async function conferirSelecaoEstado(cenario) {
+            await abrirFormulario();
+            await evaluate("document.getElementById('cadEstado').focus()");
+            assert.equal(await evaluate("document.activeElement.id"), 'cadEstado', cenario);
+            for (const [key, code] of [['Home', 36], ['ArrowDown', 40]]) {
+                await call('Input.dispatchKeyEvent', { type: 'keyDown', key, code: key, windowsVirtualKeyCode: code });
+                await call('Input.dispatchKeyEvent', { type: 'keyUp', key, windowsVirtualKeyCode: code });
+            }
+            assert.equal(await evaluate("document.getElementById('cadEstado').value"), 'AC', cenario);
+            await evaluate("document.getElementById('cadastroManual').open = false");
+        }
+        async function conferirDownloadModelo(cenario) {
+            const destino = path.join(profile, `download-${cenario}`);
+            fs.mkdirSync(destino);
+            await call('Browser.setDownloadBehavior', { behavior: 'allow', downloadPath: destino });
+            await evaluate("document.getElementById('btnAbrirImportacao').click()");
+            assert.equal(await evaluate("document.getElementById('modalImportacao').matches(':modal')"), true);
+            await evaluate("document.getElementById('btnModeloCSV').click()");
+            const baixado = path.join(destino, 'modelo-postos.csv');
+            for (let i = 0; i < 100 && !fs.existsSync(baixado); i++) {
+                await new Promise(resolve => setTimeout(resolve, 50));
+            }
+            assert.ok(fs.existsSync(baixado), `Modelo não baixou: ${cenario}`);
+            assert.deepEqual(fs.readFileSync(baixado), fs.readFileSync(path.join(root, 'assets/modelos/modelo-postos.csv')));
+            await call('Input.dispatchKeyEvent', { type: 'keyDown', key: 'Escape', windowsVirtualKeyCode: 27 });
+            await call('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Escape', windowsVirtualKeyCode: 27 });
+            assert.equal(await evaluate("document.getElementById('modalImportacao').open"), false);
+            assert.equal(await evaluate("document.activeElement.id"), 'btnAbrirImportacao');
+        }
         await call('Emulation.setDeviceMetricsOverride', { width: 1366, height: 1000, deviceScaleFactor: 1, mobile: false });
         await call('Page.navigate', { url: `http://127.0.0.1:${server.address().port}/` });
         for (let i = 0; i < 100; i++) {
-            if (await evaluate("document.getElementById('outAutonomiaSegura')?.textContent === '952.0 km'")) break;
+            if (await evaluate("document.getElementById('outAutonomiaSegura')?.textContent === '952.0 km' && document.getElementById('quantidadePostos')?.textContent === '49 postos cadastrados'")) break;
             await new Promise(resolve => setTimeout(resolve, 50));
         }
         assert.equal(await evaluate("document.getElementById('outAutonomiaSegura').textContent"), '952.0 km');
+        assert.equal(await evaluate("IvecoTector.postos.length === 49 && IvecoTector.postos.every(p => Number.isInteger(p.id))"), true);
+        await conferirDownloadModelo('http');
+        await conferirSelecaoEstado('servidor disponível');
+        await conferirDigitacaoCadastro('servidor disponível');
         assert.equal(await evaluate("document.querySelectorAll('input[id^=\"inpCapacidade\"]').length"), 1);
         assert.equal(await evaluate("getComputedStyle(document.body).backgroundColor"), 'rgb(8, 10, 16)');
         assert.equal(await evaluate("document.querySelector('.brand-mark img').decode().then(() => document.querySelector('.brand-mark img').naturalWidth > 0)"), true);
@@ -67,11 +117,11 @@ async function main() {
         assert.equal(await evaluate("document.getElementById('outAutonomia').textContent"), '1512.0 km');
         await call('Page.reload');
         for (let i = 0; i < 100; i++) {
-            if (await evaluate("document.getElementById('outAutonomia')?.textContent === '1512.0 km'")) break;
+            if (await evaluate("document.getElementById('outAutonomia')?.textContent === '1512.0 km' && document.getElementById('quantidadePostos')?.textContent === '49 postos cadastrados'")) break;
             await new Promise(resolve => setTimeout(resolve, 50));
         }
         assert.equal(await evaluate("document.getElementById('inpConsumo').value"), '2.7');
-        await evaluate(`window.fetch = async url => ({ok:true,json:async()=>String(url).includes('nominatim')?[{lat:'-19.9',lon:'-44.0',display_name:'Contagem, MG'}]:{code:'Ok',routes:[{distance:50000,duration:3590}]}}); document.getElementById('inpOrigem').value='Contagem'; document.getElementById('btnBuscarCidade').click()`);
+        await evaluate(`window.fetch = async url => ({ok:true,json:async()=>String(url).includes('/api/geocodificar')?[{lat:'-19.9',lon:'-44.0',display_name:'Contagem, MG'}]:{code:'Ok',routes:[{distance:50000,duration:3590}]}}); document.getElementById('inpOrigem').value='Contagem'; document.getElementById('btnBuscarCidade').click()`);
         for (let i = 0; i < 100; i++) {
             if (await evaluate("!document.getElementById('btnBuscarCidade').disabled")) break;
             await new Promise(resolve => setTimeout(resolve, 50));
@@ -91,14 +141,14 @@ async function main() {
         await evaluate("document.getElementById('inpConsumo').value=''; document.getElementById('inpConsumo').dispatchEvent(new Event('input'))");
         assert.equal(await evaluate("document.getElementById('outAutonomia').textContent"), '—');
         assert.equal(await evaluate("document.getElementById('resultadosPostos').textContent.includes('NaN')"), false);
-        await evaluate(`document.getElementById('inpConsumo').value='2'; document.getElementById('inpNivel').value='1.00'; IvecoTector.controllers.painel.calcular(); window.fetch=async url=>{if(String(url).includes('nominatim')) return {ok:true,json:async()=>[{lat:'-19.9',lon:'-44.0',display_name:'Contagem, MG'}]}; throw new Error('Sem conexão')}; IvecoTector.controllers.localizador.buscarPostos()`);
+        await evaluate(`document.getElementById('inpConsumo').value='2'; document.getElementById('inpNivel').value='1.00'; IvecoTector.controllers.painel.calcular(); window.fetch=async url=>{if(String(url).includes('/api/geocodificar')) return {ok:true,json:async()=>[{lat:'-19.9',lon:'-44.0',display_name:'Contagem, MG'}]}; throw new Error('Sem conexão')}; IvecoTector.controllers.localizador.buscarPostos()`);
         assert.equal(await evaluate("(document.getElementById('resultadosPostos').textContent.match(/📏 estimativa/g)||[]).length"), 5);
         await evaluate("window.fetch=async()=>{throw new Error('Sem conexão')}; IvecoTector.controllers.localizador.buscarPostos()");
         assert.equal(await evaluate("document.getElementById('statusBusca').textContent"), 'Sem conexão');
         assert.equal(await evaluate("document.getElementById('btnGPS').disabled || document.getElementById('btnBuscarCidade').disabled"), false);
-        await evaluate("window.fetch=async url=>({ok:true,json:async()=>String(url).includes('nominatim')?[{lat:'-19.9',lon:'-44.0',display_name:'Contagem, MG'}]:{code:'Ok',routes:[{distance:null,duration:30}]}}); IvecoTector.controllers.localizador.buscarPostos()");
+        await evaluate("window.fetch=async url=>({ok:true,json:async()=>String(url).includes('/api/geocodificar')?[{lat:'-19.9',lon:'-44.0',display_name:'Contagem, MG'}]:{code:'Ok',routes:[{distance:null,duration:30}]}}); IvecoTector.controllers.localizador.buscarPostos()");
         assert.equal(await evaluate("(document.getElementById('resultadosPostos').textContent.match(/📏 estimativa/g)||[]).length"), 5);
-        await evaluate("window.fetch=async url=>({ok:true,json:async()=>String(url).includes('nominatim')?[{lat:'-19.9',lon:'-44.0',display_name:'Contagem, MG'}]:{code:'NoRoute'}}); IvecoTector.controllers.localizador.buscarPostos()");
+        await evaluate("window.fetch=async url=>({ok:true,json:async()=>String(url).includes('/api/geocodificar')?[{lat:'-19.9',lon:'-44.0',display_name:'Contagem, MG'}]:{code:'NoRoute'}}); IvecoTector.controllers.localizador.buscarPostos()");
         assert.equal(await evaluate("document.querySelectorAll('#resultadosPostos .status-danger').length"), 5);
         assert.equal(await evaluate("document.querySelectorAll('#resultadosPostos .status-success').length"), 0);
         assert.equal(await evaluate("document.getElementById('resultadosPostos').textContent.includes('autonomia não avaliada')"), true);
@@ -161,14 +211,126 @@ async function main() {
             assert.deepEqual(await evaluate("JSON.parse(localStorage.getItem(IvecoTector.config.storageKey))"), parametrosValidos);
             assert.equal(await evaluate("document.getElementById('statusArmazenamento').textContent.includes('preservados até a correção')"), false);
         }
+        // Importação real pela interface, com banco de teste e sem simular a API.
+        async function esperarImportacao() {
+            for (let i = 0; i < 100; i++) {
+                if (await evaluate("!document.getElementById('arquivoPostos').disabled && document.getElementById('modalImportacao').getAttribute('aria-busy') !== 'true'")) return;
+                await new Promise(resolve => setTimeout(resolve, 50));
+            }
+            throw new Error('Importação não ficou disponível.');
+        }
+        await esperarImportacao();
+        const csvImportacao = 'nome;endereco;cidade;estado;latitude;longitude;nome_mapa\nPosto <img src=x onerror=alert(1)>;Rua Teste, 10;Belo Horizonte;MG;-19.9;-43.94;';
+        async function selecionarCSV(texto) {
+            await evaluate("document.getElementById('btnAbrirImportacao').click()");
+            await evaluate(`{ const dados = new DataTransfer(); dados.items.add(new File([${JSON.stringify(texto)}], 'postos.csv', {type:'text/csv'})); const campo = document.getElementById('arquivoPostos'); campo.files = dados.files; campo.dispatchEvent(new Event('change')); }`);
+            await esperarImportacao();
+        }
+        await selecionarCSV(csvImportacao);
+        assert.equal(await evaluate("document.getElementById('btnImportarPostos').disabled"), false);
+        assert.equal(await evaluate("IvecoTector.postos.length"), 49);
+        assert.equal(await evaluate("document.querySelectorAll('#linhasImportacao img').length"), 0);
+        await evaluate("document.getElementById('btnCancelarImportacao').click()");
+        assert.equal(await evaluate("document.getElementById('previaImportacao').hidden"), true);
+        await selecionarCSV(csvImportacao.replace('-19.9', ''));
+        assert.equal(await evaluate("document.getElementById('btnImportarPostos').disabled"), true);
+        assert.equal(await evaluate("document.getElementById('errosImportacao').textContent.includes('Linha 2')"), true);
+        await selecionarCSV(csvImportacao);
+        await evaluate("document.getElementById('btnImportarPostos').click()");
+        await esperarImportacao();
+        assert.equal(await evaluate("IvecoTector.postos.length"), 50);
+        assert.equal(await evaluate("document.getElementById('statusImportacao').textContent.includes('1 postos salvos')"), true);
+        await selecionarCSV(csvImportacao);
+        assert.equal(await evaluate("document.getElementById('btnImportarPostos').disabled"), true);
+        assert.equal(await evaluate("document.getElementById('resumoImportacao').textContent.includes('1 repetidos')"), true);
+        // Cadastro individual mantém a importação CSV disponível.
+        const postoManual = { cadNome: 'Posto Manual Teste', cadEndereco: 'Rua Manual, 20', cadCidade: '   ', cadEstado: 'MG', cadLatitude: '-19.9', cadLongitude: '-43.94' };
+        async function preencherManual() {
+            await abrirFormulario();
+            await evaluate(`for (const [id, valor] of Object.entries(${JSON.stringify(postoManual)})) document.getElementById(id).value = valor;`);
+        }
+        async function salvarManual() {
+            await evaluate("document.getElementById('formCadastroPosto').requestSubmit()");
+            for (let i = 0; i < 100; i++) {
+                if (await evaluate("document.getElementById('formCadastroPosto').getAttribute('aria-busy') !== 'true'")) return;
+                await new Promise(resolve => setTimeout(resolve, 50));
+            }
+            throw new Error('Cadastro manual não terminou.');
+        }
+        await preencherManual();
+        await evaluate("document.getElementById('btnCancelarCadastro').click()");
+        assert.equal(await evaluate("document.getElementById('cadastroManual').open"), false);
+        assert.equal(await evaluate("document.getElementById('cadNome').value"), '');
+        await preencherManual();
+        await salvarManual();
+        assert.equal(await evaluate("document.getElementById('cadCidade').getAttribute('aria-invalid')"), 'true');
+        assert.equal(await evaluate("document.getElementById('cadNome').value"), postoManual.cadNome);
+        assert.equal(await evaluate("IvecoTector.postos.length"), 50);
+        postoManual.cadCidade = 'Belo Horizonte';
+        await preencherManual();
+        await salvarManual();
+        assert.equal(await evaluate("document.getElementById('statusCadastro').textContent.includes('Posto salvo com sucesso')"), true);
+        assert.equal(await evaluate("document.getElementById('cadNome').value"), '');
+        assert.equal(await evaluate("IvecoTector.postos.length"), 51);
+        await preencherManual();
+        await salvarManual();
+        assert.equal(await evaluate("document.getElementById('statusCadastro').textContent.includes('já está cadastrado')"), true);
+        assert.equal(await evaluate("document.getElementById('cadNome').value"), postoManual.cadNome);
+        assert.equal(await evaluate("IvecoTector.postos.length"), 51);
+        await evaluate("window.fetchAntesFalhaCadastro = window.fetch; window.fetch = async () => { throw new Error('Sem conexão'); }");
+        await salvarManual();
+        assert.equal(await evaluate("document.getElementById('statusCadastro').textContent.includes('Falha de conexão')"), true);
+        assert.equal(await evaluate("document.getElementById('cadNome').value"), postoManual.cadNome);
+        await evaluate("window.fetch = window.fetchAntesFalhaCadastro");
+        // Simula um servidor que nunca responde e acelera apenas o prazo de 12 segundos.
+        await evaluate("window.timerAntesTeste = window.setTimeout; window.setTimeout = (fn, ms, ...args) => window.timerAntesTeste(fn, ms === 12000 ? 50 : ms, ...args); window.fetch = (_url, {signal}) => new Promise((resolve, reject) => signal.addEventListener('abort', () => reject(signal.reason), {once:true}))");
+        await salvarManual();
+        assert.equal(await evaluate("document.getElementById('statusCadastro').textContent.includes('servidor demorou demais')"), true);
+        assert.equal(await evaluate("document.getElementById('camposCadastroPosto').disabled"), false);
+        assert.equal(await evaluate("document.getElementById('cadNome').value"), postoManual.cadNome);
+        await evaluate("window.fetch = window.fetchAntesFalhaCadastro; window.setTimeout = window.timerAntesTeste");
+        await conferirDigitacaoCadastro('após servidor sem resposta');
+        await selecionarCSV(csvImportacao);
+        assert.equal(await evaluate("document.getElementById('resumoImportacao').textContent.includes('1 repetidos')"), true);
+        await evaluate("document.getElementById('btnFecharModalCSV').click()");
+        assert.equal(await evaluate("document.getElementById('modalImportacao').open"), false);
+        await evaluate("document.getElementById('btnAbrirImportacao').click()");
+        assert.equal(await evaluate("document.getElementById('resumoImportacao').textContent.includes('1 repetidos')"), true);
         for (const width of [1366, 768, 390, 320]) {
             await call('Emulation.setDeviceMetricsOverride', { width, height: 1000, deviceScaleFactor: 1, mobile: width < 700 });
+            await evaluate("document.getElementById('btnAbrirImportacao').click()");
+            assert.equal(await evaluate("document.getElementById('modalImportacao').scrollWidth <= document.getElementById('modalImportacao').clientWidth"), true, `Modal excedeu a largura em ${width}px`);
+            assert.equal(await evaluate("document.getElementById('modalImportacao').getBoundingClientRect().height <= window.innerHeight"), true);
+            await evaluate("document.getElementById('btnFecharImportacao').click()");
             assert.equal(await evaluate('document.documentElement.scrollWidth <= window.innerWidth'), true, `Layout excedeu a tela em ${width}px`);
             if (width === 1366 || width === 390) {
                 const screenshot = await call('Page.captureScreenshot', { format: 'png', captureBeyondViewport: false });
                 fs.writeFileSync(path.join(profile, `painel-${width}.png`), Buffer.from(screenshot.data, 'base64'));
+                await evaluate("document.getElementById('importacaoPostos').scrollIntoView({behavior:'instant', block:'start'})");
+                const cadastroScreenshot = await call('Page.captureScreenshot', { format: 'png', captureBeyondViewport: false });
+                fs.writeFileSync(path.join(profile, `cadastro-${width}.png`), Buffer.from(cadastroScreenshot.data, 'base64'));
+                await evaluate("document.getElementById('btnAbrirImportacao').click(); document.getElementById('btnCancelarImportacao').click()");
+                const importacaoScreenshot = await call('Page.captureScreenshot', { format: 'png', captureBeyondViewport: false });
+                fs.writeFileSync(path.join(profile, `importacao-${width}.png`), Buffer.from(importacaoScreenshot.data, 'base64'));
+                await evaluate("document.getElementById('btnFecharImportacao').click(); window.scrollTo({top:0, behavior:'instant'})");
             }
         }
+        // Mesmo quando a inicialização para por falha da API, o modelo deve baixar.
+        const falhaCadastro = await call('Page.addScriptToEvaluateOnNewDocument', {
+            source: "window.fetch = async () => { throw new Error('Cadastro indisponível no teste'); };"
+        });
+        await call('Page.reload');
+        for (let i = 0; i < 100; i++) {
+            if (await evaluate("document.getElementById('quantidadePostos')?.hidden === true")) break;
+            await new Promise(resolve => setTimeout(resolve, 50));
+        }
+        assert.equal(await evaluate("document.getElementById('quantidadePostos').hidden"), true);
+        assert.equal(await evaluate("document.getElementById('quantidadePostos').textContent"), '');
+        await conferirSelecaoEstado('falha ao carregar cadastro');
+        await conferirDigitacaoCadastro('falha ao carregar cadastro');
+        assert.equal(await evaluate("document.getElementById('btnSalvarPosto').disabled"), true);
+        await conferirDownloadModelo('api-indisponivel');
+        await call('Page.removeScriptToEvaluateOnNewDocument', { identifier: falhaCadastro.identifier });
         await call('Page.navigate', { url: pathToFileURL(path.join(root, html)).href });
         for (let i = 0; i < 100; i++) {
             if (await evaluate("document.getElementById('outAutonomiaSegura')?.textContent === '952.0 km'")) break;
@@ -177,7 +339,19 @@ async function main() {
         assert.equal(await evaluate("document.getElementById('outAutonomiaSegura').textContent"), '952.0 km');
         assert.equal(await evaluate("getComputedStyle(document.body).backgroundColor"), 'rgb(8, 10, 16)');
         assert.equal(await evaluate("document.querySelectorAll('[onclick],[oninput],[onchange]').length"), 0);
+        assert.equal(await evaluate("document.getElementById('arquivoPostos').disabled"), true);
+        assert.equal(await evaluate("document.getElementById('camposCadastroPosto').disabled"), false);
+        assert.equal(await evaluate("document.getElementById('btnSalvarPosto').disabled"), true);
+        await conferirSelecaoEstado('abertura por arquivo');
+        await conferirDigitacaoCadastro('abertura por arquivo');
+        await conferirDownloadModelo('arquivo-local');
         assert.deepEqual(errors, []);
+        console.log('OK: CSV com prévia, cancelamento, erros por linha, gravação real, duplicados e escape de HTML.');
+        console.log('OK: formulário individual com cancelamento, erros, gravação, duplicados e preservação após falha de rede.');
+        console.log('OK: seleção de UF pelo teclado com servidor, API indisponível e abertura por arquivo.');
+        console.log('OK: clique e digitação em todos os campos de cadastro com servidor, API indisponível e abertura por arquivo.');
+        console.log('OK: download real do modelo CSV por HTTP, com API indisponível e por arquivo local.');
+        console.log('OK: pop-up CSV, fechamento por botão e Escape, restauração de foco e layout responsivo.');
         console.log('OK: CSS, cálculos, consumo editável, persistência, busca simulada, atualização dos avisos, falha de rede, rota inválida e layout em 4 larguras.');
         console.log(`Capturas: ${profile}`);
         console.log('OK: abertura direta do HTML e eventos separados da marcação.');

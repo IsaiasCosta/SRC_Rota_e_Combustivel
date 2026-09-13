@@ -14,9 +14,10 @@ async function geocodificarOrigem(texto) {
      * Para uso corporativo de alto volume, troque por um serviço de geocodificação
      * próprio/profissional.
      */
-    const url =
-        "https://nominatim.openstreetmap.org/search" +
-        `?format=jsonv2&limit=1&countrycodes=br&q=${encodeURIComponent(texto)}`;
+    const url = typeof window.location?.protocol === 'string' && window.location.protocol !== 'file:'
+        ? `/api/geocodificar?q=${encodeURIComponent(texto)}`
+        : "https://nominatim.openstreetmap.org/search" +
+          `?format=jsonv2&limit=1&countrycodes=br&q=${encodeURIComponent(texto)}`;
 
     const dados = await consultarJSON(url);
 

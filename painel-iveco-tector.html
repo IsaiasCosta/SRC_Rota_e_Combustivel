@@ -21,11 +21,11 @@
         <span class="version-badge">Painel do veículo</span>
     </header>
 
-    <nav class="navigation" aria-label="Navegação do painel"><a href="#veiculo">Veículo e autonomia</a><a href="#localizador">Localizar postos</a></nav>
+    <nav class="navigation" aria-label="Navegação do painel"><a href="#veiculo">Veículo e autonomia</a><a href="#localizador">Localizar postos</a><a href="#importacaoPostos">Cadastrar postos</a></nav>
     <p id="statusArmazenamento" class="helper" role="status">Parâmetros salvos neste navegador. Busca de endereço e rotas requer internet.</p>
 
     <div class="section-box" id="veiculo">
-        <div class="section-heading"><div><p class="eyebrow">01 / CONFIGURAÇÃO</p><h2>Parâmetros do veículo</h2></div><span class="tag">Veículo · Bitruck</span></div>
+        <div class="section-heading titulo-centralizado"><h2>Parâmetros do veículo</h2></div>
         <div class="inputs-grid">
             <div class="input-group">
                 <label for="inpCapacidade">Capacidade do tanque (L)</label>
@@ -68,13 +68,13 @@
     </div>
 
     <div class="section-box">
-        <h2>Combustível a bordo</h2><p class="helper">O combustível disponível é calculado pela capacidade e pelo nível informado. Exemplo: 600 L a 50% = 300 L disponíveis.</p>
+        <h2 class="titulo-centralizado">Medidor de Combustível</h2><p class="helper">O combustível disponível é calculado pela capacidade e pelo nível informado. Exemplo: 600 L a 50% = 300 L disponíveis.</p>
         <div class="gauge-wrap" id="gaugeContainer"></div>
         <div class="gauge-readout" id="gaugeReadout" style="text-align:center; margin-top:10px; font-size:13px; color:#94a3b8;"></div>
     </div>
 
     <div class="section-box section-purple" id="localizador">
-        <div class="section-heading"><div><p class="eyebrow">02 / PRÓXIMA PARADA</p><h2>Localizar postos</h2></div><span class="tag" id="quantidadePostos"></span></div><p class="helper">Busca na lista cadastrada de MG e ES. Endereços e coordenadas do cadastro ainda precisam de conferência.</p>
+        <div class="section-heading titulo-centralizado"><h2>Localizar postos</h2><span class="tag" id="quantidadePostos"></span></div><p class="helper">Busca na lista de postos cadastrados. Confira os endereços e as coordenadas antes de viajar.</p>
         <div class="inputs-grid">
             <div class="input-group" style="grid-column:1 / -1;">
                 <label for="inpOrigem">Onde o veículo está agora?</label>
@@ -95,6 +95,58 @@
     </div>
 
     <div class="section-box" id="resultadosPostos" style="display:none;"></div>
+
+    <section class="section-box" id="importacaoPostos" aria-labelledby="tituloImportacao">
+        <div class="cadastro-cabecalho"><h2 id="tituloImportacao">Cadastrar postos</h2><p class="helper">Escolha como deseja cadastrar.</p></div>
+        <div class="cadastro-opcoes">
+            <button type="button" class="cadastro-opcao" id="btnAbrirFormulario" aria-controls="cadastroManual" aria-expanded="false">
+                <span class="cadastro-icone" aria-hidden="true">＋</span><span><strong>Abrir formulário</strong><small>Um posto por vez</small></span>
+            </button>
+            <button type="button" class="cadastro-opcao" id="btnAbrirImportacao" aria-haspopup="dialog" aria-controls="modalImportacao">
+                <span class="cadastro-icone" aria-hidden="true">↑</span><span><strong>Importar CSV</strong><small>Vários postos de uma vez</small></span>
+            </button>
+        </div>
+        <details id="cadastroManual" class="cadastro-manual">
+            <summary hidden>Preencher formulário</summary>
+            <form id="formCadastroPosto" aria-describedby="ajudaCadastro statusCadastro">
+                <p class="helper" id="ajudaCadastro">Preencha os campos obrigatórios e confira o endereço e as coordenadas. O nome no mapa é opcional.</p>
+                <fieldset id="camposCadastroPosto">
+                    <legend class="helper">Dados do posto</legend>
+                    <div class="inputs-grid">
+                        <div class="input-group"><label for="cadNome">Nome do posto</label><input id="cadNome" name="Nome" type="text" maxlength="300" required></div>
+                        <div class="input-group"><label for="cadEndereco">Endereço</label><input id="cadEndereco" name="Endereço" type="text" maxlength="300" placeholder="Rua, número ou rodovia e km" required></div>
+                        <div class="input-group"><label for="cadCidade">Cidade</label><input id="cadCidade" name="Cidade" type="text" maxlength="300" required></div>
+                        <div class="input-group"><label for="cadEstado">Estado (UF)</label><select id="cadEstado" name="Estado" required><option value="">Selecione</option><option>AC</option><option>AL</option><option>AP</option><option>AM</option><option>BA</option><option>CE</option><option>DF</option><option>ES</option><option>GO</option><option>MA</option><option>MT</option><option>MS</option><option>MG</option><option>PA</option><option>PB</option><option>PR</option><option>PE</option><option>PI</option><option>RJ</option><option>RN</option><option>RS</option><option>RO</option><option>RR</option><option>SC</option><option>SP</option><option>SE</option><option>TO</option></select></div>
+                        <div class="input-group"><label for="cadLatitude">Latitude</label><input id="cadLatitude" name="lat" type="number" step="any" min="-35" max="6" placeholder="Ex.: -19.9" required></div>
+                        <div class="input-group"><label for="cadLongitude">Longitude</label><input id="cadLongitude" name="lon" type="number" step="any" min="-75" max="-30" placeholder="Ex.: -43.94" required></div>
+                        <div class="input-group"><label for="cadNomeMapa">Nome no mapa (opcional)</label><input id="cadNomeMapa" name="nomeMapa" type="text" maxlength="300"></div>
+                    </div>
+                    <div class="cadastro-acoes"><button class="btn-calc" id="btnSalvarPosto" type="submit" disabled>Salvar posto</button><button class="btn-secondary" id="btnCancelarCadastro" type="button">Cancelar</button></div>
+                </fieldset>
+                <p class="helper" id="statusCadastro" role="status" aria-live="polite">Você pode preencher o formulário. Para salvar, abra o painel pelo servidor local e aguarde o carregamento do cadastro.</p>
+            </form>
+        </details>
+        <dialog id="modalImportacao" class="csv-dialog" aria-labelledby="tituloModalCSV" aria-describedby="ajudaCSV">
+        <div class="csv-dialog-cabecalho"><h2 id="tituloModalCSV">Importar postos por CSV</h2><button type="button" id="btnFecharModalCSV" class="csv-fechar" aria-label="Fechar importação">×</button></div>
+        <div class="csv-dialog-conteudo">
+        <p class="helper" id="ajudaCSV">Selecione seu arquivo e confira os postos antes de importar.</p>
+        <div class="input-group"><label for="arquivoPostos">Arquivo de postos (.csv)</label><input type="file" id="arquivoPostos" accept=".csv,text/csv" aria-describedby="ajudaCSV statusImportacao" disabled></div>
+        <div class="csv-modelo"><span>CSV UTF-8 · Até 1.000 postos · 1 MB</span><a id="btnModeloCSV" href="assets/modelos/modelo-postos.csv" download="modelo-postos.csv">Baixar modelo CSV</a></div>
+        <div class="csv-ajuda"><h3>Como preencher</h3><p>Baixe o modelo e substitua a linha de exemplo pelos dados reais, com um posto por linha. Preencha <strong>nome, endereço, cidade, UF, latitude e longitude</strong>. O nome no mapa é opcional.</p><p>Exemplo de coordenadas: <strong>-19.9</strong> e <strong>-43.94</strong>. Salve como <strong>CSV UTF-8</strong>, separado por vírgula ou ponto e vírgula. Use aspas quando um valor contiver o separador.</p></div>
+        <p id="statusImportacao" class="helper importacao-status" role="status" aria-live="polite">A importação estará disponível após carregar o cadastro pelo servidor local.</p>
+        <div id="previaImportacao" hidden>
+            <p id="resumoImportacao"></p>
+            <ul id="errosImportacao" class="importacao-erros"></ul>
+            <div class="importacao-tabela" role="region" aria-label="Prévia dos postos" tabindex="0">
+                <table><caption>Conferência do arquivo</caption><thead><tr><th scope="col">Linha</th><th scope="col">Nome</th><th scope="col">Endereço</th><th scope="col">Cidade / UF</th><th scope="col">Coordenadas</th><th scope="col">Nome no mapa</th><th scope="col">Situação</th></tr></thead><tbody id="linhasImportacao"></tbody></table>
+            </div>
+            <p class="helper" id="limitePrevia"></p>
+        </div>
+        <button type="button" class="btn-secondary" id="btnCancelarImportacao" hidden>Limpar arquivo</button>
+        </div>
+        <div class="csv-dialog-acoes"><button type="button" class="btn-secondary" id="btnFecharImportacao">Fechar</button><button type="button" class="btn-calc" id="btnImportarPostos" disabled>Importar postos</button></div>
+        </dialog>
+    </section>
 
     <div class="results-grid">
         <div class="info-card">
@@ -134,12 +186,15 @@
 <script src="src/domain/combustivel.js" defer></script>
 <script src="src/domain/distancia.js" defer></script>
 <script src="src/services/armazenamento.js" defer></script>
+<script src="src/services/postos.js" defer></script>
 <script src="src/services/mapas.js" defer></script>
 <script src="src/ui/medidor.js" defer></script>
 <script src="src/ui/veiculo.js" defer></script>
 <script src="src/ui/postos.js" defer></script>
 <script src="src/controllers/painel.js" defer></script>
 <script src="src/controllers/localizador.js" defer></script>
+<script src="src/controllers/importacao.js" defer></script>
+<script src="src/controllers/cadastro.js" defer></script>
 <script src="src/app.js" defer></script>
 <footer>
     <div class="footer-project">

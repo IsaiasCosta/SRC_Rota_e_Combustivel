@@ -1,7 +1,6 @@
 /* src/controllers/localizador.js */
 (function (app) {
 'use strict';
-const postos = app.postos;
 const { normalizarTexto } = app.utils;
 const { calcularDistancia, distanciaEstimadaRodoviaria, coordenadasValidas, coordenadasNoBrasil } = app.domain.distancia;
 const { geocodificarOrigem, obterRotaOSRM } = app.services.mapas;
@@ -133,7 +132,7 @@ async function buscarPostosMaisProximos(local) {
      * Primeiro filtramos por distância geográfica para reduzir chamadas.
      * Depois tentamos obter distância de rota para os candidatos.
      */
-    const candidatos = postos
+    const candidatos = app.postos
         .filter(coordenadasNoBrasil)
         .map(p => ({
             ...p,
@@ -184,7 +183,7 @@ function validarCadastroPostos() {
     const problemas = [];
     const nomes = new Set();
 
-    postos.forEach((p, i) => {
+    app.postos.forEach((p, i) => {
         if (!coordenadasValidas(p)) {
             problemas.push(`Posto ${i + 1}: coordenada inválida.`);
         } else if (!coordenadasNoBrasil(p)) {
