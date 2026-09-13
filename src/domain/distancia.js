@@ -33,4 +33,4 @@ function distanciaEstimadaRodoviaria(local, posto) {
 }
 
 app.domain.distancia = { calcularDistancia, distanciaEstimadaRodoviaria, coordenadasValidas, coordenadasNoBrasil };
-})(window.IvecoTector);
+})(window.RotaCombustivel);

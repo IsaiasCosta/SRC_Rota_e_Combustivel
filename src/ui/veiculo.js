@@ -58,4 +58,4 @@ function obterValoresCampos() {
 }
 
 app.ui.veiculo = { lerParametros, aplicarParametros, limparParametros, obterValoresCampos };
-})(window.IvecoTector);
+})(window.RotaCombustivel);

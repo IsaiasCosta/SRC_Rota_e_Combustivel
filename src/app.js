@@ -43,4 +43,4 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 });
-})(window.IvecoTector);
+})(window.RotaCombustivel);

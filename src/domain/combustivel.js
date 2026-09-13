@@ -39,4 +39,4 @@ function analisarAutonomia(distanciaKm, parametros) {
 }
 
 app.domain.combustivel = { calcularAutonomia, analisarAutonomia };
-})(window.IvecoTector);
+})(window.RotaCombustivel);

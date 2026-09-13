@@ -1,9 +1,11 @@
 // Configurações compartilhadas; os valores de consumo são estimativas iniciais.
-window.IvecoTector = {
+window.RotaCombustivel = {
     config: Object.freeze({
         consumos: Object.freeze({ VAZIO: 3.0, PARCIAL: 2.5, CARREGADO: 2.0 }),
         parametros: Object.freeze(['inpCapacidade', 'inpNivel', 'inpCarga', 'inpConsumo', 'inpMargem']),
-        storageKey: 'iveco-tector.parametros.v1'
+        storageKey: 'src-rota-e-combustivel.parametros.v1',
+        legacyStorageKey: 'src-rota-e-combustivel.parametros.v1'
     }),
     domain: {}, services: {}, ui: {}, controllers: {}
 };
+window['src-rota-e-combustivel'] = window.RotaCombustivel;

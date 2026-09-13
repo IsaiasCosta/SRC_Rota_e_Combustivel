@@ -74,4 +74,4 @@ function atualizarMedidor(percentual, combustivelAtual, capacidadeTotal) {
 }
 
 app.ui.medidor = { criarMedidor, atualizarMedidor };
-})(window.IvecoTector);
+})(window.RotaCombustivel);

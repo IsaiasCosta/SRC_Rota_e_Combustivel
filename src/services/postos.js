@@ -50,4 +50,4 @@ async function cadastrar(dados) {
 }
 
 app.services.postos = { carregar, importarCSV, cadastrar };
-})(window.IvecoTector);
+})(window.RotaCombustivel);

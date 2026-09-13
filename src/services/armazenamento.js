@@ -1,9 +1,10 @@
 (function (app) {
 'use strict';
 const chave = app.config.storageKey;
+const chaveLegada = app.config.legacyStorageKey;
 
 function carregarParametros() {
-    const valor = localStorage.getItem(chave);
+    const valor = localStorage.getItem(chave) ?? localStorage.getItem(chaveLegada);
     const salvos = valor === null ? {} : JSON.parse(valor);
     if (!salvos || typeof salvos !== 'object' || Array.isArray(salvos)) {
         throw new Error('Parâmetros salvos inválidos.');
@@ -34,4 +35,4 @@ function salvarParametros(parametros) {
 }
 
 app.services.armazenamento = { carregarParametros, salvarParametros };
-})(window.IvecoTector);
+})(window.RotaCombustivel);

@@ -4,7 +4,7 @@
 
 Frontend em HTML, CSS e JavaScript, organizado por responsabilidade, com servidor Node.js e banco SQLite local. O HTML existente continua sendo a entrada principal e os scripts são carregados com `defer`, na ordem declarada na página.
 
-Cada arquivo JavaScript encapsula suas variáveis em uma função e publica apenas sua interface no objeto `window.IvecoTector`. Essa estrutura mantém a abertura direta por arquivo, sem compilação ou instalação de dependências. Não são usados módulos ES nesta etapa, pois exigiriam servir a página por HTTP para o fluxo de desenvolvimento adotado.
+Cada arquivo JavaScript encapsula suas variáveis em uma função e publica apenas sua interface no objeto `window.RotaCombustivel`. Essa estrutura mantém a abertura direta por arquivo, sem compilação ou instalação de dependências. Não são usados módulos ES nesta etapa, pois exigiriam servir a página por HTTP para o fluxo de desenvolvimento adotado.
 
 ## Responsabilidades
 
@@ -35,7 +35,7 @@ As regras de `domain` não acessam DOM, rede ou armazenamento. Isso permite test
 
 ## Dados e estado
 
-- **Configuração:** `config.js` reúne os consumos iniciais por carga, os campos persistidos e a chave `iveco-tector.parametros.v1`, preservada nesta reorganização.
+- **Configuração:** `config.js` reúne os consumos iniciais por carga, os campos persistidos e a chave `src-rota-e-combustivel.parametros.v1`; a chave `src-rota-e-combustivel.parametros.v1` é lida como compatibilidade durante a migração.
 - **Persistência:** `services/armazenamento.js` lê e grava os parâmetros. Ao ler cadastros antigos, soma `inpCapacidade1` e `inpCapacidade2` no novo campo `inpCapacidade`. Um valor já salvo no campo novo tem prioridade e não é somado novamente. A interface esvazia campos salvos inválidos; falhas de leitura ou migração esvaziam todos os parâmetros. O controlador informa a necessidade de preenchimento e preserva o conteúdo salvo até todos os campos ficarem válidos. Na ausência de cadastro salvo, os padrões iniciais continuam disponíveis.
 - **Estado da busca:** origem, resultados e indicação de operação em andamento ficam privados em `controllers/localizador.js`.
 - **Cadastro:** no servidor, `database/rota-combustivel.sqlite` é a fonte dos postos, exposta por `GET /api/postos` com os nomes de campos usados pela interface e um `id` estável. `services/postos.js` carrega essa lista em `app.postos`; os controladores consultam o estado atualizado. A abertura `file:` usa `data/postos.js` e não permite importar.

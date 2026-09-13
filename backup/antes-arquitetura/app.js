@@ -4,7 +4,7 @@ let origemFoiGPS = false;
 let ultimosResultados = null;
 let buscaEmAndamento = false;
 const PARAMETROS = ['inpCapacidade1', 'inpCapacidade2', 'inpNivel', 'inpCarga', 'inpConsumo', 'inpMargem'];
-const STORAGE_KEY = 'iveco-tector.parametros.v1';
+const STORAGE_KEY = 'src-rota-e-combustivel.parametros.v1';
 
 const CONSUMOS = {
     VAZIO: 3.0,

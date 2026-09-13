@@ -112,4 +112,4 @@ function exibirResultadosPostos(listaPostos, local, parametros) {
 }
 
 app.ui.postos = { exibirResultadosPostos };
-})(window.IvecoTector);
+})(window.RotaCombustivel);

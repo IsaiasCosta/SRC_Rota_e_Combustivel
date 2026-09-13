@@ -201,4 +201,4 @@ function validarCadastroPostos() {
 }
 
 app.controllers.localizador = { buscarGPS, buscarPostos, atualizarResultados, validarCadastroPostos };
-})(window.IvecoTector);
+})(window.RotaCombustivel);

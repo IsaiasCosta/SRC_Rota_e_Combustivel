@@ -7,9 +7,9 @@ const arquivoPadrao = path.resolve(__dirname, '../database/rota-combustivel.sqli
 
 function lerCadastroInicial() {
     // Executa somente o cadastro versionado do projeto, nunca conteúdo recebido pela API.
-    const contexto = { window: { IvecoTector: {} } };
+    const contexto = { window: { RotaCombustivel: {} } };
     vm.runInNewContext(fs.readFileSync(path.resolve(__dirname, '../src/data/postos.js'), 'utf8'), contexto, { timeout: 1000 });
-    return contexto.window.IvecoTector.postos;
+    return contexto.window.RotaCombustivel.postos;
 }
 
 function abrirBanco({ arquivo = arquivoPadrao, cadastroInicial = lerCadastroInicial } = {}) {

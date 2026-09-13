@@ -6,7 +6,7 @@ O painel possui um único campo **Capacidade do tanque (L)**. Informe a capacida
 
 ## Abrir o sistema
 
-Para usar o banco de dados, inicie o servidor local. A abertura direta de `painel-iveco-tector.html` continua disponível, mas usa apenas o cadastro de referência em JavaScript.
+Para usar o banco de dados, inicie o servidor local. A abertura direta de `src_rota_e_combustivel.html` continua disponível, mas usa apenas o cadastro de referência em JavaScript.
 
 Use Node.js 22.13 ou superior:
 
@@ -70,7 +70,7 @@ Se um parâmetro salvo for inválido, seu campo fica vazio e o painel informa a 
 
 ```text
 SRC Rota e Combustível/
-├── painel-iveco-tector.html
+├── src_rota_e_combustivel.html
 ├── assets/
 │   ├── css/style.css             # Tema e layout responsivo
 │   └── images/                   # Logotipo RC e versão transparente aplicada

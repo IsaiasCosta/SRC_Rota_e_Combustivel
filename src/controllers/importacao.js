@@ -98,4 +98,4 @@ function inicializar() {
 }
 
 app.controllers.importacao = { inicializar };
-})(window.IvecoTector);
+})(window.RotaCombustivel);

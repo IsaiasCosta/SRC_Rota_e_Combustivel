@@ -5,14 +5,14 @@ html = r'''<!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Iveco Tector</title>
+    <title>Dashboard SRC ROTA e COMBUSTIVEL</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="dashboard-container">
     <div class="header">
-        <h1>IVECO TECTOR (BITRUCK)</h1>
+        <h1>SRC ROTA e COMBUSTIVE</h1>
         <span>PAINEL DE CONTROLE - LOCALIZADOR DE POSTOS & GESTÃO DE COMBUSTÍVEL</span>
     </div>
 
@@ -722,7 +722,7 @@ function validarCadastroPostos() {
 </html>
 '''
 
-path = Path("/mnt/data/dashboard_iveco_tector_corrigido.html")
+path = Path("/mnt/data/dashboard_src-rota-e-combustivel.html")
 path.write_text(html, encoding="utf-8")
 print(f"Arquivo criado: {path}")
 print(f"Tamanho: {path.stat().st_size:,} bytes")

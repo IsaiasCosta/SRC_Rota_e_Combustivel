@@ -9,7 +9,7 @@ const context = vm.createContext({ window: {} });
 for (const file of ['config.js', 'domain/combustivel.js', 'domain/distancia.js']) {
     vm.runInContext(fs.readFileSync(path.join(__dirname, '../src', file), 'utf8'), context);
 }
-const { combustivel, distancia } = context.window.IvecoTector.domain;
+const { combustivel, distancia } = context.window.RotaCombustivel.domain;
 const parametros = { capacidade: 560, nivel: 1, consumo: 2, margem: 0.15, validos: true };
 
 test('tanque cheio: 560 L, 1120 km estimados e 952 km com margem', () => {

@@ -7,7 +7,7 @@ const context = vm.createContext({ window: {}, URL });
 for (const file of ['config.js', 'data/postos.js', 'domain/distancia.js', 'services/mapas.js']) {
     vm.runInContext(fs.readFileSync(path.join(__dirname, '../src', file), 'utf8'), context);
 }
-const app = context.window.IvecoTector;
+const app = context.window.RotaCombustivel;
 const { criarLinkRota, criarLinkPosto } = app.services.mapas;
 
 test('links de todos os postos priorizam o endereço completo, preservando a origem da rota', () => {
@@ -93,7 +93,7 @@ function localizadorSimulado(responderRota) {
         'domain/distancia.js', 'services/mapas.js', 'ui/postos.js', 'controllers/localizador.js']) {
         vm.runInContext(fs.readFileSync(path.join(__dirname, '../src', file), 'utf8'), contexto);
     }
-    const app = contexto.window.IvecoTector;
+    const app = contexto.window.RotaCombustivel;
     app.ui.veiculo = { lerParametros: () => ({ capacidade: 560, nivel: 1, consumo: 2, margem: 0.15, validos: true }) };
     return { app, elementos, contexto };
 }

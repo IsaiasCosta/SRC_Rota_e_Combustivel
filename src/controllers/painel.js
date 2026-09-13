@@ -60,4 +60,4 @@ function calcular() {
 }
 
 app.controllers.painel = { alterarCarga, calcular, restaurarParametros };
-})(window.IvecoTector);
+})(window.RotaCombustivel);

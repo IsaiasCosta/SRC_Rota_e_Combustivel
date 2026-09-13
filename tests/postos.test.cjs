@@ -6,7 +6,7 @@ const { test } = require('node:test');
 function ambiente(protocol, fetch, temporizadores = {}) {
     const app = { postos: [{ Nome: 'Referência' }], services: {} };
     vm.runInNewContext(fs.readFileSync(require.resolve('../src/services/postos.js'), 'utf8'), {
-        window: { IvecoTector: app, location: { protocol } }, fetch, AbortController, setTimeout, clearTimeout, ...temporizadores
+        window: { RotaCombustivel: app, location: { protocol } }, fetch, AbortController, setTimeout, clearTimeout, ...temporizadores
     });
     return app;
 }

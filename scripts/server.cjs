@@ -6,7 +6,7 @@ const { responderImportacao } = require('./importacao-http.cjs');
 const { responderCadastro } = require('./cadastro-http.cjs');
 
 const root = path.resolve(__dirname, '..');
-const entry = 'painel-iveco-tector.html';
+const entry = 'src_rota_e_combustivel.html';
 const nominatimEndpoint = 'https://nominatim.openstreetmap.org/search';
 
 async function responderGeocodificacao(url, res) {

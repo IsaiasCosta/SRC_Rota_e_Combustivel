@@ -13,7 +13,7 @@ function armazenamento(dados) {
     for (const file of ['config.js', 'services/armazenamento.js']) {
         vm.runInContext(fs.readFileSync(path.join(__dirname, '../src', file), 'utf8'), context);
     }
-    return context.window.IvecoTector.services.armazenamento;
+    return context.window['src-rota-e-combustivel'].services.armazenamento;
 }
 
 test('migra a soma dos tanques, preservando nível e consumo', () => {

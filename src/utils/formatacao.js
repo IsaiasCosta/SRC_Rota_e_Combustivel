@@ -29,4 +29,4 @@ function formatarTempo(minutos) {
 }
 
 app.utils = { normalizarTexto, escaparHTML, formatarTempo };
-})(window.IvecoTector);
+})(window.RotaCombustivel);

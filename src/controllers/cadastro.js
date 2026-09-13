@@ -68,4 +68,4 @@ function inicializar() {
 }
 
 app.controllers.cadastro = { inicializar };
-})(window.IvecoTector);
+})(window.RotaCombustivel);

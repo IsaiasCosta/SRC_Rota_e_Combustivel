@@ -53,4 +53,4 @@ const postos = [
 ];
 
 app.postos = postos;
-})(window.IvecoTector);
+})(window.RotaCombustivel);

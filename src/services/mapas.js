@@ -125,4 +125,4 @@ function criarLinkPosto(posto) {
 }
 
 app.services.mapas = { geocodificarOrigem, obterRotaOSRM, criarLinkRota, criarLinkPosto };
-})(window.IvecoTector);
+})(window.RotaCombustivel);
