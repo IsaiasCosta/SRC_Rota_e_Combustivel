@@ -2,7 +2,7 @@
   "name": "rota-combustivel",
   "version": "0.1.0",
   "private": true,
-  "description": "Rota & Combustível — localizador de postos e planejamento de autonomia",
+  "description": "SRC Rota e Combustível — localizador de postos e planejamento de autonomia",
   "engines": { "node": ">=22.13" },
   "scripts": {
     "start": "node scripts/serve.cjs",

@@ -1,4 +1,4 @@
-# Rota & Combustível — painel do veículo
+# SRC Rota e Combustível — painel do veículo
 
 Localizador de postos cadastrados e planejamento de autonomia. Interface em português, com parâmetros do veículo salvos no navegador.
 
@@ -69,7 +69,7 @@ Se um parâmetro salvo for inválido, seu campo fica vazio e o painel informa a 
 ## Organização
 
 ```text
-IVECO TECTOR/
+SRC Rota e Combustível/
 ├── painel-iveco-tector.html
 ├── assets/
 │   ├── css/style.css             # Tema e layout responsivo
