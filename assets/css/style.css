@@ -395,7 +395,9 @@ button {
     }
 
     .header h1 {
-        font-size: 22px;
+        font-size: 18px;
+        line-height: 1.2;
+        white-space: nowrap;
     }
 
     .header span {
@@ -541,6 +543,13 @@ footer { display: flex; justify-content: space-between; align-items: center; fle
         width: 100%;
     }
 
+    .header h1 {
+        max-width: 100%;
+        font-size: 16px;
+        letter-spacing: 0;
+        white-space: nowrap;
+    }
+
     .header .version-badge {
         display: none;
     }
@@ -554,18 +563,20 @@ footer { display: flex; justify-content: space-between; align-items: center; fle
 
     .navigation {
         display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 10px 16px;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
         padding: 0 4px 14px;
     }
 
     .navigation a {
         min-width: 0;
+        font-size: 11px;
         line-height: 1.35;
+        white-space: nowrap;
     }
 
     .navigation a:last-child {
-        grid-column: 1 / -1;
+        grid-column: auto;
     }
 
     footer {
