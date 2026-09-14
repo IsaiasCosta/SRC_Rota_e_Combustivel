@@ -4,6 +4,7 @@
 // Ponto de composição: inicializa a interface e conecta os eventos aos controladores.
 document.addEventListener('DOMContentLoaded', async () => {
     const cadastro = app.controllers.cadastro.inicializar();
+    app.controllers.roteirizacao.inicializar();
     const importacao = app.controllers.importacao.inicializar();
     const { calcular, alterarCarga } = app.controllers.painel;
     const { buscarPostos, buscarGPS, validarCadastroPostos } = app.controllers.localizador;
@@ -26,6 +27,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         botoesBusca.forEach(botao => { botao.disabled = false; });
         cadastro.definirDisponibilidade(true);
         importacao.definirDisponibilidade(true);
+        try {
+            await app.services.lojas.carregar();
+            app.controllers.roteirizacao.renderizarLojas();
+            const lojasComCoordenadas = app.lojas.filter(app.domain.distancia.coordenadasValidas).length;
+            document.getElementById('statusRoteirizacao').textContent = `${app.lojas.length} lojas carregadas; ${lojasComCoordenadas} prontas para calcular rota.`;
+        } catch (error) {
+            document.getElementById('statusRoteirizacao').textContent = error.message;
+        }
     } catch {
         document.getElementById('quantidadePostos').textContent = '';
         document.getElementById('quantidadePostos').hidden = true;

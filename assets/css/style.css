@@ -115,6 +115,55 @@ button {
     color: #d8b4fe;
 }
 
+.section-route {
+    border-color: rgba(34, 211, 238, 0.35);
+    background: linear-gradient(135deg, rgba(8, 47, 73, 0.45), rgba(15, 18, 28, 0.98));
+}
+
+.cadastro-acoes { display: flex; gap: 10px; margin-top: 12px; }
+.cadastro-acoes > button { flex: 1; margin-top: 0; }
+.subtitulo-rota { margin: 18px 0 8px; color: #cbd5e1; font-size: 12px; text-transform: uppercase; letter-spacing: .4px; }
+.ferramentas-lojas { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 10px; }
+.ferramentas-lojas input { flex: 1 1 240px; min-height: 38px; padding: 8px 10px; color: #f8fafc; background: #0b0e16; border: 1px solid #303646; border-radius: 8px; }
+.ferramentas-lojas button { width: auto; min-height: 38px; margin: 0; padding: 8px 11px; }
+.ferramentas-lojas .helper { margin-left: auto; }
+.lista-marcas { display: flex; flex-wrap: wrap; gap: 8px; }
+.marca-opcao { display: inline-flex; align-items: center; gap: 7px; padding: 7px 10px; border: 1px solid #2c5361; border-radius: 999px; color: #a5f3fc; background: rgba(8, 47, 73, .55); font-size: 12px; cursor: pointer; }
+.marca-opcao input { accent-color: #22d3ee; }
+
+.lista-lojas {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    max-height: 260px;
+    overflow: auto;
+    margin: 16px 0 10px;
+    padding: 2px;
+}
+
+.loja-opcao { display: flex; gap: 9px; align-items: flex-start; padding: 10px; border: 1px solid #303646; border-radius: 8px; background: #0b0e16; cursor: pointer; }
+.loja-opcao input { margin-top: 3px; accent-color: #22d3ee; }
+.loja-opcao strong, .loja-opcao small { display: block; }
+.loja-opcao strong { color: #f8fafc; font-size: 13px; }
+.loja-opcao small { color: #94a3b8; font-size: 11px; }
+.loja-opcao small a { color: #67e8f9; }
+.loja-sem-coordenadas { opacity: .65; }
+.loja-sem-coordenadas input { cursor: not-allowed; }
+.aviso-coordenadas { color: #fbbf24 !important; }
+.resultado-rota { margin-top: 16px; }
+.rota-resumo { display: grid; gap: 4px; padding: 12px; border: 1px solid currentColor; border-radius: 8px; font-size: 12px; }
+.rota-resumo span { color: #cbd5e1; }
+.trechos-rota { display: grid; gap: 8px; margin: 12px 0; padding-left: 24px; }
+.trechos-rota li { display: flex; justify-content: space-between; gap: 12px; padding: 10px 12px; border-left: 2px solid #22d3ee; background: #0b0e16; color: #f8fafc; font-size: 12px; }
+.trechos-rota li small { display: block; color: #94a3b8; font-size: 11px; }
+.trechos-rota li > span { color: #67e8f9; text-align: right; white-space: nowrap; }
+.link-rota { display: inline-block; color: #07111a; background: #67e8f9; text-decoration: none; }
+.cadastro-loja { margin-top: 18px; border-top: 1px solid #303646; padding-top: 14px; }
+.cadastro-loja summary { color: #cbd5e1; cursor: pointer; font-size: 12px; font-weight: 700; }
+.cadastro-loja form { margin-top: 14px; }
+.arquivo-lojas { display: block; margin-top: 14px; color: #cbd5e1; font-size: 12px; }
+.arquivo-lojas input { display: block; margin-top: 7px; }
+
 /* =========================
    GRID DE INPUTS
    ========================= */
@@ -415,6 +464,9 @@ button {
         gap: 12px;
     }
 
+    .lista-lojas { grid-template-columns: 1fr; }
+    .cadastro-acoes { flex-direction: column; }
+
     .results-grid {
         grid-template-columns: 1fr 1fr;
         gap: 10px;
@@ -512,7 +564,7 @@ button:disabled { cursor: default; opacity: 0.5; }
 .navigation a:hover { text-decoration: underline; }
 .helper { margin: 0 0 16px; color: #94a3b8; font-size: 12px; }
 .section-heading { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 18px; }
-.section-box h2 { margin: 0 0 17px; color: #e2e8f0; font-size: 17px; }
+.section-box h2 { margin: 0 0 19px; color: #e2e8f0; font-size: 22px; }
 .section-heading h2 { margin-bottom: 0; }
 .titulo-centralizado h2,
 h2.titulo-centralizado { text-align: center; }

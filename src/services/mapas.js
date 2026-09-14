@@ -86,6 +86,37 @@ async function obterRotaOSRM(local, posto) {
     }
 }
 
+async function obterRotaSequencial(origem, lojas) {
+    if (window.location.protocol !== 'file:') {
+        try {
+            const resposta = await fetch('/api/rotas', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ origem, destinos: lojas.map(loja => ({ lat: loja.lat, lon: loja.lon, Nome: loja.Nome })) })
+            });
+            if (resposta.ok) {
+                const resultado = await resposta.json();
+                return resultado.trechos.map(trecho => ({ ...trecho, provedor: resultado.provedor }));
+            }
+        } catch { /* O OSRM continua como fallback local. */ }
+    }
+    const pontos = [origem, ...lojas];
+    const trechos = [];
+    for (let indice = 0; indice < lojas.length; indice++) {
+        const rota = await obterRotaOSRM(pontos[indice], pontos[indice + 1]);
+        trechos.push({
+            origem: indice === 0 ? 'Ponto atual' : lojas[indice - 1].Nome,
+            destino: lojas[indice].Nome,
+            distanciaKm: rota.distanciaKm,
+            tempoMin: rota.tempoMin,
+            origemCoordenadas: pontos[indice],
+            destinoCoordenadas: pontos[indice + 1],
+            provedor: 'OSRM'
+        });
+    }
+    return trechos;
+}
+
 function identificarPosto(posto) {
     return [posto.nomeMapa || posto.Nome, posto.Endereço, posto.Cidade, posto.Estado, 'Brasil']
         .map(valor => String(valor ?? '').trim())
@@ -116,6 +147,16 @@ function criarLinkRota(posto, origem) {
     return url.href;
 }
 
+function criarLinkRotaMulti(origem, lojas) {
+    const url = new URL('https://www.google.com/maps/dir/');
+    url.searchParams.set('api', '1');
+    url.searchParams.set('origin', `${origem.lat},${origem.lon}`);
+    url.searchParams.set('destination', identificarDestino(lojas[lojas.length - 1]));
+    url.searchParams.set('waypoints', lojas.slice(0, -1).map(identificarDestino).join('|'));
+    url.searchParams.set('travelmode', 'driving');
+    return url.href;
+}
+
 function criarLinkPosto(posto) {
     const url = new URL('https://www.google.com/maps/search/');
     url.searchParams.set('api', '1');
@@ -124,5 +165,5 @@ function criarLinkPosto(posto) {
     return url.href;
 }
 
-app.services.mapas = { geocodificarOrigem, obterRotaOSRM, criarLinkRota, criarLinkPosto };
+app.services.mapas = { geocodificarOrigem, obterRotaOSRM, obterRotaSequencial, criarLinkRota, criarLinkRotaMulti, criarLinkPosto };
 })(window.RotaCombustivel);

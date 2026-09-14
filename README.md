@@ -28,6 +28,14 @@ A importação ocorre uma única vez, em transação: reiniciar o servidor não 
 
 O painel permite cadastrar um posto pelo formulário ou vários postos por CSV. A edição de postos existentes ainda não possui tela. Os parâmetros do veículo permanecem no navegador. Para fazer backup do banco, encerre o servidor e copie `database/rota-combustivel.sqlite`. O arquivo não é servido por HTTP nem incluído no Git; a estrutura e o código de importação são versionados.
 
+## Planejamento de entregas
+
+Em **Planejamento de entregas**, o operador informa qualquer ponto de partida por endereço ou GPS, seleciona uma ou mais lojas e define a ordem das paradas. O sistema consulta o OSRM para cada trecho da sequência origem → loja 1 → loja 2, calcula os litros consumidos e mostra o saldo após cada entrega. O alerta indica quando o combustível atual não é suficiente para concluir a rota ou quando o trajeto ultrapassa a margem de segurança.
+
+As lojas ficam na tabela `lojas` do SQLite e podem ser cadastradas individualmente ou importadas por CSV UTF-8 com o cabeçalho `marca;nome;endereco;cidade;estado;latitude;longitude;link_maps`. Marca e link do Maps são preservados; se o link não for informado, o sistema gera uma busca pelo endereço. O link da rota completa abre no Google Maps com as lojas como pontos intermediários.
+
+O cálculo de distância usa o **Google Maps Directions API** quando a variável local `GOOGLE_MAPS_API_KEY` está configurada. Sem essa chave, o sistema usa o OSRM e identifica o resultado como estimativa, pois os dois roteadores podem escolher caminhos diferentes. No PowerShell, configure a chave apenas no terminal local antes de iniciar o servidor: `$env:GOOGLE_MAPS_API_KEY = 'sua-chave'` e depois `npm.cmd start`. Nunca coloque a chave no HTML ou no Git.
+
 ## Cadastrar um posto pelo formulário
 
 Com o servidor iniciado, acesse **Cadastrar postos → Preencher formulário**. Informe nome, endereço, cidade, UF, latitude e longitude. O nome no mapa é opcional. Clique em **Salvar posto**: o registro é salvo no SQLite, o contador é atualizado e o formulário fica livre para outro cadastro. Faça uma nova busca para incluir o novo posto nos resultados.

@@ -73,6 +73,38 @@
         <div class="gauge-readout" id="gaugeReadout" style="text-align:center; margin-top:10px; font-size:13px; color:#94a3b8;"></div>
     </div>
 
+    <div class="results-grid">
+        <div class="info-card">
+            <div class="info-item">
+                <label>Capacidade do tanque</label>
+                <div class="value" id="outCapacidadeTotal">0.0 L</div>
+            </div>
+        </div>
+        <div class="info-card">
+            <div class="info-item">
+                <label>Litros no Momento</label>
+                <div class="value" id="outLitros">0.0 L</div>
+            </div>
+        </div>
+        <div class="info-card">
+            <div class="info-item">
+                <label>Autonomia estimada</label>
+                <div class="value" id="outAutonomia">0.0 km</div>
+            </div>
+        </div>
+        <div class="info-card">
+            <div class="info-item">
+                <label>Autonomia com margem</label>
+                <div class="value" id="outAutonomiaSegura">0.0 km</div>
+            </div>
+        </div>
+
+        <div class="status-alert status-success" id="outStatusPosto" role="status" style="grid-column:1 / -1;">
+            🟢 TANQUE CHEIO - SEM ALERTAS NO MOMENTO
+        </div>
+    </div>
+</div>
+
     <div class="section-box section-purple" id="localizador">
         <div class="section-heading titulo-centralizado"><h2>Localizar postos</h2><span class="tag" id="quantidadePostos"></span></div><p class="helper">Busca na lista de postos cadastrados. Confira os endereços e as coordenadas antes de viajar.</p>
         <div class="inputs-grid">
@@ -95,6 +127,37 @@
     </div>
 
     <div class="section-box" id="resultadosPostos" style="display:none;"></div>
+
+    <section class="section-box section-route" id="planejamentoRota" aria-labelledby="tituloRota">
+        <div class="section-heading titulo-centralizado"><h2 id="tituloRota">Planejamento de entregas</h2><span class="tag">Multi-drop</span></div>
+        <p class="helper">Escolha qualquer origem e a ordem das lojas. O sistema calcula o consumo de cada trecho e o saldo após cada entrega.</p>
+        <div class="inputs-grid">
+            <div class="input-group" style="grid-column:1 / -1;"><label for="inpOrigemRota">Ponto de partida</label><input id="inpOrigemRota" placeholder="Endereço, cidade ou ponto atual"></div>
+        </div>
+        <div class="cadastro-acoes"><button type="button" class="btn-calc" id="btnDefinirOrigem">Definir origem</button><button type="button" class="btn-gps" id="btnGPSRota">Usar GPS</button></div>
+        <h3 class="subtitulo-rota">Marcas das lojas</h3>
+        <div id="listaMarcas" class="lista-marcas" aria-label="Filtrar lojas por marca"></div>
+        <h3 class="subtitulo-rota">Lojas na sequência da rota</h3>
+        <div class="ferramentas-lojas"><input id="filtroLojas" type="search" placeholder="Buscar loja, cidade ou endereço" aria-label="Buscar lojas"><button type="button" class="btn-secondary" id="btnMarcarLojas">Marcar visíveis</button><button type="button" class="btn-secondary" id="btnDesmarcarLojas">Desmarcar visíveis</button><span id="contadorLojas" class="helper"></span></div>
+        <div id="listaLojas" class="lista-lojas" aria-label="Lojas da rota"></div>
+        <button type="button" class="btn-calc" id="btnCalcularRota">Calcular rota e consumo</button>
+        <div id="resultadoRota" class="resultado-rota" hidden></div>
+        <p id="statusRoteirizacao" class="helper" role="status" aria-live="polite">Carregando lojas...</p>
+        <details class="cadastro-loja"><summary>Cadastrar ou importar lojas</summary>
+            <form id="formCadastroLoja"><div class="inputs-grid">
+                <div class="input-group"><label for="lojaMarca">Marca</label><input id="lojaMarca" name="marca" placeholder="Ex.: Carrefour, Assaí, BH" required></div>
+                <div class="input-group"><label for="lojaNome">Nome</label><input id="lojaNome" name="nome" required></div>
+                <div class="input-group"><label for="lojaEndereco">Endereço</label><input id="lojaEndereco" name="endereco" required></div>
+                <div class="input-group"><label for="lojaCidade">Cidade</label><input id="lojaCidade" name="cidade" required></div>
+                <div class="input-group"><label for="lojaEstado">UF</label><input id="lojaEstado" name="estado" maxlength="2" required></div>
+                <div class="input-group"><label for="lojaLat">Latitude</label><input id="lojaLat" name="latitude" type="number" step="any" required></div>
+                <div class="input-group"><label for="lojaLon">Longitude</label><input id="lojaLon" name="longitude" type="number" step="any" required></div>
+                <div class="input-group"><label for="lojaLinkMaps">Link do Maps</label><input id="lojaLinkMaps" name="linkMaps" type="url" placeholder="https://maps.google.com/..." ></div>
+            </div><button type="submit" class="btn-calc">Cadastrar loja</button></form>
+            <label class="arquivo-lojas">Importar CSV de lojas <input type="file" id="arquivoLojas" accept=".csv,text/csv"></label>
+            <small class="helper">Cabeçalho aceito: marca;nome;endereco;cidade;estado;latitude;longitude;link_maps. As coordenadas são necessárias para calcular a rota.</small>
+        </details>
+    </section>
 
     <section class="section-box" id="importacaoPostos" aria-labelledby="tituloImportacao">
         <div class="cadastro-cabecalho"><h2 id="tituloImportacao">Cadastrar postos</h2><p class="helper">Escolha como deseja cadastrar.</p></div>
@@ -148,36 +211,6 @@
         </dialog>
     </section>
 
-    <div class="results-grid">
-        <div class="info-card">
-            <div class="info-item">
-                <label>Capacidade do tanque</label>
-                <div class="value" id="outCapacidadeTotal">0.0 L</div>
-            </div>
-        </div>
-        <div class="info-card">
-            <div class="info-item">
-                <label>Litros no Momento</label>
-                <div class="value" id="outLitros">0.0 L</div>
-            </div>
-        </div>
-        <div class="info-card">
-            <div class="info-item">
-                <label>Autonomia estimada</label>
-                <div class="value" id="outAutonomia">0.0 km</div>
-            </div>
-        </div>
-        <div class="info-card">
-            <div class="info-item">
-                <label>Autonomia com margem</label>
-                <div class="value" id="outAutonomiaSegura">0.0 km</div>
-            </div>
-        </div>
-
-        <div class="status-alert status-success" id="outStatusPosto" role="status" style="grid-column:1 / -1;">
-            🟢 TANQUE CHEIO - SEM ALERTAS NO MOMENTO
-        </div>
-    </div>
 </div>
 
 <script src="src/config.js" defer></script>
@@ -185,8 +218,10 @@
 <script src="src/utils/formatacao.js" defer></script>
 <script src="src/domain/combustivel.js" defer></script>
 <script src="src/domain/distancia.js" defer></script>
+<script src="src/domain/roteirizacao.js" defer></script>
 <script src="src/services/armazenamento.js" defer></script>
 <script src="src/services/postos.js" defer></script>
+<script src="src/services/lojas.js" defer></script>
 <script src="src/services/mapas.js" defer></script>
 <script src="src/ui/medidor.js" defer></script>
 <script src="src/ui/veiculo.js" defer></script>
@@ -195,6 +230,7 @@
 <script src="src/controllers/localizador.js" defer></script>
 <script src="src/controllers/importacao.js" defer></script>
 <script src="src/controllers/cadastro.js" defer></script>
+<script src="src/controllers/roteirizacao.js" defer></script>
 <script src="src/app.js" defer></script>
 <footer>
     <div class="footer-project">

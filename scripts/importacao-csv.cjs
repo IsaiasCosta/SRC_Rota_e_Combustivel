@@ -85,4 +85,4 @@ function analisarCSV(texto, existentes = []) {
     return resultado;
 }
 
-module.exports = { analisarCSV, LIMITE_BYTES };
+module.exports = { analisarCSV, lerCSV, LIMITE_BYTES };

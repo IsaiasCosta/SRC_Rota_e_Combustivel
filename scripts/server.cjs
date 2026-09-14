@@ -1,9 +1,10 @@
 const fs = require('node:fs');
 const http = require('node:http');
 const path = require('node:path');
-const { abrirBanco, listarPostos } = require('./database.cjs');
+const { abrirBanco, listarPostos, listarLojas, cadastrarLoja, importarLojas } = require('./database.cjs');
 const { responderImportacao } = require('./importacao-http.cjs');
 const { responderCadastro } = require('./cadastro-http.cjs');
+const { lerCSV } = require('./importacao-csv.cjs');
 
 const root = path.resolve(__dirname, '..');
 const entry = 'src_rota_e_combustivel.html';
@@ -54,6 +55,9 @@ function criarServidor({ diretorio = root, pagina = entry, arquivoBanco } = {}) 
         const url = new URL(req.url, 'http://localhost');
         if (url.pathname === '/api/postos/importar') return responderImportacao(req, res, db, url);
         if (url.pathname === '/api/postos' && req.method === 'POST') return responderCadastro(req, res, db);
+        if (url.pathname === '/api/lojas' && req.method === 'POST') return receberLoja(req, res, db);
+        if (url.pathname === '/api/lojas/importar' && req.method === 'POST') return receberLojas(req, res, db);
+        if (url.pathname === '/api/rotas' && req.method === 'POST') return receberRotaGoogle(req, res);
         if (!['GET', 'HEAD'].includes(req.method)) {
             res.writeHead(405, { Allow: 'GET, HEAD' });
             return res.end();
@@ -67,6 +71,11 @@ function criarServidor({ diretorio = root, pagina = entry, arquivoBanco } = {}) 
                 res.writeHead(500, { 'Content-Type': 'application/json; charset=utf-8' });
                 return res.end(req.method === 'HEAD' ? undefined : JSON.stringify({ error: 'Não foi possível consultar os postos.' }));
             }
+        }
+        if (url.pathname === '/api/lojas') {
+            const dados = JSON.stringify(listarLojas(db));
+            res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' });
+            return res.end(req.method === 'HEAD' ? undefined : dados);
         }
         if (url.pathname === '/api/geocodificar') {
             if (req.method !== 'GET') {
@@ -97,6 +106,80 @@ function criarServidor({ diretorio = root, pagina = entry, arquivoBanco } = {}) 
     });
     server.once('close', () => db.close());
     return server;
+}
+
+function responderJSON(res, status, dados) {
+    res.writeHead(status, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' });
+    res.end(JSON.stringify(dados));
+}
+
+async function lerCorpo(req, limite = 1024 * 1024) {
+    const partes = [];
+    let tamanho = 0;
+    for await (const parte of req) {
+        tamanho += parte.length;
+        if (tamanho > limite) throw new Error('O arquivo excede o limite de 1 MB.');
+        partes.push(parte);
+    }
+    return new TextDecoder('utf-8', { fatal: true }).decode(Buffer.concat(partes));
+}
+
+async function receberLoja(req, res, db) {
+    try {
+        const dados = JSON.parse(await lerCorpo(req, 16384));
+        const resultado = cadastrarLoja(db, dados);
+        if (resultado.erros.length) return responderJSON(res, 422, resultado);
+        if (resultado.duplicados) return responderJSON(res, 409, { error: 'Esta loja já está cadastrada.' });
+        responderJSON(res, 201, resultado);
+    } catch { responderJSON(res, 400, { error: 'Não foi possível ler o cadastro da loja.' }); }
+}
+
+async function receberLojas(req, res, db) {
+    try {
+        const texto = await lerCorpo(req);
+        const registros = lerCSV(texto);
+        if (registros.length < 2) return responderJSON(res, 422, { error: 'Inclua o cabeçalho e pelo menos uma loja.' });
+        const cabecalho = registros.shift().campos.map(c => c.trim().toLowerCase());
+        const aliases = { nome: 'Nome', marca: 'Marca', brand: 'Marca', endereco: 'Endereço', 'endereço': 'Endereço', cidade: 'Cidade', estado: 'Estado', uf: 'Estado', lat: 'lat', latitude: 'lat', lon: 'lon', longitude: 'lon', link: 'linkMaps', linkmaps: 'linkMaps', link_maps: 'linkMaps', maps: 'linkMaps' };
+        const campos = cabecalho.map(c => aliases[c]);
+        if (campos.some(c => !c) || !['Nome', 'Endereço', 'Cidade', 'Estado', 'lat', 'lon'].every(c => campos.includes(c))) {
+            return responderJSON(res, 422, { error: 'Use as colunas nome, endereco, cidade, estado, latitude e longitude.' });
+        }
+        const lojas = registros.map(registro => {
+            if (registro.campos.length !== campos.length) throw new Error(`Linha ${registro.linha}: quantidade de campos diferente do cabeçalho.`);
+            return Object.fromEntries(registro.campos.map((valor, i) => [campos[i], valor]));
+        });
+        responderJSON(res, 201, importarLojas(db, lojas));
+    } catch (error) { responderJSON(res, 422, { error: error.message || 'Não foi possível importar as lojas.' }); }
+}
+
+async function receberRotaGoogle(req, res) {
+    const chave = process.env.GOOGLE_MAPS_API_KEY;
+    if (!chave) return responderJSON(res, 503, { error: 'Google Maps API não configurada.' });
+    try {
+        const dados = JSON.parse(await lerCorpo(req, 128 * 1024));
+        const origem = dados.origem;
+        const destinos = Array.isArray(dados.destinos) ? dados.destinos : [];
+        if (!origem || destinos.length === 0) return responderJSON(res, 422, { error: 'Origem e destinos são obrigatórios.' });
+        const url = new URL('https://maps.googleapis.com/maps/api/directions/json');
+        url.searchParams.set('origin', `${origem.lat},${origem.lon}`);
+        url.searchParams.set('destination', `${destinos[destinos.length - 1].lat},${destinos[destinos.length - 1].lon}`);
+        if (destinos.length > 1) url.searchParams.set('waypoints', destinos.slice(0, -1).map(p => `${p.lat},${p.lon}`).join('|'));
+        url.searchParams.set('mode', 'driving');
+        url.searchParams.set('key', chave);
+        const resposta = await fetch(url);
+        const resultado = await resposta.json();
+        if (!resposta.ok || resultado.status !== 'OK' || !resultado.routes?.[0]?.legs?.length) {
+            return responderJSON(res, 502, { error: resultado.error_message || `Google Maps: ${resultado.status || 'falha'}.` });
+        }
+        const trechos = resultado.routes[0].legs.map((leg, indice) => ({
+            origem: indice === 0 ? 'Ponto atual' : destinos[indice - 1].Nome,
+            destino: destinos[indice].Nome,
+            distanciaKm: leg.distance.value / 1000,
+            tempoMin: leg.duration.value / 60
+        }));
+        responderJSON(res, 200, { provedor: 'GOOGLE_MAPS', trechos });
+    } catch (error) { responderJSON(res, 502, { error: error.message || 'Não foi possível consultar o Google Maps.' }); }
 }
 
 module.exports = { criarServidor };
