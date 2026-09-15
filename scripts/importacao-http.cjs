@@ -9,14 +9,13 @@ async function responderImportacao(req, res, db, url) {
     if (req.method !== 'POST') {
         res.writeHead(405, { Allow: 'POST' }); return res.end();
     }
-    // Escrita local: bloqueia formulários e chamadas de outros sites, sem habilitar CORS.
+    // Bloqueia chamadas de outros sites, sem habilitar CORS.
     let origem;
     try { origem = new URL(`http://${req.headers.host}`); }
     catch { return responder(403, { error: 'Endereço do servidor inválido.' }); }
-    if (!['localhost', '127.0.0.1', '[::1]'].includes(origem.hostname) ||
-        (req.headers.origin && req.headers.origin !== origem.origin) ||
+    if ((req.headers.origin && req.headers.origin !== origem.origin) ||
         req.headers['x-rota-importacao'] !== 'csv') {
-        return responder(403, { error: 'Importe pelo painel aberto no servidor local.' });
+        return responder(403, { error: 'Importe pelo painel oficial.' });
     }
     if (!/^text\/csv(?:\s*;|$)/i.test(req.headers['content-type'] || '')) {
         return responder(415, { error: 'Envie um arquivo CSV UTF-8.' });
@@ -34,7 +33,7 @@ async function responderImportacao(req, res, db, url) {
         let texto;
         try { texto = new TextDecoder('utf-8', { fatal: true }).decode(Buffer.concat(partes)); }
         catch { return responder(400, { error: 'Salve o arquivo como CSV UTF-8 e tente novamente.' }); }
-        const resultado = importarCSV(db, texto, url.searchParams.get('previa') === '1');
+        const resultado = await importarCSV(db, texto, url.searchParams.get('previa') === '1');
         responder(resultado.erros.length ? 422 : 200, resultado);
     } catch {
         if (!res.writableEnded && !res.destroyed) responder(500, { error: 'Não foi possível importar. Consulte o cadastro antes de tentar novamente.' });

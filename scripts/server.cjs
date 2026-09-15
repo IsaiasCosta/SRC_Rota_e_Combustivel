@@ -48,6 +48,11 @@ function criarServidor({ diretorio = root, pagina = entry, arquivoBanco } = {}) 
     diretorio = path.resolve(diretorio);
     const tipos = { '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.png': 'image/png', '.csv': 'text/csv; charset=utf-8' };
     const db = abrirBanco({ arquivo: arquivoBanco });
+    if (db && typeof db.then === 'function') return db.then(banco => criarServidorComBanco({ diretorio, pagina, tipos }, banco));
+    return criarServidorComBanco({ diretorio, pagina, tipos }, db);
+}
+
+function criarServidorComBanco({ diretorio, pagina, tipos }, db) {
     const server = http.createServer((req, res) => {
         let pathname;
         try { pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname); }
@@ -63,19 +68,22 @@ function criarServidor({ diretorio = root, pagina = entry, arquivoBanco } = {}) 
             return res.end();
         }
         if (url.pathname === '/api/postos') {
-            try {
-                const dados = JSON.stringify(listarPostos(db));
+            Promise.resolve().then(() => listarPostos(db)).then(dadosBrutos => {
+                const dados = JSON.stringify(dadosBrutos);
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' });
                 return res.end(req.method === 'HEAD' ? undefined : dados);
-            } catch {
+            }).catch(() => {
                 res.writeHead(500, { 'Content-Type': 'application/json; charset=utf-8' });
                 return res.end(req.method === 'HEAD' ? undefined : JSON.stringify({ error: 'Não foi possível consultar os postos.' }));
-            }
+            });
+            return;
         }
         if (url.pathname === '/api/lojas') {
-            const dados = JSON.stringify(listarLojas(db));
-            res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' });
-            return res.end(req.method === 'HEAD' ? undefined : dados);
+            return Promise.resolve().then(() => listarLojas(db)).then(dadosBrutos => {
+                const dados = JSON.stringify(dadosBrutos);
+                res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' });
+                return res.end(req.method === 'HEAD' ? undefined : dados);
+            }).catch(() => responderJSON(res, 500, { error: 'Não foi possível consultar as lojas.' }));
         }
         if (url.pathname === '/api/geocodificar') {
             if (req.method !== 'GET') {
@@ -104,7 +112,7 @@ function criarServidor({ diretorio = root, pagina = entry, arquivoBanco } = {}) 
             });
         });
     });
-    server.once('close', () => db.close());
+    server.once('close', () => Promise.resolve(db.close()).catch(() => {}));
     return server;
 }
 
@@ -127,7 +135,7 @@ async function lerCorpo(req, limite = 1024 * 1024) {
 async function receberLoja(req, res, db) {
     try {
         const dados = JSON.parse(await lerCorpo(req, 16384));
-        const resultado = cadastrarLoja(db, dados);
+        const resultado = await cadastrarLoja(db, dados);
         if (resultado.erros.length) return responderJSON(res, 422, resultado);
         if (resultado.duplicados) return responderJSON(res, 409, { error: 'Esta loja já está cadastrada.' });
         responderJSON(res, 201, resultado);
@@ -149,7 +157,7 @@ async function receberLojas(req, res, db) {
             if (registro.campos.length !== campos.length) throw new Error(`Linha ${registro.linha}: quantidade de campos diferente do cabeçalho.`);
             return Object.fromEntries(registro.campos.map((valor, i) => [campos[i], valor]));
         });
-        responderJSON(res, 201, importarLojas(db, lojas));
+        responderJSON(res, 201, await importarLojas(db, lojas));
     } catch (error) { responderJSON(res, 422, { error: error.message || 'Não foi possível importar as lojas.' }); }
 }
 

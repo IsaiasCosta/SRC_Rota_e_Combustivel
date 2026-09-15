@@ -8,9 +8,8 @@ async function responderCadastro(req, res, db) {
     let origem;
     try { origem = new URL(`http://${req.headers.host}`); }
     catch { return responder(403, { error: 'Endereço do servidor inválido.' }); }
-    if (!['localhost', '127.0.0.1', '[::1]'].includes(origem.hostname) ||
-        (req.headers.origin && req.headers.origin !== origem.origin) || req.headers['x-rota-cadastro'] !== 'formulario') {
-        return responder(403, { error: 'Cadastre pelo painel aberto no servidor local.' });
+    if ((req.headers.origin && req.headers.origin !== origem.origin) || req.headers['x-rota-cadastro'] !== 'formulario') {
+        return responder(403, { error: 'Cadastre pelo painel oficial.' });
     }
     if (!/^application\/json(?:\s*;|$)/i.test(req.headers['content-type'] || '')) {
         return responder(415, { error: 'Envie os dados do formulário em JSON.' });
@@ -26,7 +25,7 @@ async function responderCadastro(req, res, db) {
         let dados;
         try { dados = JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(Buffer.concat(partes))); }
         catch { return responder(400, { error: 'Não foi possível ler os dados do formulário.' }); }
-        const resultado = cadastrarPosto(db, dados);
+        const resultado = await cadastrarPosto(db, dados);
         if (resultado.erros.length) return responder(422, { erros: resultado.erros });
         if (resultado.duplicados) return responder(409, { error: 'Este posto já está cadastrado. Nenhum dado foi alterado.' });
         return responder(201, { postos: resultado.postos });

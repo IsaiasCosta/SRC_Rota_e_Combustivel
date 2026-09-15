@@ -3,7 +3,9 @@ const path = require('node:path');
 const vm = require('node:vm');
 const { DatabaseSync } = require('node:sqlite');
 
-const arquivoPadrao = path.resolve(__dirname, '../database/rota-combustivel.sqlite');
+const arquivoPadrao = process.env.DATABASE_PATH
+    ? path.resolve(process.env.DATABASE_PATH)
+    : path.resolve(__dirname, '../database/rota-combustivel.sqlite');
 
 function lerCadastroInicial() {
     // Executa somente o cadastro versionado do projeto, nunca conteúdo recebido pela API.
@@ -12,7 +14,7 @@ function lerCadastroInicial() {
     return contexto.window.RotaCombustivel.postos;
 }
 
-function abrirBanco({ arquivo = arquivoPadrao, cadastroInicial = lerCadastroInicial } = {}) {
+function abrirBancoLocal({ arquivo = arquivoPadrao, cadastroInicial = lerCadastroInicial } = {}) {
     if (arquivo !== ':memory:') fs.mkdirSync(path.dirname(path.resolve(arquivo)), { recursive: true });
     const db = new DatabaseSync(arquivo);
     try {
@@ -51,13 +53,23 @@ function abrirBanco({ arquivo = arquivoPadrao, cadastroInicial = lerCadastroInic
     }
 }
 
+function abrirBanco(opcoes = {}) {
+    if (!opcoes.arquivo && process.env.DATABASE_URL) {
+        const { abrirBancoPostgres } = require('./database-postgres.cjs');
+        return abrirBancoPostgres({ cadastroInicial: opcoes.cadastroInicial ?? lerCadastroInicial });
+    }
+    return abrirBancoLocal(opcoes);
+}
+
 function listarPostos(db) {
+    if (db.tipo === 'postgres') return require('./database-postgres.cjs').listarPostos(db);
     return db.prepare(`SELECT id, nome AS Nome, nome_mapa AS nomeMapa,
         endereco AS "Endereço", cidade AS Cidade, estado AS Estado,
         latitude AS lat, longitude AS lon, cnpj FROM postos ORDER BY id`).all();
 }
 
 function listarLojas(db) {
+    if (db.tipo === 'postgres') return require('./database-postgres.cjs').listarLojas(db);
     return db.prepare(`SELECT id, nome AS Nome, marca AS Marca, endereco AS "Endereço", cidade AS Cidade,
         estado AS Estado, latitude AS lat, longitude AS lon, link_maps AS linkMaps
         FROM lojas ORDER BY id`).all();
@@ -83,6 +95,7 @@ function validarLoja(dados) {
 }
 
 function cadastrarLoja(db, dados) {
+    if (db.tipo === 'postgres') return require('./database-postgres.cjs').cadastrarLoja(db, dados);
     const { loja, erros } = validarLoja(dados);
     if (erros.length) return { erros, duplicados: 0 };
     const duplicada = db.prepare(`SELECT 1 FROM lojas WHERE lower(nome) = lower(?) AND lower(endereco) = lower(?)
@@ -95,6 +108,7 @@ function cadastrarLoja(db, dados) {
 }
 
 function importarLojas(db, lojas) {
+    if (db.tipo === 'postgres') return require('./database-postgres.cjs').importarLojas(db, lojas);
     db.exec('BEGIN IMMEDIATE;');
     try {
         let importados = 0, duplicados = 0;
@@ -113,11 +127,13 @@ function importarLojas(db, lojas) {
 }
 
 function importarCSV(db, texto, previa = false) {
+    if (db.tipo === 'postgres') return require('./database-postgres.cjs').importarCSV(db, texto, previa);
     const { analisarCSV } = require('./importacao-csv.cjs');
     return gravarPostos(db, existentes => analisarCSV(texto, existentes), previa);
 }
 
 function cadastrarPosto(db, dados) {
+    if (db.tipo === 'postgres') return require('./database-postgres.cjs').cadastrarPosto(db, dados);
     const { validarPosto, identidade } = require('./validacao-postos.cjs');
     return gravarPostos(db, existentes => {
         const { posto, erros } = validarPosto(dados);

@@ -20,13 +20,19 @@ Se o PowerShell bloquear `npm.ps1`, use `npm.cmd start` e `npm.cmd test`.
 
 ## Banco de dados
 
-O servidor cria automaticamente `database/rota-combustivel.sqlite` e importa os 49 postos de `src/data/postos.js` na primeira execução. Para criar ou verificar o banco sem iniciar o servidor, execute `npm.cmd run db:init`.
+O servidor cria automaticamente `database/rota-combustivel.sqlite` e importa os 49 postos de `src/data/postos.js` na primeira execução. Para criar ou verificar o banco sem iniciar o servidor, execute `npm.cmd run db:init`. Em produção, defina `DATABASE_PATH` para um diretório persistente, por exemplo `/var/data/rota-combustivel.sqlite` no Render.
 
 O painel consulta `GET /api/postos`. A tabela `postos` armazena identificador, nome, nome no mapa, endereço, cidade, estado, latitude, longitude, CNPJ opcional e data de criação. A migração em `database/migrations/001-postos.sql` define as validações e o índice por estado e cidade. Os nomes e endereços são preservados, inclusive os registros com coordenadas coincidentes.
 
 A importação ocorre uma única vez, em transação: reiniciar o servidor não duplica os registros nem sobrescreve alterações do banco. Após a criação, editar `src/data/postos.js` afeta apenas a referência para abertura direta e a importação em bancos novos. Alterações no banco aparecem no painel ao recarregar a página.
 
 O painel permite cadastrar um posto pelo formulário ou vários postos por CSV. A edição de postos existentes ainda não possui tela. Os parâmetros do veículo permanecem no navegador. Para fazer backup do banco, encerre o servidor e copie `database/rota-combustivel.sqlite`. O arquivo não é servido por HTTP nem incluído no Git; a estrutura e o código de importação são versionados.
+
+### Publicação no Render
+
+Crie o serviço como **Web Service**, usando `npm start` como comando de inicialização. Adicione um **Persistent Disk** montado em `/var/data` e crie a variável de ambiente `DATABASE_PATH=/var/data/rota-combustivel.sqlite`. Sem o Persistent Disk, o Render pode apagar o arquivo SQLite em reinicializações, novos deploys ou troca de instância.
+
+Para usar o plano gratuito do Render, use PostgreSQL no Supabase em vez do SQLite. No Supabase, execute o conteúdo de `database/supabase.sql` no **SQL Editor**. Em seguida, no Render, adicione a variável secreta `DATABASE_URL` com a connection string PostgreSQL do Supabase, preferencialmente a conexão **Session Pooler** em **Connect**. Quando `DATABASE_URL` existir, o servidor usa o Supabase automaticamente; quando ela não existir, continua usando SQLite local. Nunca publique essa URL no GitHub.
 
 ## Planejamento de entregas
 
