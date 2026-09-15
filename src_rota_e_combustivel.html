@@ -134,7 +134,7 @@
         <div class="inputs-grid">
             <div class="input-group" style="grid-column:1 / -1;"><label for="inpOrigemRota">Ponto de partida</label><input id="inpOrigemRota" placeholder="Endereço, cidade ou ponto atual"></div>
         </div>
-        <div class="cadastro-acoes"><button type="button" class="btn-calc" id="btnDefinirOrigem">Definir origem</button><button type="button" class="btn-gps" id="btnGPSRota">Usar GPS</button></div>
+        <div class="cadastro-acoes rota-acoes"><button type="button" class="btn-calc" id="btnDefinirOrigem">Definir origem</button><button type="button" class="btn-gps" id="btnGPSRota">Usar GPS</button></div>
         <h3 class="subtitulo-rota">Marcas das lojas</h3>
         <div id="listaMarcas" class="lista-marcas" aria-label="Filtrar lojas por marca"></div>
         <h3 class="subtitulo-rota">Lojas na sequência da rota</h3>
@@ -145,7 +145,7 @@
         <p id="statusRoteirizacao" class="helper" role="status" aria-live="polite">Carregando lojas...</p>
         <details class="cadastro-loja"><summary>Cadastrar ou importar lojas</summary>
             <form id="formCadastroLoja"><div class="inputs-grid">
-                <div class="input-group"><label for="lojaMarca">Marca</label><input id="lojaMarca" name="marca" placeholder="Ex.: Carrefour, Assaí, BH" required></div>
+                <div class="input-group"><label for="lojaMarca">Marca</label><input id="lojaMarca" name="marca" placeholder="Ex.: Carrefour, Assaí, BH"></div>
                 <div class="input-group"><label for="lojaNome">Nome</label><input id="lojaNome" name="nome" required></div>
                 <div class="input-group"><label for="lojaEndereco">Endereço</label><input id="lojaEndereco" name="endereco" required></div>
                 <div class="input-group"><label for="lojaCidade">Cidade</label><input id="lojaCidade" name="cidade" required></div>

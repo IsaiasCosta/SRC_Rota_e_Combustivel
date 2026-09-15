@@ -14,6 +14,7 @@ html {
 body {
     margin: 0;
     min-height: 100vh;
+    overflow-x: hidden;
     font-family: Arial, Helvetica, sans-serif;
     background:
         radial-gradient(circle at top left, rgba(56, 189, 248, 0.08), transparent 30%),
@@ -122,6 +123,8 @@ button {
 
 .cadastro-acoes { display: flex; gap: 10px; margin-top: 12px; }
 .cadastro-acoes > button { flex: 1; margin-top: 0; }
+.rota-acoes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.rota-acoes > button { width: 100%; }
 .subtitulo-rota { margin: 18px 0 8px; color: #cbd5e1; font-size: 12px; text-transform: uppercase; letter-spacing: .4px; }
 .ferramentas-lojas { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 10px; }
 .ferramentas-lojas input { flex: 1 1 240px; min-height: 38px; padding: 8px 10px; color: #f8fafc; background: #0b0e16; border: 1px solid #303646; border-radius: 8px; }
@@ -446,7 +449,7 @@ button {
     .header h1 {
         font-size: 18px;
         line-height: 1.2;
-        white-space: nowrap;
+        overflow-wrap: anywhere;
     }
 
     .header span {
@@ -464,8 +467,41 @@ button {
         gap: 12px;
     }
 
-    .lista-lojas { grid-template-columns: 1fr; }
+    .section-route { overflow: hidden; }
+
+    .lista-lojas {
+        grid-template-columns: 1fr;
+        max-height: min(42dvh, 360px);
+        margin-top: 12px;
+    }
+
+    .loja-opcao,
+    .loja-opcao > span {
+        min-width: 0;
+    }
+
+    .loja-opcao strong,
+    .loja-opcao small {
+        overflow-wrap: anywhere;
+    }
+
+    .ferramentas-lojas input {
+        flex-basis: 100%;
+        min-width: 0;
+    }
+
+    .ferramentas-lojas button {
+        flex: 1 1 calc(50% - 4px);
+    }
+
+    .ferramentas-lojas .helper {
+        flex-basis: 100%;
+        margin-left: 0;
+        text-align: right;
+    }
+
     .cadastro-acoes { flex-direction: column; }
+    .rota-acoes { grid-template-columns: 1fr; }
 
     .results-grid {
         grid-template-columns: 1fr 1fr;
@@ -542,6 +578,8 @@ body:has(.csv-dialog[open]) { overflow: hidden; }
 .cadastro-manual fieldset { margin: 0; padding: 0; border: 0; min-width: 0; }
 .cadastro-acoes { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin: 16px 0; }
 .cadastro-acoes .btn-calc { width: auto; margin: 0; }
+.rota-acoes > .btn-calc,
+.rota-acoes > .btn-gps { width: 100%; margin: 0; }
 .cadastro-manual [aria-invalid="true"] { border-color: #f87171; }
 button:disabled { cursor: default; opacity: 0.5; }
 .importacao-status { margin: 14px 0; }

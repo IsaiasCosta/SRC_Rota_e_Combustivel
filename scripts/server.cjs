@@ -147,11 +147,13 @@ async function receberLojas(req, res, db) {
         const texto = await lerCorpo(req);
         const registros = lerCSV(texto);
         if (registros.length < 2) return responderJSON(res, 422, { error: 'Inclua o cabeçalho e pelo menos uma loja.' });
-        const cabecalho = registros.shift().campos.map(c => c.trim().toLowerCase());
-        const aliases = { nome: 'Nome', marca: 'Marca', brand: 'Marca', endereco: 'Endereço', 'endereço': 'Endereço', cidade: 'Cidade', estado: 'Estado', uf: 'Estado', lat: 'lat', latitude: 'lat', lon: 'lon', longitude: 'lon', link: 'linkMaps', linkmaps: 'linkMaps', link_maps: 'linkMaps', maps: 'linkMaps' };
+        const normalizarCabecalho = campo => campo.normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim().toLowerCase().replace(/[?\uFFFD]/g, 'c').replace(/[ _-]/g, '');
+        const cabecalho = registros.shift().campos.map(normalizarCabecalho);
+        const aliases = { nome: 'Nome', marca: 'Marca', brand: 'Marca', endereco: 'Endereço', cidade: 'Cidade', estado: 'Estado', uf: 'Estado', lat: 'lat', latitude: 'lat', lon: 'lon', longitude: 'lon', link: 'linkMaps', linkmaps: 'linkMaps', maps: 'linkMaps' };
         const campos = cabecalho.map(c => aliases[c]);
-        if (campos.some(c => !c) || !['Nome', 'Endereço', 'Cidade', 'Estado', 'lat', 'lon'].every(c => campos.includes(c))) {
-            return responderJSON(res, 422, { error: 'Use as colunas nome, endereco, cidade, estado, latitude e longitude.' });
+        if (campos.some(c => !c) || !['Nome', 'Endereço', 'Cidade', 'Estado'].every(c => campos.includes(c)) ||
+            (campos.includes('lat') !== campos.includes('lon'))) {
+            return responderJSON(res, 422, { error: 'Use as colunas nome, endereco, cidade e estado. Latitude e longitude são opcionais, mas devem aparecer juntas.' });
         }
         const lojas = registros.map(registro => {
             if (registro.campos.length !== campos.length) throw new Error(`Linha ${registro.linha}: quantidade de campos diferente do cabeçalho.`);

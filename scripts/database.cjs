@@ -82,15 +82,17 @@ function validarLoja(dados) {
     const endereco = String(dados?.['Endereço'] ?? dados?.endereco ?? '').trim();
     const cidade = String(dados?.Cidade ?? dados?.cidade ?? '').trim();
     const estado = String(dados?.Estado ?? dados?.estado ?? '').trim().toUpperCase();
-    const lat = Number(String(dados?.lat ?? dados?.latitude ?? '').replace(',', '.'));
-    const lon = Number(String(dados?.lon ?? dados?.longitude ?? '').replace(',', '.'));
+    const textoLat = String(dados?.lat ?? dados?.latitude ?? '').trim();
+    const textoLon = String(dados?.lon ?? dados?.longitude ?? '').trim();
+    const lat = textoLat ? Number(textoLat.replace(',', '.')) : null;
+    const lon = textoLon ? Number(textoLon.replace(',', '.')) : null;
     const erros = [];
     if (!nome) erros.push('Nome da loja é obrigatório.');
     if (!endereco) erros.push('Endereço da loja é obrigatório.');
     if (!cidade) erros.push('Cidade da loja é obrigatória.');
     if (!/^[A-Z]{2}$/.test(estado)) erros.push('Estado deve ser uma UF válida.');
-    if (!Number.isFinite(lat) || lat < -90 || lat > 90) erros.push('Latitude inválida.');
-    if (!Number.isFinite(lon) || lon < -180 || lon > 180) erros.push('Longitude inválida.');
+    if (lat !== null && (!Number.isFinite(lat) || lat < -90 || lat > 90)) erros.push('Latitude inválida.');
+    if (lon !== null && (!Number.isFinite(lon) || lon < -180 || lon > 180)) erros.push('Longitude inválida.');
     return { loja: { Nome: nome, Marca: marca, Endereço: endereco, Cidade: cidade, Estado: estado, lat, lon, linkMaps }, erros };
 }
 

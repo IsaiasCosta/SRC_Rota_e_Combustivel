@@ -35,8 +35,8 @@ async function responderImportacao(req, res, db, url) {
         catch { return responder(400, { error: 'Salve o arquivo como CSV UTF-8 e tente novamente.' }); }
         const resultado = await importarCSV(db, texto, url.searchParams.get('previa') === '1');
         responder(resultado.erros.length ? 422 : 200, resultado);
-    } catch {
-        if (!res.writableEnded && !res.destroyed) responder(500, { error: 'Não foi possível importar. Consulte o cadastro antes de tentar novamente.' });
+    } catch (error) {
+        if (!res.writableEnded && !res.destroyed) responder(500, { error: error.message || 'Não foi possível importar. Consulte o cadastro antes de tentar novamente.' });
     }
 }
 

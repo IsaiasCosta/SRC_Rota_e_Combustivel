@@ -23,7 +23,7 @@ function inicializar() {
         disponivel = valor && window.location.protocol !== 'file:';
         arquivo.disabled = !disponivel || ocupado;
         status.textContent = disponivel ? 'Selecione um arquivo para conferir os postos antes de importar.' :
-            'Para importar, abra o painel pelo servidor local em http://localhost:3000 e aguarde o carregamento do cadastro.';
+            'Para importar, abra o painel pelo servidor e aguarde o carregamento do cadastro.';
     }
 
     function limpar() {
