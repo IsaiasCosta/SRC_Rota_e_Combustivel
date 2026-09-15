@@ -126,37 +126,6 @@
         <div id="statusBusca" role="status" aria-live="polite" style="margin-top:10px;color:#94a3b8;font-size:12px;"></div>
     </div>
 
-    <div class="section-box" id="resultadosPostos" style="display:none;"></div>
-
-    <section class="section-box section-route" id="planejamentoRota" aria-labelledby="tituloRota">
-        <div class="section-heading titulo-centralizado"><h2 id="tituloRota">Planejamento de entregas</h2></div>
-        <p class="helper">Escolha qualquer origem e a ordem das lojas. O sistema calcula o consumo de cada trecho e o saldo após cada entrega.</p>
-        <div class="inputs-grid">
-            <div class="input-group" style="grid-column:1 / -1;"><label for="inpOrigemRota">Ponto de partida</label><input id="inpOrigemRota" placeholder="Endereço, cidade ou ponto atual"></div>
-        </div>
-        <div class="cadastro-acoes rota-acoes"><button type="button" class="btn-calc" id="btnDefinirOrigem">Definir origem</button><button type="button" class="btn-gps" id="btnGPSRota">Usar GPS</button></div>
-        <h3 class="subtitulo-rota">Lojas na sequência da rota</h3>
-        <div class="ferramentas-lojas"><input id="filtroLojas" type="search" placeholder="Buscar loja, cidade ou endereço" aria-label="Buscar lojas"><button type="button" class="btn-secondary" id="btnMarcarLojas">Marcar visíveis</button><button type="button" class="btn-secondary" id="btnDesmarcarLojas">Desmarcar visíveis</button><span id="contadorLojas" class="helper"></span></div>
-        <div id="listaLojas" class="lista-lojas" aria-label="Lojas da rota"></div>
-        <button type="button" class="btn-calc" id="btnCalcularRota">Calcular rota e consumo</button>
-        <div id="resultadoRota" class="resultado-rota" hidden></div>
-        <p id="statusRoteirizacao" class="helper" role="status" aria-live="polite">Carregando lojas...</p>
-        <details class="cadastro-loja"><summary>Cadastrar ou importar lojas</summary>
-            <form id="formCadastroLoja"><div class="inputs-grid">
-                <div class="input-group"><label for="lojaMarca">Marca</label><input id="lojaMarca" name="marca" placeholder="Ex.: Carrefour, Assaí, BH"></div>
-                <div class="input-group"><label for="lojaNome">Nome</label><input id="lojaNome" name="nome" required></div>
-                <div class="input-group"><label for="lojaEndereco">Endereço</label><input id="lojaEndereco" name="endereco" required></div>
-                <div class="input-group"><label for="lojaCidade">Cidade</label><input id="lojaCidade" name="cidade" required></div>
-                <div class="input-group"><label for="lojaEstado">UF</label><input id="lojaEstado" name="estado" maxlength="2" required></div>
-                <div class="input-group"><label for="lojaLat">Latitude</label><input id="lojaLat" name="latitude" type="number" step="any" ></div>
-                <div class="input-group"><label for="lojaLon">Longitude</label><input id="lojaLon" name="longitude" type="number" step="any" ></div>
-                <div class="input-group"><label for="lojaLinkMaps">Link do Maps</label><input id="lojaLinkMaps" name="linkMaps" type="url" placeholder="https://maps.google.com/..." ></div>
-            </div><button type="submit" class="btn-calc">Cadastrar loja</button></form>
-            <label class="arquivo-lojas">Importar CSV de lojas <input type="file" id="arquivoLojas" accept=".csv,text/csv"></label>
-            <small class="helper">Cabeçalho aceito: marca;nome;endereco;cidade;estado;latitude;longitude;link_maps. As coordenadas são necessárias para calcular a rota.</small>
-        </details>
-    </section>
-
     <section class="section-box" id="importacaoPostos" aria-labelledby="tituloImportacao">
         <div class="cadastro-cabecalho"><h2 id="tituloImportacao">Cadastrar postos</h2><p class="helper">Escolha como deseja cadastrar.</p></div>
         <div class="cadastro-opcoes">
@@ -207,6 +176,62 @@
         </div>
         <div class="csv-dialog-acoes"><button type="button" class="btn-secondary" id="btnFecharImportacao">Fechar</button><button type="button" class="btn-calc" id="btnImportarPostos" disabled>Importar postos</button></div>
         </dialog>
+    </section>
+
+    <div class="section-box" id="resultadosPostos" style="display:none;"></div>
+
+    <section class="section-box section-route" id="planejamentoRota" aria-labelledby="tituloRota">
+        <div class="section-heading titulo-centralizado"><h2 id="tituloRota">Planejamento de entregas</h2></div>
+        <p class="helper">Escolha qualquer origem e a ordem das lojas. O sistema calcula o consumo de cada trecho e o saldo após cada entrega.</p>
+        <div class="inputs-grid">
+            <div class="input-group" style="grid-column:1 / -1;"><label for="inpOrigemRota">Ponto de partida</label><input id="inpOrigemRota" placeholder="Endereço, cidade ou ponto atual"></div>
+        </div>
+        <div class="cadastro-acoes rota-acoes"><button type="button" class="btn-calc" id="btnDefinirOrigem">Definir origem</button><button type="button" class="btn-gps" id="btnGPSRota">Usar GPS</button></div>
+        <h3 class="subtitulo-rota">Lojas na sequência da rota</h3>
+        <div class="ferramentas-lojas"><input id="filtroLojas" type="search" placeholder="Buscar loja, cidade ou endereço" aria-label="Buscar lojas"><button type="button" class="btn-secondary" id="btnMarcarLojas">Marcar visíveis</button><button type="button" class="btn-secondary" id="btnDesmarcarLojas">Desmarcar visíveis</button><span id="contadorLojas" class="helper"></span></div>
+        <div id="listaLojas" class="lista-lojas" aria-label="Lojas da rota"></div>
+        <button type="button" class="btn-calc" id="btnCalcularRota">Calcular rota e consumo</button>
+        <div id="resultadoRota" class="resultado-rota" hidden></div>
+        <p id="statusRoteirizacao" class="helper" role="status" aria-live="polite">Carregando lojas...</p>
+    </section>
+
+    <section class="section-box" id="cadastroLojas" aria-labelledby="tituloCadastroLojas">
+        <div class="cadastro-cabecalho"><h2 id="tituloCadastroLojas">Cadastrar ou importar lojas</h2><p class="helper">Escolha como deseja cadastrar.</p></div>
+        <div class="cadastro-opcoes">
+            <button type="button" class="cadastro-opcao" id="btnAbrirFormularioLoja" aria-controls="cadastroManualLoja" aria-expanded="false">
+                <span class="cadastro-icone" aria-hidden="true">＋</span><span><strong>Abrir formulário</strong><small>Uma loja por vez</small></span>
+            </button>
+            <button type="button" class="cadastro-opcao" id="btnAbrirImportacaoLoja" aria-controls="importacaoManualLoja" aria-expanded="false">
+                <span class="cadastro-icone" aria-hidden="true">↑</span><span><strong>Importar CSV</strong><small>Várias lojas de uma vez</small></span>
+            </button>
+        </div>
+        <details id="cadastroManualLoja" class="cadastro-manual">
+            <summary hidden>Preencher formulário</summary>
+            <form id="formCadastroLoja">
+                <p class="helper">Preencha os dados da loja. Latitude e longitude são opcionais, mas necessárias para incluí-la na rota.</p>
+                <fieldset id="camposCadastroLoja">
+                    <legend class="helper">Dados da loja</legend>
+                    <div class="inputs-grid">
+                        <div class="input-group"><label for="lojaMarca">Marca</label><input id="lojaMarca" name="marca" placeholder="Ex.: Carrefour, Assaí, BH"></div>
+                        <div class="input-group"><label for="lojaNome">Nome</label><input id="lojaNome" name="nome" required></div>
+                        <div class="input-group"><label for="lojaEndereco">Endereço</label><input id="lojaEndereco" name="endereco" required></div>
+                        <div class="input-group"><label for="lojaCidade">Cidade</label><input id="lojaCidade" name="cidade" required></div>
+                        <div class="input-group"><label for="lojaEstado">UF</label><input id="lojaEstado" name="estado" maxlength="2" required></div>
+                        <div class="input-group"><label for="lojaLat">Latitude</label><input id="lojaLat" name="latitude" type="number" step="any"></div>
+                        <div class="input-group"><label for="lojaLon">Longitude</label><input id="lojaLon" name="longitude" type="number" step="any"></div>
+                        <div class="input-group"><label for="lojaLinkMaps">Link do Maps</label><input id="lojaLinkMaps" name="linkMaps" type="url" placeholder="https://maps.google.com/..."></div>
+                    </div>
+                    <div class="cadastro-acoes"><button type="submit" class="btn-calc">Salvar loja</button><button type="button" class="btn-secondary" id="btnCancelarCadastroLoja">Cancelar</button></div>
+                </fieldset>
+                <p id="statusCadastroLoja" class="helper" role="status" aria-live="polite"></p>
+            </form>
+        </details>
+        <details id="importacaoManualLoja" class="cadastro-manual">
+            <summary hidden>Importar lojas por CSV</summary>
+            <label class="arquivo-lojas">Arquivo de lojas (.csv)<input type="file" id="arquivoLojas" accept=".csv,text/csv"></label>
+            <div class="csv-ajuda"><h3>Formato aceito</h3><p>Use CSV UTF-8 separado por vírgula ou ponto e vírgula. Cabeçalho: <strong>nome,endereco,cidade,estado,latitude,longitude,link_maps</strong>. Latitude e longitude podem ficar vazias.</p></div>
+            <p id="statusImportacaoLojas" class="helper" role="status" aria-live="polite"></p>
+        </details>
     </section>
 
 </div>

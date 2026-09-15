@@ -106,24 +106,44 @@ function renderizarResultado(resultado, lojas) {
 
 async function cadastrarLoja(event) {
     event.preventDefault();
+    const formulario = event.currentTarget;
+    const statusCadastro = el('statusCadastroLoja');
+    const campos = el('camposCadastroLoja');
     try {
-        const dados = Object.fromEntries(new FormData(event.currentTarget));
+        const dados = Object.fromEntries(new FormData(formulario));
+        campos.disabled = true;
+        statusCadastro.textContent = 'Salvando loja...';
         const resultado = await app.services.lojas.cadastrar(dados);
         renderizarLojas();
-        event.currentTarget.reset();
-        status(`Loja cadastrada. ${resultado.lojas.length} lojas disponíveis.`);
-    } catch (error) { status(error.message); }
+        formulario.reset();
+        statusCadastro.textContent = `Loja salva com sucesso. ${resultado.lojas.length} lojas disponíveis.`;
+    } catch (error) { statusCadastro.textContent = error.message; }
+    finally { campos.disabled = false; }
 }
 
 async function importarCSV(event) {
     const arquivo = event.target.files[0];
     if (!arquivo) return;
+    const statusImportacao = el('statusImportacaoLojas');
+    statusImportacao.textContent = 'Importando lojas...';
     try {
         const resultado = await app.services.lojas.importarCSV(await arquivo.text());
         renderizarLojas();
-        status(`${resultado.importados} lojas importadas; ${resultado.duplicados} duplicadas ignoradas.`);
-    } catch (error) { status(error.message); }
+        statusImportacao.textContent = `${resultado.importados} lojas importadas; ${resultado.duplicados} duplicadas ignoradas.`;
+    } catch (error) { statusImportacao.textContent = error.message; }
     event.target.value = '';
+}
+
+function alternarCadastroLoja(tipo) {
+    const formulario = el('cadastroManualLoja');
+    const importacao = el('importacaoManualLoja');
+    const abrirFormulario = tipo === 'formulario';
+    formulario.open = abrirFormulario;
+    importacao.open = !abrirFormulario;
+    el('btnAbrirFormularioLoja').setAttribute('aria-expanded', String(abrirFormulario));
+    el('btnAbrirImportacaoLoja').setAttribute('aria-expanded', String(!abrirFormulario));
+    if (abrirFormulario) el('lojaNome').focus();
+    else el('arquivoLojas').focus();
 }
 
 function inicializar() {
@@ -132,6 +152,14 @@ function inicializar() {
     el('btnCalcularRota').addEventListener('click', calcularRota);
     el('formCadastroLoja').addEventListener('submit', cadastrarLoja);
     el('arquivoLojas').addEventListener('change', importarCSV);
+    el('btnAbrirFormularioLoja').addEventListener('click', () => alternarCadastroLoja('formulario'));
+    el('btnAbrirImportacaoLoja').addEventListener('click', () => alternarCadastroLoja('importacao'));
+    el('btnCancelarCadastroLoja').addEventListener('click', () => {
+        el('formCadastroLoja').reset();
+        el('statusCadastroLoja').textContent = 'Cadastro cancelado. Nenhuma loja foi salva.';
+        el('cadastroManualLoja').open = false;
+        el('btnAbrirFormularioLoja').focus();
+    });
     el('filtroLojas').addEventListener('input', renderizarLojas);
     el('listaLojas').addEventListener('change', atualizarContador);
     el('btnMarcarLojas').addEventListener('click', () => alterarSelecaoVisivel(true));
