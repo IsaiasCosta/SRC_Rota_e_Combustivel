@@ -129,14 +129,12 @@
     <div class="section-box" id="resultadosPostos" style="display:none;"></div>
 
     <section class="section-box section-route" id="planejamentoRota" aria-labelledby="tituloRota">
-        <div class="section-heading titulo-centralizado"><h2 id="tituloRota">Planejamento de entregas</h2><span class="tag">Multi-drop</span></div>
+        <div class="section-heading titulo-centralizado"><h2 id="tituloRota">Planejamento de entregas</h2></div>
         <p class="helper">Escolha qualquer origem e a ordem das lojas. O sistema calcula o consumo de cada trecho e o saldo após cada entrega.</p>
         <div class="inputs-grid">
             <div class="input-group" style="grid-column:1 / -1;"><label for="inpOrigemRota">Ponto de partida</label><input id="inpOrigemRota" placeholder="Endereço, cidade ou ponto atual"></div>
         </div>
         <div class="cadastro-acoes rota-acoes"><button type="button" class="btn-calc" id="btnDefinirOrigem">Definir origem</button><button type="button" class="btn-gps" id="btnGPSRota">Usar GPS</button></div>
-        <h3 class="subtitulo-rota">Marcas das lojas</h3>
-        <div id="listaMarcas" class="lista-marcas" aria-label="Filtrar lojas por marca"></div>
         <h3 class="subtitulo-rota">Lojas na sequência da rota</h3>
         <div class="ferramentas-lojas"><input id="filtroLojas" type="search" placeholder="Buscar loja, cidade ou endereço" aria-label="Buscar lojas"><button type="button" class="btn-secondary" id="btnMarcarLojas">Marcar visíveis</button><button type="button" class="btn-secondary" id="btnDesmarcarLojas">Desmarcar visíveis</button><span id="contadorLojas" class="helper"></span></div>
         <div id="listaLojas" class="lista-lojas" aria-label="Lojas da rota"></div>

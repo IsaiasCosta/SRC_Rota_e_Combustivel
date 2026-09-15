@@ -12,11 +12,10 @@ function marcasDisponiveis() {
 }
 
 function lojasVisiveis() {
-    const marcasMarcadas = new Set([...document.querySelectorAll('#listaMarcas input:checked')].map(input => input.value));
     const filtro = el('filtroLojas')?.value.trim().toLocaleLowerCase() || '';
     return app.lojas.filter(loja => {
         const texto = [loja.Nome, loja.Endereço, loja.Cidade, loja.Estado, loja.Marca].join(' ').toLocaleLowerCase();
-        return marcasMarcadas.has(String(loja.Marca || 'Sem marca').trim()) && texto.includes(filtro);
+        return texto.includes(filtro);
     });
 }
 
@@ -28,8 +27,6 @@ function atualizarContador() {
 
 function renderizarLojas() {
     const selecionadasAntes = new Set([...document.querySelectorAll('#listaLojas input:checked')].map(input => Number(input.value)));
-    const marcas = el('listaMarcas');
-    marcas.innerHTML = marcasDisponiveis().map(marca => `<label class="marca-opcao"><input type="checkbox" value="${app.utils.escaparHTML(marca)}" checked><span>${app.utils.escaparHTML(marca)}</span></label>`).join('');
     const lista = el('listaLojas');
     if (!app.lojas?.length) {
         lista.innerHTML = '<p class="helper">Nenhuma loja cadastrada. Cadastre uma loja ou importe um CSV.</p>';
@@ -135,7 +132,6 @@ function inicializar() {
     el('btnCalcularRota').addEventListener('click', calcularRota);
     el('formCadastroLoja').addEventListener('submit', cadastrarLoja);
     el('arquivoLojas').addEventListener('change', importarCSV);
-    el('listaMarcas').addEventListener('change', renderizarLojas);
     el('filtroLojas').addEventListener('input', renderizarLojas);
     el('listaLojas').addEventListener('change', atualizarContador);
     el('btnMarcarLojas').addEventListener('click', () => alterarSelecaoVisivel(true));
