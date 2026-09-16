@@ -170,3 +170,6 @@ O primeiro comando testa as regras e o servidor. O segundo abre o Chrome em modo
 - Os testes de navegador simulam os serviços externos; não verificam sua disponibilidade real.
 
 Consulte [a arquitetura e as orientações de evolução](docs/arquitetura.md) antes de acrescentar funcionalidades.
+
+cd /d "D:\SRC Rota e Combustível"
+npx wrangler pages deploy . --project-name NOME_DO_PROJETO
