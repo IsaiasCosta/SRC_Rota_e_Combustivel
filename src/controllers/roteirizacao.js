@@ -21,7 +21,7 @@ function lojasVisiveis() {
 
 function atualizarContador() {
     const quantidade = document.querySelectorAll('#listaLojas input:checked').length;
-    const total = document.querySelectorAll('#listaLojas input:not(:disabled)').length;
+    const total = document.querySelectorAll('#listaLojas input').length;
     el('contadorLojas').textContent = `${quantidade} selecionada${quantidade === 1 ? '' : 's'} de ${total}`;
 }
 
@@ -41,8 +41,8 @@ function renderizarLojas() {
         const marcado = deveMarcar ? 'checked' : '';
         if (marcado) primeiraCoordenada = true;
         const link = loja.linkMaps ? `<a href="${app.utils.escaparHTML(loja.linkMaps)}" target="_blank" rel="noopener noreferrer">Maps</a>` : '';
-        return `<label class="loja-opcao ${temCoordenadas ? '' : 'loja-sem-coordenadas'}"><input type="checkbox" value="${loja.id}" ${marcado} ${temCoordenadas ? '' : 'disabled'}>
-        <span><strong>${app.utils.escaparHTML(loja.Nome)}</strong><small>${app.utils.escaparHTML(loja.Marca || 'Sem marca')} • ${app.utils.escaparHTML(loja.Endereço)}, ${app.utils.escaparHTML(loja.Cidade)}/${app.utils.escaparHTML(loja.Estado)} ${link}</small>${temCoordenadas ? '' : '<small class="aviso-coordenadas">Sem coordenadas: não pode entrar na rota.</small>'}</span></label>`;
+        return `<label class="loja-opcao ${temCoordenadas ? '' : 'loja-sem-coordenadas'}"><input type="checkbox" value="${loja.id}" ${marcado}>
+        <span><strong>${app.utils.escaparHTML(loja.Nome)}</strong><small>${app.utils.escaparHTML(loja.Marca || 'Sem marca')} • ${app.utils.escaparHTML(loja.Endereço)}, ${app.utils.escaparHTML(loja.Cidade)}/${app.utils.escaparHTML(loja.Estado)} ${link}</small>${temCoordenadas ? '' : '<small class="aviso-coordenadas">Sem coordenadas: informe antes de calcular a rota.</small>'}</span></label>`;
     }).join('');
     lista.querySelectorAll('input').forEach(input => input.addEventListener('change', atualizarContador));
     atualizarContador();
@@ -72,7 +72,7 @@ function lojasSelecionadas() {
 }
 
 function alterarSelecaoVisivel(marcar) {
-    document.querySelectorAll('#listaLojas input:not(:disabled)').forEach(input => { input.checked = marcar; });
+    document.querySelectorAll('#listaLojas input').forEach(input => { input.checked = marcar; });
     atualizarContador();
 }
 
@@ -82,6 +82,12 @@ async function calcularRota() {
         const lojas = lojasSelecionadas();
         if (!coordenadasValidas(origem)) throw new Error('Defina uma origem válida.');
         if (!lojas.length) throw new Error('Selecione ao menos uma loja.');
+        const semCoordenadas = lojas.filter(loja => !coordenadasValidas(loja));
+        if (semCoordenadas.length) {
+            const nomes = semCoordenadas.slice(0, 3).map(loja => loja.Nome).join(', ');
+            const complemento = semCoordenadas.length > 3 ? ` e mais ${semCoordenadas.length - 3}` : '';
+            throw new Error(`Informe as coordenadas de ${nomes}${complemento} antes de calcular a rota.`);
+        }
         el('btnCalcularRota').disabled = true;
         status('Calculando a rota no Google Maps...');
         const trechos = await obterRotaSequencial(origem, lojas);

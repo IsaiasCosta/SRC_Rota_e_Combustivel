@@ -151,7 +151,7 @@ button {
 .loja-opcao small { color: #94a3b8; font-size: 11px; }
 .loja-opcao small a { color: #67e8f9; }
 .loja-sem-coordenadas { opacity: .65; }
-.loja-sem-coordenadas input { cursor: not-allowed; }
+.loja-sem-coordenadas input { cursor: pointer; }
 .aviso-coordenadas { color: #fbbf24 !important; }
 .resultado-rota { margin-top: 16px; }
 .rota-resumo { display: grid; gap: 4px; padding: 12px; border: 1px solid currentColor; border-radius: 8px; font-size: 12px; }
