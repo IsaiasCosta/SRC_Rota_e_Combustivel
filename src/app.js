@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     } catch {
         document.getElementById('quantidadePostos').textContent = '';
         document.getElementById('quantidadePostos').hidden = true;
-        document.getElementById('statusBusca').textContent = 'Não foi possível carregar os postos. Verifique o servidor e recarregue a página.';
+        document.getElementById('statusBusca').textContent = 'Não foi possível carregar os postos. Verifique a configuração do Supabase e recarregue a página.';
         cadastro.definirDisponibilidade(false);
         importacao.definirDisponibilidade(false);
         return;

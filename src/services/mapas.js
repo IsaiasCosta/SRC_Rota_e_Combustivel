@@ -14,7 +14,8 @@ async function geocodificarOrigem(texto) {
      * Para uso corporativo de alto volume, troque por um serviço de geocodificação
      * próprio/profissional.
      */
-    const url = typeof window.location?.protocol === 'string' && window.location.protocol !== 'file:'
+    const usaServidorLocal = typeof window.location?.protocol === 'string' && window.location.protocol !== 'file:' && !app.config.supabaseUrl;
+    const url = usaServidorLocal
         ? `/api/geocodificar?q=${encodeURIComponent(texto)}`
         : "https://nominatim.openstreetmap.org/search" +
           `?format=jsonv2&limit=1&countrycodes=br&q=${encodeURIComponent(texto)}`;
@@ -87,7 +88,7 @@ async function obterRotaOSRM(local, posto) {
 }
 
 async function obterRotaSequencial(origem, lojas) {
-    if (window.location.protocol !== 'file:') {
+    if (window.location.protocol !== 'file:' && !app.config.supabaseUrl) {
         try {
             const resposta = await fetch('/api/rotas', {
                 method: 'POST',

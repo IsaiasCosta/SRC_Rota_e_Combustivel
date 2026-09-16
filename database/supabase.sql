@@ -27,3 +27,16 @@ CREATE TABLE IF NOT EXISTS lojas (
 );
 
 CREATE INDEX IF NOT EXISTS lojas_estado_cidade ON lojas (estado, cidade);
+
+ALTER TABLE postos ENABLE ROW LEVEL SECURITY;
+ALTER TABLE lojas ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS postos_public_select ON postos;
+DROP POLICY IF EXISTS postos_public_insert ON postos;
+DROP POLICY IF EXISTS lojas_public_select ON lojas;
+DROP POLICY IF EXISTS lojas_public_insert ON lojas;
+
+CREATE POLICY postos_public_select ON postos FOR SELECT TO anon, authenticated USING (true);
+CREATE POLICY postos_public_insert ON postos FOR INSERT TO anon, authenticated WITH CHECK (true);
+CREATE POLICY lojas_public_select ON lojas FOR SELECT TO anon, authenticated USING (true);
+CREATE POLICY lojas_public_insert ON lojas FOR INSERT TO anon, authenticated WITH CHECK (true);

@@ -20,7 +20,7 @@ Se o PowerShell bloquear `npm.ps1`, use `npm.cmd start` e `npm.cmd test`.
 
 ## Banco de dados
 
-O servidor cria automaticamente `database/rota-combustivel.sqlite` e importa os 49 postos de `src/data/postos.js` na primeira execução. Para criar ou verificar o banco sem iniciar o servidor, execute `npm.cmd run db:init`. Em produção, defina `DATABASE_PATH` para um diretório persistente, por exemplo `/var/data/rota-combustivel.sqlite` no Render.
+O servidor cria automaticamente `database/rota-combustivel.sqlite` e importa os 49 postos de `src/data/postos.js` na primeira execução. Para criar ou verificar o banco sem iniciar o servidor, execute `npm.cmd run db:init`. Em produção, use PostgreSQL e defina `DATABASE_URL`; o SQLite local é destinado ao desenvolvimento ou a servidores com disco persistente.
 
 O painel consulta `GET /api/postos`. A tabela `postos` armazena identificador, nome, nome no mapa, endereço, cidade, estado, latitude, longitude, CNPJ opcional e data de criação. A migração em `database/migrations/001-postos.sql` define as validações e o índice por estado e cidade. Os nomes e endereços são preservados, inclusive os registros com coordenadas coincidentes.
 
@@ -28,17 +28,31 @@ A importação ocorre uma única vez, em transação: reiniciar o servidor não 
 
 O painel permite cadastrar um posto pelo formulário ou vários postos por CSV. A edição de postos existentes ainda não possui tela. Os parâmetros do veículo permanecem no navegador. Para fazer backup do banco, encerre o servidor e copie `database/rota-combustivel.sqlite`. O arquivo não é servido por HTTP nem incluído no Git; a estrutura e o código de importação são versionados.
 
-### Publicação no Render
+### Publicação no Cloudflare Pages + Supabase
 
-Crie o serviço como **Web Service**, usando `npm start` como comando de inicialização. Adicione um **Persistent Disk** montado em `/var/data` e crie a variável de ambiente `DATABASE_PATH=/var/data/rota-combustivel.sqlite`. Sem o Persistent Disk, o Render pode apagar o arquivo SQLite em reinicializações, novos deploys ou troca de instância.
+O Cloudflare Pages hospeda o HTML, CSS e JavaScript como um site estático. O cadastro de postos e lojas é salvo diretamente no Supabase pela API REST; não é necessário executar `npm start` em produção.
 
-Para usar o plano gratuito do Render, use PostgreSQL no Supabase em vez do SQLite. No Supabase, execute o conteúdo de `database/supabase.sql` no **SQL Editor**. Em seguida, no Render, adicione a variável secreta `DATABASE_URL` com a connection string PostgreSQL do Supabase, preferencialmente a conexão **Session Pooler** em **Connect**. Quando `DATABASE_URL` existir, o servidor usa o Supabase automaticamente; quando ela não existir, continua usando SQLite local. Nunca publique essa URL no GitHub.
+1. Crie um projeto em [Supabase](https://supabase.com/dashboard).
+2. No **SQL Editor**, execute todo o conteúdo de `database/supabase.sql`.
+3. Em **Project Settings → API**, copie a **Project URL** e a chave pública **anon**.
+4. Cole esses valores em `src/config.js`:
+	```js
+	supabaseUrl: 'https://SEU-PROJETO.supabase.co',
+	supabaseAnonKey: 'SUA_CHAVE_ANON',
+	```
+5. Crie um projeto em [Cloudflare Pages](https://pages.cloudflare.com/) conectado ao GitHub.
+6. Escolha **Direct Upload** ou conecte o repositório. Como não há build, deixe o comando de build vazio e publique a raiz do projeto.
+7. Abra o domínio gerado pelo Cloudflare e importe o CSV pelo painel.
+
+A chave `anon` pode aparecer no frontend; ela não é uma senha. As políticas do arquivo `database/supabase.sql` permitem leitura e inserção públicas, mas não permitem atualização ou exclusão. Nunca coloque a chave `service_role` no código ou no Cloudflare Pages.
+
+No Cloudflare Pages, o arquivo de entrada é `src_rota_e_combustivel.html`. Se quiser usar o endereço `/`, renomeie uma cópia para `index.html` ou configure uma regra de redirecionamento. A abertura direta por arquivo continua sem persistência.
 
 ## Planejamento de entregas
 
 Em **Planejamento de entregas**, o operador informa qualquer ponto de partida por endereço ou GPS, seleciona uma ou mais lojas e define a ordem das paradas. O sistema consulta o OSRM para cada trecho da sequência origem → loja 1 → loja 2, calcula os litros consumidos e mostra o saldo após cada entrega. O alerta indica quando o combustível atual não é suficiente para concluir a rota ou quando o trajeto ultrapassa a margem de segurança.
 
-As lojas ficam na tabela `lojas` do SQLite e podem ser cadastradas individualmente ou importadas por CSV UTF-8 com o cabeçalho `marca;nome;endereco;cidade;estado;latitude;longitude;link_maps`. Marca e link do Maps são preservados; se o link não for informado, o sistema gera uma busca pelo endereço. O link da rota completa abre no Google Maps com as lojas como pontos intermediários.
+As lojas ficam na tabela `lojas` do Supabase e podem ser cadastradas individualmente ou importadas por CSV UTF-8 com o cabeçalho `marca;nome;endereco;cidade;estado;latitude;longitude;link_maps`. Marca e link do Maps são preservados; se o link não for informado, o sistema gera uma busca pelo endereço. O link da rota completa abre no Google Maps com as lojas como pontos intermediários.
 
 O cálculo de distância usa o **Google Maps Directions API** quando a variável local `GOOGLE_MAPS_API_KEY` está configurada. Sem essa chave, o sistema usa o OSRM e identifica o resultado como estimativa, pois os dois roteadores podem escolher caminhos diferentes. No PowerShell, configure a chave apenas no terminal local antes de iniciar o servidor: `$env:GOOGLE_MAPS_API_KEY = 'sua-chave'` e depois `npm.cmd start`. Nunca coloque a chave no HTML ou no Git.
 
