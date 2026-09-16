@@ -597,9 +597,12 @@ button:disabled { cursor: default; opacity: 0.5; }
 .brand-mark img { display: block; width: 100%; height: auto; }
 .header .version-badge { margin-left: auto; padding: 7px 12px; border: 1px solid #303646; border-radius: 20px; white-space: nowrap; }
 .eyebrow { margin: 0 0 5px; color: #38bdf8; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; }
-.navigation { display: flex; flex-wrap: wrap; gap: 24px; margin-bottom: 16px; padding: 0 4px 14px; border-bottom: 1px solid #252a38; }
-.navigation a { color: #bae6fd; text-decoration: none; font-size: 13px; }
-.navigation a:hover { text-decoration: underline; }
+.navigation { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 2px; margin-bottom: 16px; padding: 4px; border: 1px solid #1d2d4b; background: #0c1830; overflow-x: auto; }
+.navigation a { display: flex; min-height: 78px; align-items: center; justify-content: center; gap: 10px; padding: 12px 14px; border-right: 1px solid #243552; color: #dbeafe; text-decoration: none; font-size: 13px; font-weight: 700; text-align: center; white-space: nowrap; transition: background .2s ease, color .2s ease, box-shadow .2s ease; }
+.navigation a:last-child { border-right: 0; }
+.navigation a:hover,
+.navigation a:focus-visible { color: #fff; background: #17376d; box-shadow: inset 0 -4px #2f7cff; outline: none; }
+.navigation-icon { display: grid; place-items: center; min-width: 30px; color: #c7dcff; font-size: 30px; line-height: 1; }
 .helper { margin: 0 0 16px; color: #94a3b8; font-size: 12px; }
 .section-heading { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 18px; }
 .section-box h2 { margin: 0 0 19px; color: #e2e8f0; font-size: 22px; }
@@ -652,21 +655,24 @@ footer { display: flex; justify-content: space-between; align-items: center; fle
     }
 
     .navigation {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 8px;
-        padding: 0 4px 14px;
+        grid-template-columns: repeat(5, minmax(142px, 1fr));
+        gap: 0;
+        padding: 3px;
     }
 
     .navigation a {
-        min-width: 0;
+        min-width: 142px;
+        min-height: 64px;
+        flex-direction: column;
+        gap: 5px;
+        padding: 9px 8px;
         font-size: 11px;
         line-height: 1.35;
-        white-space: nowrap;
     }
 
-    .navigation a:last-child {
-        grid-column: auto;
+    .navigation-icon {
+        min-width: 24px;
+        font-size: 24px;
     }
 
     footer {
