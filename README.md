@@ -40,9 +40,11 @@ O Cloudflare Pages hospeda o HTML, CSS e JavaScript como um site estático. O ca
 	supabaseUrl: 'https://SEU-PROJETO.supabase.co',
 	supabaseAnonKey: 'SUA_CHAVE_ANON',
 	```
-5. Crie um projeto em [Cloudflare Pages](https://pages.cloudflare.com/) conectado ao GitHub.
-6. Escolha **Direct Upload** ou conecte o repositório. Como não há build, deixe o comando de build vazio e publique a raiz do projeto.
-7. Abra o domínio gerado pelo Cloudflare e importe o CSV pelo painel.
+5. Crie um projeto em [Cloudflare Workers & Pages](https://dash.cloudflare.com/) conectado ao GitHub e escolha **Workers Builds**.
+6. Configure o comando de build como `npm run build:cloudflare`.
+7. Configure o comando de deploy como `npx wrangler deploy`.
+8. Não use `npx wrangler deploy` sem executar o build: o `wrangler.jsonc` aponta para a pasta `public` criada pelo build.
+9. Abra o domínio gerado pelo Cloudflare e importe o CSV pelo painel.
 
 A chave `anon` pode aparecer no frontend; ela não é uma senha. As políticas do arquivo `database/supabase.sql` permitem leitura e inserção públicas, mas não permitem atualização ou exclusão. Nunca coloque a chave `service_role` no código ou no Cloudflare Pages.
 
