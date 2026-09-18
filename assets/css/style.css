@@ -87,6 +87,52 @@ button {
 }
 
 /* =========================
+   TELA DE LOGIN
+   ========================= */
+.login-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 32px;
+    border-radius: 16px;
+    background: #ffffff;
+    color: #172033;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+.login-card input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #aab3c2;
+    border-radius: 8px;
+}
+
+.login-card button {
+    padding: 12px;
+    border: 0;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+[hidden] {
+    display: none !important;
+}
+#painelPrincipal[hidden],
+#telaLogin[hidden] {
+    display: none !important;
+}
+
+/* =========================
    CAIXAS / SEÇÕES
    ========================= */
 
