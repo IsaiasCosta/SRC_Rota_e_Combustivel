@@ -8,12 +8,6 @@
         const formulario = document.getElementById('formLogin');
         const statusLogin = document.getElementById('statusLogin');
         const botaoEntrar = document.getElementById('btnEntrar');
-        const telaCadastro = document.getElementById('telaCadastro');
-        const botaoCriarConta = document.getElementById('btnCriarConta');
-        const botaoVoltarLogin = document.getElementById('btnVoltarLogin');
-        const statusCadastroUsuario = document.getElementById('statusCadastroUsuario');
-        const formularioCadastro = document.getElementById('formCadastroUsuario');
-        const botaoCadastrarUsuario = document.getElementById('btnCadastrarUsuario');
         const botaoMostrarSenha = document.getElementById('btnMostrarSenha');
         const campoSenhaLogin = document.getElementById('senhaLogin');
         const botaoEsqueciSenha = document.getElementById('btnEsqueciSenha');
@@ -24,56 +18,6 @@
         const botaoSalvarNovaSenha = document.getElementById('btnSalvarNovaSenha');
 
         let painelInicializado = false;
-        botaoCriarConta.addEventListener('click', () => {
-            statusLogin.textContent = '';
-            statusCadastroUsuario.textContent = '';
-
-            telaLogin.hidden = true;
-            telaCadastro.hidden = false;
-            painel.hidden = true;
-        });
-
-        botaoVoltarLogin.addEventListener('click', () => {
-            statusCadastroUsuario.textContent = '';
-
-            telaCadastro.hidden = true;
-            telaLogin.hidden = false;
-            painel.hidden = true;
-        });
-        
-        formularioCadastro.addEventListener('submit', async event => {
-            event.preventDefault();
-
-            const email = document.getElementById('emailCadastro').value.trim();
-            const senha = document.getElementById('senhaCadastro').value;
-            const confirmacao = document.getElementById('confirmarSenhaCadastro').value;
-
-            if (senha !== confirmacao) {
-                statusCadastroUsuario.textContent = 'As senhas não coincidem.';
-                return;
-            }
-
-            if (senha.length < 12) {
-                statusCadastroUsuario.textContent =
-                    'A senha deve ter pelo menos 12 caracteres.';
-                return;
-            }
-
-            botaoCadastrarUsuario.disabled = true;
-            statusCadastroUsuario.textContent = 'Criando conta...';
-
-            try {
-                await app.services.auth.cadastrar(email, senha);
-
-                formularioCadastro.reset();
-                statusCadastroUsuario.textContent =
-                    'Solicitação recebida. Verifique seu e-mail para confirmar a conta, se necessário. Depois, volte ao login.';
-            } catch (error) {
-                statusCadastroUsuario.textContent = error.message;
-            } finally {
-                botaoCadastrarUsuario.disabled = false;
-            }
-        });
         if (botaoLogout) {
             botaoLogout.addEventListener('click', () => {
                 app.services.auth.sair();

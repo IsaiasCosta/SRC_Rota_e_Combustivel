@@ -85,33 +85,10 @@
             if (!coordenadasValidas(origem)) throw new Error('Defina uma origem válida.');
             if (!lojas.length) throw new Error('Selecione ao menos uma loja.');
             const semCoordenadas = lojas.filter(loja => !coordenadasValidas(loja));
-
-            for (const loja of semCoordenadas) {
-                const enderecoCompleto = [
-                    loja.Endereço,
-                    loja.Cidade,
-                    loja.Estado,
-                    'Brasil'
-                ].filter(Boolean).join(', ');
-
-                if (!loja.Endereço || !loja.Cidade || !loja.Estado) {
-                    throw new Error(
-                        `Complete o endereço, a cidade e o estado da loja ${loja.Nome}.`
-                    );
-                }
-
-                status(`Localizando a loja ${loja.Nome} pelo endereço...`);
-
-                try {
-                    const local = await geocodificarOrigem(enderecoCompleto);
-
-                    loja.lat = local.coordenadas.lat;
-                    loja.lon = local.coordenadas.lon;
-                } catch (error) {
-                    throw new Error(
-                        `Não foi possível localizar a loja ${loja.Nome}: ${error.message}`
-                    );
-                }
+            if (semCoordenadas.length) {
+                const nomes = semCoordenadas.slice(0, 3).map(loja => loja.Nome).join(', ');
+                const complemento = semCoordenadas.length > 3 ? ` e mais ${semCoordenadas.length - 3}` : '';
+                throw new Error(`Informe as coordenadas de ${nomes}${complemento} antes de calcular a rota.`);
             }
             el('btnCalcularRota').disabled = true;
             status('Calculando a rota no Google Maps...');
@@ -159,21 +136,13 @@
         const botaoSalvar = el('btnSalvarLoja');
         if (botaoSalvar) botaoSalvar.textContent = 'Salvar alterações';
 
-        // Editar deve sempre abrir o formulário, nunca alternar seu estado.
-        el('cadastroManualLoja').open = true;
-        el('importacaoManualLoja').open = false;
-
-        el('btnAbrirFormularioLoja').setAttribute('aria-expanded', 'true');
-        el('btnAbrirImportacaoLoja').setAttribute('aria-expanded', 'false');
+        alternarCadastroLoja('formulario');
 
         el('cadastroManualLoja').scrollIntoView({
             behavior: 'smooth',
             block: 'start'
         });
-
-        el('lojaNome').focus();
     }
-
     async function cadastrarLoja(event) {
         event.preventDefault();
 
@@ -232,7 +201,7 @@
         event.target.value = '';
     }
 
-    function alternarCadastroLoja(tipo) {
+   function alternarCadastroLoja(tipo) {
         const formulario = el('cadastroManualLoja');
         const importacao = el('importacaoManualLoja');
 
@@ -276,9 +245,6 @@
         el('btnAbrirImportacaoLoja').addEventListener('click', () => alternarCadastroLoja('importacao'));
         el('btnCancelarCadastroLoja').addEventListener('click', () => {
             el('formCadastroLoja').reset();
-            lojaEmEdicao = null;
-            el('lojaIdEdicao').value = '';
-            el('btnSalvarLoja').textContent = 'Salvar loja';
             el('statusCadastroLoja').textContent = 'Cadastro cancelado. Nenhuma loja foi salva.';
             el('cadastroManualLoja').open = false;
             el('btnAbrirFormularioLoja').setAttribute('aria-expanded', 'false');
