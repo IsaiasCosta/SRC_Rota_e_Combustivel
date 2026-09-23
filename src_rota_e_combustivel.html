@@ -22,14 +22,20 @@
             <label for="emailLogin">E-mail</label>
             <input type="email" id="emailLogin" placeholder="seu@email.com" autocomplete="username" required>
 
-            <label for="senhaLogin">Senha</label>
+            <label for="senhaLogin">Senha (8 caracteres)</label>
 
             <div class="login-senha-container">
-                <input type="password" id="senhaLogin" placeholder="Sua senha" autocomplete="current-password" required>
+                <input type="password" id="senhaLogin" placeholder="Sua senha" autocomplete="current-password"  minlength="8" maxlength="8" required>
 
                 <button type="button" id="btnMostrarSenha" class="btn-mostrar-senha" aria-label="Mostrar senha"
                     aria-pressed="false">
-                    Mostrar
+                    <svg class="icone-senha" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"
+                        focusable="false">
+                        <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z" />
+                        <circle cx="12" cy="12" r="3" />
+                        <path class="icone-senha-risco" d="m3 3 18 18" />
+                    </svg>
                 </button>
             </div>
 
@@ -62,22 +68,28 @@
             <label for="emailCadastro">E-mail</label>
             <input type="email" id="emailCadastro" autocomplete="email" required>
 
-            <label for="senhaCadastro">Senha</label>
+            <label for="senhaCadastro">Senha (8 caracteres)</label>
             <div class="login-senha-container">
-                <input type="password" id="senhaCadastro" autocomplete="new-password" minlength="12" required>
+                <input type="password" id="senhaCadastro" autocomplete="new-password" minlength="8" maxlength="8" required>
 
-                <button type="button" id="btnMostrarSenhaCadastro" class="btn-mostrar-senha" aria-label="Mostrar senha"
+                <button type="button" id="btnMostrarSenhaCadastro" class="btn-mostrar-senha" aria-label="Mostrar senhas"
                     aria-pressed="false">
-                    Mostrar
+                    <svg class="icone-senha" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"
+                        focusable="false">
+                        <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z" />
+                        <circle cx="12" cy="12" r="3" />
+                        <path class="icone-senha-risco" d="m3 3 18 18" />
+                    </svg>
                 </button>
             </div>
 
 
             <label for="confirmarSenhaCadastro">Confirmar senha</label>
             <div class="login-senha-container">
-                <input type="password" id="confirmarSenhaCadastro" autocomplete="new-password" minlength="12" required>
+                <input type="password" id="confirmarSenhaCadastro" autocomplete="new-password" minlength="8" maxlength="8" required>
 
-      
+
             </div>
             <button type="submit" id="btnCadastrarUsuario">
                 Cadastrar
@@ -96,11 +108,11 @@
             <h1>Definir nova senha</h1>
             <p>Crie uma senha para acessar o SRC Rota e Combustível.</p>
 
-            <label for="novaSenha">Nova senha</label>
-            <input type="password" id="novaSenha" autocomplete="new-password" minlength="12" required>
+            <label for="novaSenha">Nova senha (8 caracteres)</label>
+            <input type="password" id="novaSenha" autocomplete="new-password" minlength="8" maxlength="8" required>
 
             <label for="confirmarNovaSenha">Confirmar nova senha</label>
-            <input type="password" id="confirmarNovaSenha" autocomplete="new-password" minlength="12" required>
+            <input type="password" id="confirmarNovaSenha" autocomplete="new-password" minlength="8" maxlength="8" required>
 
             <button type="submit" id="btnSalvarNovaSenha">
                 Salvar nova senha
@@ -216,72 +228,81 @@
             </div>
         </div>
 
-        <div class="section-box">
-            <h2 class="titulo-centralizado">Medidor de Combustível</h2>
-            <p class="helper">O combustível disponível é calculado pela capacidade e pelo nível informado. Exemplo:
-                600 L a 50% = 300 L disponíveis.</p>
-            <div class="gauge-wrap" id="gaugeContainer"></div>
-            <div class="gauge-readout" id="gaugeReadout"
-                style="text-align:center; margin-top:10px; font-size:13px; color:#94a3b8;"></div>
+        <div class="painel-combustivel-postos">
+            <div class="painel-combustivel-coluna">
+
+                <div class="section-box">
+                    <h2 class="titulo-centralizado">Medidor de Combustível</h2>
+                    <p class="helper">O combustível disponível é calculado pela capacidade e pelo nível informado.
+                        Exemplo:
+                        600 L a 50% = 300 L disponíveis.</p>
+                    <div class="gauge-wrap" id="gaugeContainer"></div>
+                    <div class="gauge-readout" id="gaugeReadout"
+                        style="text-align:center; margin-top:10px; font-size:13px; color:#94a3b8;"></div>
+                </div>
+
+                <div class="results-grid">
+                    <div class="info-card">
+                        <div class="info-item">
+                            <label>Capacidade do tanque</label>
+                            <div class="value" id="outCapacidadeTotal">0.0 L</div>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-item">
+                            <label>Litros no Momento</label>
+                            <div class="value" id="outLitros">0.0 L</div>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-item">
+                            <label>Autonomia estimada</label>
+                            <div class="value" id="outAutonomia">0.0 km</div>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-item">
+                            <label>Autonomia com margem</label>
+                            <div class="value" id="outAutonomiaSegura">0.0 km</div>
+                        </div>
+                    </div>
+
+                    <div class="status-alert status-success" id="outStatusPosto" role="status"
+                        style="grid-column:1 / -1;">
+                        🟢 TANQUE CHEIO - SEM ALERTAS NO MOMENTO
+                    </div>
+                </div>
+            </div>
+            <div class="painel-postos-coluna">
+                <div class="section-box section-purple" id="localizador">
+                    <div class="section-heading titulo-centralizado">
+                        <h2>Localizar postos</h2><span class="tag" id="quantidadePostos"></span>
+                    </div>
+                    <p class="helper">Busca na lista de postos cadastrados. Confira os endereços e as coordenadas antes de
+                        viajar.</p>
+                    <div class="inputs-grid">
+                        <div class="input-group" style="grid-column:1 / -1;">
+                            <label for="inpOrigem">Onde o veículo está agora?</label>
+                            <input type="text" id="inpOrigem"
+                                placeholder="Ex.: Av. Juscelino Kubitschek, Contagem, MG ou apenas Contagem">
+                            <small style="display:block;color:#94a3b8;margin-top:5px;">
+                                Endereço = localização aproximada pelo mapa. Cidade = estimativa; GPS é mais preciso.
+                            </small>
+                        </div>
+                    </div>
+                    <button class="btn-calc" id="btnBuscarCidade" style="margin-top:15px;">
+                        🔎 Localizar Postos
+                    </button>
+                    <button class="btn-gps" id="btnGPS">
+                        📡 Usar Minha Localização Atual (GPS)
+                    </button>
+                    <div id="statusBusca" role="status" aria-live="polite"
+                        style="margin-top:10px;color:#94a3b8;font-size:12px;">
+                    </div>
+                </div>
+                  <div class="section-box" id="resultadosPostos" style="display:none;"></div>
+            </div>
         </div>
-
-        <div class="results-grid">
-            <div class="info-card">
-                <div class="info-item">
-                    <label>Capacidade do tanque</label>
-                    <div class="value" id="outCapacidadeTotal">0.0 L</div>
-                </div>
-            </div>
-            <div class="info-card">
-                <div class="info-item">
-                    <label>Litros no Momento</label>
-                    <div class="value" id="outLitros">0.0 L</div>
-                </div>
-            </div>
-            <div class="info-card">
-                <div class="info-item">
-                    <label>Autonomia estimada</label>
-                    <div class="value" id="outAutonomia">0.0 km</div>
-                </div>
-            </div>
-            <div class="info-card">
-                <div class="info-item">
-                    <label>Autonomia com margem</label>
-                    <div class="value" id="outAutonomiaSegura">0.0 km</div>
-                </div>
-            </div>
-
-            <div class="status-alert status-success" id="outStatusPosto" role="status" style="grid-column:1 / -1;">
-                🟢 TANQUE CHEIO - SEM ALERTAS NO MOMENTO
-            </div>
-        </div>
-
-        <div class="section-box section-purple" id="localizador">
-            <div class="section-heading titulo-centralizado">
-                <h2>Localizar postos</h2><span class="tag" id="quantidadePostos"></span>
-            </div>
-            <p class="helper">Busca na lista de postos cadastrados. Confira os endereços e as coordenadas antes de
-                viajar.</p>
-            <div class="inputs-grid">
-                <div class="input-group" style="grid-column:1 / -1;">
-                    <label for="inpOrigem">Onde o veículo está agora?</label>
-                    <input type="text" id="inpOrigem"
-                        placeholder="Ex.: Av. Juscelino Kubitschek, Contagem, MG ou apenas Contagem">
-                    <small style="display:block;color:#94a3b8;margin-top:5px;">
-                        Endereço = localização aproximada pelo mapa. Cidade = estimativa; GPS é mais preciso.
-                    </small>
-                </div>
-            </div>
-            <button class="btn-calc" id="btnBuscarCidade" style="margin-top:15px;">
-                🔎 Localizar Postos
-            </button>
-            <button class="btn-gps" id="btnGPS">
-                📡 Usar Minha Localização Atual (GPS)
-            </button>
-            <div id="statusBusca" role="status" aria-live="polite"
-                style="margin-top:10px;color:#94a3b8;font-size:12px;"></div>
-        </div>
-
         <section class="section-box" id="importacaoPostos" aria-labelledby="tituloImportacao">
             <div class="cadastro-cabecalho">
                 <h2 id="tituloImportacao">Cadastrar postos</h2>
@@ -420,7 +441,7 @@
             </dialog>
         </section>
 
-        <div class="section-box" id="resultadosPostos" style="display:none;"></div>
+      
 
         <section class="section-box section-route" id="planejamentoRota" aria-labelledby="tituloRota">
             <div class="section-heading titulo-centralizado">

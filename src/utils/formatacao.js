@@ -11,6 +11,11 @@ function normalizarTexto(texto) {
         .trim();
 }
 
+function identidadePosto(posto) {
+    return JSON.stringify([posto.Nome, posto.Endereço, posto.Cidade, posto.Estado]
+        .map(valor => normalizarTexto(valor).replace(/\s+/g, ' ')));
+}
+
 function escaparHTML(valor) {
     return String(valor ?? "")
         .replaceAll("&", "&amp;")
@@ -28,5 +33,5 @@ function formatarTempo(minutos) {
     return h > 0 ? `${h}h ${m}min` : `${m} min`;
 }
 
-app.utils = { normalizarTexto, escaparHTML, formatarTempo };
+app.utils = { normalizarTexto, identidadePosto, escaparHTML, formatarTempo };
 })(window.RotaCombustivel);

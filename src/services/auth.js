@@ -128,7 +128,14 @@
         return dados;
     }
 
+    function validarNovaSenha(senha) {
+        if (typeof senha !== 'string' || senha.length !== 8) {
+            throw new Error('A senha deve ter exatamente 8 caracteres.');
+        }
+    }
+
     async function cadastrar(nome,email, senha) {
+        validarNovaSenha(senha);
         return requisicaoAuth(
             '/auth/v1/signup',
             {
@@ -222,6 +229,7 @@
     }
 
     async function definirNovaSenha(novaSenha) {
+        validarNovaSenha(novaSenha);
         if (!sessao?.access_token) {
             throw new Error('Sessão de recuperação não encontrada.');
         }

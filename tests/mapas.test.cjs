@@ -103,7 +103,7 @@ test('NoRoute não vira estimativa nem aviso verde, inclusive em resposta HTTP d
         const { app, elementos } = localizadorSimulado(async () => ({ ok, json: async () => ({ code: 'NoRoute' }) }));
         await app.controllers.localizador.buscarPostos();
         const html = elementos.get('resultadosPostos').innerHTML;
-        assert.equal((html.match(/ROTA NÃO ENCONTRADA/g) || []).length, 5);
+        assert.equal((html.match(/ROTA NÃO ENCONTRADA/g) || []).length, 3);
         assert.doesNotMatch(html, /status-success|📏 estimativa|~[\d.]+ km|margem segura:|NaN/);
         app.controllers.localizador.atualizarResultados();
         assert.equal(elementos.get('resultadosPostos').innerHTML, html);
@@ -115,7 +115,7 @@ test('falha de conexão preserva a estimativa de distância e as regras de auton
     const { app, elementos } = localizadorSimulado(async () => { throw new Error('Sem conexão'); });
     await app.controllers.localizador.buscarPostos();
     const html = elementos.get('resultadosPostos').innerHTML;
-    assert.equal((html.match(/📏 estimativa/g) || []).length, 5);
+    assert.equal((html.match(/📏 estimativa/g) || []).length, 3);
     assert.match(html, /status-success/);
     assert.doesNotMatch(html, /ROTA NÃO ENCONTRADA/);
 });
@@ -128,7 +128,7 @@ test('postos com trajeto precedem os resultados sem rota', async () => {
     await app.controllers.localizador.buscarPostos();
     const html = elementos.get('resultadosPostos').innerHTML;
     assert.equal((html.match(/🛣️ rota rodoviária/g) || []).length, 2);
-    assert.equal((html.match(/ROTA NÃO ENCONTRADA/g) || []).length, 3);
+    assert.equal((html.match(/ROTA NÃO ENCONTRADA/g) || []).length, 1);
     assert.ok(html.indexOf('~50.0 km') < html.indexOf('Sem rota'));
 });
 
@@ -193,4 +193,26 @@ test('serviço de rota rejeita coordenadas inválidas antes de acessar a rede', 
     contexto.fetch = () => { assert.fail('Não deve consultar a rede'); };
     await assert.rejects(app.services.mapas.obterRotaOSRM({ lat: 91, lon: 0 }, app.postos[0]), /Coordenadas inválidas/);
     await assert.rejects(app.services.mapas.obterRotaOSRM({ lat: 0, lon: 0 }, { lat: null, lon: 0 }), /Coordenadas inválidas/);
+});
+
+test('busca não repete postos nem deixa duplicatas ocuparem os candidatos', async () => {
+    let chamadas = 0;
+    const { app, elementos } = localizadorSimulado(async () => {
+        chamadas++;
+        return { ok: true, json: async () => ({ code: 'Ok', routes: [{ distance: 1000, duration: 60 }] }) };
+    });
+    const posto = { Nome: 'POSTO 601 BARBACENA', Endereço: 'Rua Benjamin Constant, 200',
+        Cidade: 'Barbacena', Estado: 'MG', lat: -21.2161322, lon: -43.7697524 };
+    app.postos = [
+        { ...posto, id: 1, lat: null },
+        ...Array.from({ length: 12 }, (_, i) => ({ ...posto, id: i + 2 })),
+        { ...posto, id: 20, Nome: ' posto 601  barbacena ' },
+        { ...posto, id: 21, Endereço: 'Outra rua, 10' },
+        { ...posto, id: 22, Nome: 'Posto Vizinho' }
+    ];
+    await app.controllers.localizador.buscarPostos();
+    assert.equal(chamadas, 3);
+    assert.equal((elementos.get('resultadosPostos').innerHTML.match(/<li style=/g) || []).length, 3);
+    assert.match(elementos.get('resultadosPostos').innerHTML, /Posto Vizinho/);
+    assert.equal(app.postos.length, 16, 'o cadastro original continua disponível para conferência');
 });

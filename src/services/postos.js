@@ -42,6 +42,7 @@ if (!app.services.supabase) {
 }
 
 const { requisicao, csv, normalizar, numero } = app.services.supabase;
+const { identidadePosto } = app.utils;
 const campos = 'id,nome,nome_mapa,endereco,cidade,estado,latitude,longitude,cnpj';
 
 function mapear(posto) {
@@ -63,7 +64,7 @@ function analisar(texto, existentes = []) {
     if (cabecalho.some(c => !c) || !['Nome', 'Endereço', 'Cidade', 'Estado', 'lat', 'lon'].every(c => cabecalho.includes(c))) {
         throw new Error('CSV de postos inválido. Use nome, endereco, cidade, estado, latitude e longitude.');
     }
-    const identidades = new Set(existentes.map(p => [p.Nome, p.Endereço, p.Cidade, p.Estado].join('|').toLowerCase()));
+    const identidades = new Set(existentes.map(identidadePosto));
     const resultado = { total: registros.length, novos: 0, duplicados: 0, erros: [], postos: [] };
     registros.forEach((valores, indice) => {
         const dados = Object.fromEntries(cabecalho.map((campo, i) => [campo, valores[i] ?? '']));
@@ -74,7 +75,7 @@ function analisar(texto, existentes = []) {
         }
         const posto = { Nome: dados.Nome, nomeMapa: dados.nomeMapa || null, Endereço: dados.Endereço,
             Cidade: dados.Cidade, Estado: dados.Estado.toUpperCase(), lat, lon, cnpj: dados.cnpj || null };
-        const identidade = [posto.Nome, posto.Endereço, posto.Cidade, posto.Estado].join('|').toLowerCase();
+        const identidade = identidadePosto(posto);
         const duplicado = identidades.has(identidade);
         if (duplicado) resultado.duplicados++;
         else { identidades.add(identidade); resultado.novos++; }
@@ -84,13 +85,15 @@ function analisar(texto, existentes = []) {
 }
 
 async function importarCSV(texto, previa) {
-    const resultado = analisar(texto, app.postos || []);
-    if (previa || resultado.erros.length || !resultado.novos) return resultado;
+    const existentes = previa ? (app.postos || []) : await carregar();
+    const resultado = analisar(texto, existentes);
+    if (previa || resultado.erros.length) return resultado;
+    if (!resultado.novos) return { ...resultado, importados: 0, postos: existentes };
     const novos = resultado.postos.filter(p => !p.duplicado).map(p => ({ nome: p.Nome, nome_mapa: p.nomeMapa,
         endereco: p.Endereço, cidade: p.Cidade, estado: p.Estado, latitude: p.lat, longitude: p.lon, cnpj: p.cnpj }));
     await requisicao('postos', { method: 'POST', body: JSON.stringify(novos) });
     const postos = await carregar();
-    return { ...resultado, postos };
+    return { ...resultado, importados: novos.length, postos };
 }
 
 async function cadastrar(dados) {
@@ -98,6 +101,12 @@ async function cadastrar(dados) {
         endereco: dados.Endereço || dados.endereco, cidade: dados.Cidade || dados.cidade,
         estado: String(dados.Estado || dados.estado || '').toUpperCase(),
         latitude: numero(dados.lat || dados.latitude), longitude: numero(dados.lon || dados.longitude), cnpj: dados.cnpj || null };
+    const existentes = await carregar();
+    const chave = identidadePosto(mapear(registro));
+    if (existentes.some(posto => identidadePosto(posto) === chave)) {
+        return { erros: [{ campo: 'Nome', mensagem: 'Este posto já está cadastrado nesse endereço, cidade e UF.' }],
+            duplicados: 1, postos: existentes };
+    }
     await requisicao('postos', { method: 'POST', body: JSON.stringify([registro]) });
     return { erros: [], duplicados: 0, postos: await carregar() };
 }

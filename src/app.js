@@ -24,6 +24,26 @@
         const botaoSalvarNovaSenha = document.getElementById('btnSalvarNovaSenha');
 
         let painelInicializado = false;
+        let modoRecuperacao = false;
+
+        try {
+            modoRecuperacao = await app.services.auth.processarRecuperacao();
+
+            const recuperacao = modoRecuperacao;
+
+            if (recuperacao) {
+                telaLogin.hidden = true;
+                telaCadastro.hidden = true;
+                painel.hidden = true;
+                telaNovaSenha.hidden = false;
+            }
+        } catch (error) {
+            telaLogin.hidden = false;
+            telaCadastro.hidden = true;
+            painel.hidden = true;
+            telaNovaSenha.hidden = true;
+            statusLogin.textContent = error.message;
+        }
         botaoCriarConta.addEventListener('click', () => {
             statusLogin.textContent = '';
             statusCadastroUsuario.textContent = '';
@@ -53,9 +73,9 @@
                 return;
             }
 
-            if (senha.length < 12) {
+            if (senha.length !== 8) {
                 statusCadastroUsuario.textContent =
-                    'A senha deve ter pelo menos 12 caracteres.';
+                    'A senha deve ter exatamente 8 caracteres.';
                 return;
             }
 
@@ -85,10 +105,6 @@
 
                 campoSenhaLogin.type = senhaVisivel ? 'password' : 'text';
 
-                botaoMostrarSenha.textContent = senhaVisivel
-                    ? 'Mostrar'
-                    : 'Ocultar';
-
                 botaoMostrarSenha.setAttribute(
                     'aria-label',
                     senhaVisivel ? 'Mostrar senha' : 'Ocultar senha'
@@ -100,7 +116,7 @@
                 );
             });
         }
-        
+
         const botaoMostrarSenhasCadastro = document.getElementById('btnMostrarSenhaCadastro');
         const campoSenhaCadastro = document.getElementById('senhaCadastro');
         const campoConfirmarSenha = document.getElementById('confirmarSenhaCadastro');
@@ -113,7 +129,6 @@
                 campoSenhaCadastro.type = novoTipo;
                 campoConfirmarSenha.type = novoTipo;
 
-                botaoMostrarSenhasCadastro.textContent = senhaVisivel ? 'Mostrar' : 'Ocultar';
                 botaoMostrarSenhasCadastro.setAttribute(
                     'aria-label',
                     senhaVisivel ? 'Mostrar senhas' : 'Ocultar senhas'
@@ -359,24 +374,13 @@
 
             const email = document.getElementById('emailLogin').value.trim();
             const senha = document.getElementById('senhaLogin').value;
-
-            botaoEntrar.disabled = true;
-            try {
-                const recuperacao = await app.services.auth.processarRecuperacao();
-
-                if (recuperacao) {
-                    telaLogin.hidden = true;
-                    painel.hidden = true;
-                    telaNovaSenha.hidden = false;
-                    return;
-                }
-            } catch (error) {
-                telaLogin.hidden = false;
-                painel.hidden = true;
-                telaNovaSenha.hidden = true;
-                statusLogin.textContent = error.message;
+            if (senha.length !== 8) {
+                statusLogin.textContent = 'A senha deve ter exatamente 8 caracteres.';
                 return;
             }
+
+            botaoEntrar.disabled = true;
+
 
             statusLogin.textContent = 'Verificando acesso...';
 
@@ -390,6 +394,8 @@
                 botaoEntrar.disabled = false;
             }
         });
+        
+        if (modoRecuperacao) return;
 
         statusLogin.textContent = 'Verificando sessão...';
 

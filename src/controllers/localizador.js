@@ -1,7 +1,7 @@
 /* src/controllers/localizador.js */
 (function (app) {
 'use strict';
-const { normalizarTexto } = app.utils;
+const { identidadePosto } = app.utils;
 const { calcularDistancia, distanciaEstimadaRodoviaria, coordenadasValidas, coordenadasNoBrasil } = app.domain.distancia;
 const { geocodificarOrigem, obterRotaOSRM } = app.services.mapas;
 let localizacaoAtual = null;
@@ -132,8 +132,15 @@ async function buscarPostosMaisProximos(local) {
      * Primeiro filtramos por distância geográfica para reduzir chamadas.
      * Depois tentamos obter distância de rota para os candidatos.
      */
+    const identidades = new Set();
     const candidatos = app.postos
         .filter(coordenadasNoBrasil)
+        .filter(posto => {
+            const chave = identidadePosto(posto);
+            if (identidades.has(chave)) return false;
+            identidades.add(chave);
+            return true;
+        })
         .map(p => ({
             ...p,
             distanciaGeografica: calcularDistancia(local.lat, local.lon, p.lat, p.lon)
@@ -171,7 +178,7 @@ async function buscarPostosMaisProximos(local) {
         Number(a.tipoDistancia === 'SEM_ROTA') - Number(b.tipoDistancia === 'SEM_ROTA') ||
         (a.distancia ?? 0) - (b.distancia ?? 0));
 
-    ultimosResultados = resultados.slice(0, 5);
+    ultimosResultados = resultados.slice(0,3);
     atualizarResultados();
     setStatusBusca(
         `📍 Origem: ${origemDescricao}` +
@@ -181,7 +188,7 @@ async function buscarPostosMaisProximos(local) {
 
 function validarCadastroPostos() {
     const problemas = [];
-    const nomes = new Set();
+    const cadastros = new Map();
 
     app.postos.forEach((p, i) => {
         if (!coordenadasValidas(p)) {
@@ -190,9 +197,16 @@ function validarCadastroPostos() {
             problemas.push(`${p.Nome}: coordenada fora do intervalo esperado para Brasil.`);
         }
 
-        const chave = normalizarTexto(p.Nome);
-        if (nomes.has(chave)) problemas.push(`${p.Nome}: nome duplicado.`);
-        nomes.add(chave);
+        const chave = identidadePosto(p);
+        if (cadastros.has(chave)) {
+            const primeiro = app.postos[cadastros.get(chave)];
+            problemas.push(`${p.Nome}: cadastro duplicado (mesmo nome, endereço, cidade e UF) ` +
+                `nos registros ${cadastros.get(chave) + 1} e ${i + 1}: ${p.Endereço} — ${p.Cidade}/${p.Estado}. ` +
+                `IDs no banco: ${primeiro.id ?? 'não informado'} e ${p.id ?? 'não informado'}. ` +
+                `Coordenadas: (${primeiro.lat}, ${primeiro.lon}) e (${p.lat}, ${p.lon}).`);
+        } else {
+            cadastros.set(chave, i);
+        }
     });
 
     if (problemas.length) {

@@ -1055,15 +1055,21 @@ button {
     box-shadow: 0 0 0 3px rgba(22, 72, 156, 0.14);
 }
 
-/* Campo de senha com botão Mostrar */
+/* Campo de senha com controle de visibilidade */
 
-#telaLogin .login-senha-containe, #telaCadastro .login-senha-container {
+#telaLogin .login-senha-container, #telaCadastro .login-senha-container {
     position: relative;
     width: 100%;
+    margin-bottom: 22px;
+}
+
+#telaLogin .login-card .login-senha-container > input,
+#telaCadastro .login-card .login-senha-container > input {
+    margin-bottom: 0;
 }
 
 #telaLogin #senhaLogin,#telaCadastro #senhaCadastro {
-    padding-right: 94px;
+    padding-right: 60px;
 }
 
 #telaLogin .btn-mostrar-senha,#telaCadastro .btn-mostrar-senha {
@@ -1072,7 +1078,12 @@ button {
     right: 8px;
     transform: translateY(-50%);
 
-    padding: 8px 10px;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    margin: 0;
+    padding: 10px;
 
     border: 0;
     border-radius: 6px;
@@ -1087,6 +1098,26 @@ button {
 
 #telaLogin .btn-mostrar-senha:hover, #telaCadastro .btn-mostrar-senha:hover {
     background: #eef4ff;
+}
+
+.btn-mostrar-senha .icone-senha {
+    display: block;
+    width: 24px;
+    height: 24px;
+    pointer-events: none;
+}
+
+.btn-mostrar-senha .icone-senha-risco {
+    display: none;
+}
+
+.btn-mostrar-senha[aria-pressed="true"] .icone-senha-risco {
+    display: block;
+}
+
+#telaCadastro .btn-mostrar-senha:focus-visible {
+    outline: 3px solid #16489c;
+    outline-offset: 3px;
 }
 
 /* Botão principal */
@@ -2565,6 +2596,84 @@ footer.src-footer .developer-credit a:hover {
 }
 #btnDefinirNome[hidden] {
     display: none !important;
+}
+/* Medidor de combustível + Localizador de postos */
+.painel-combustivel-postos {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 20px;
+    align-items: stretch;
+}
+
+.painel-combustivel-coluna {
+    min-width: 0;
+}
+
+.painel-combustivel-coluna > .section-box > .helper,
+#localizador > .helper,
+#importacaoPostos > .cadastro-cabecalho > .helper,
+#cadastroLojas > .cadastro-cabecalho > .helper,
+#planejamentoRota > .helper,
+#ajudaCapacidade,
+#statusRoteirizacao {
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.painel-combustivel-postos #localizador {
+    min-width: 0;
+    margin-top: 0;
+}
+/* A coluna da busca participa do grid sem alterar a ordem no celular. */
+.painel-postos-coluna {
+    display: contents;
+}
+
+/* Desktop: as colunas completas compartilham a mesma altura. */
+@media (min-width: 769px) {
+    .painel-combustivel-postos {
+        margin-bottom: 18px;
+    }
+
+    .painel-combustivel-coluna,
+    .painel-postos-coluna {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        min-width: 0;
+    }
+
+    .painel-combustivel-coluna > .section-box,
+    .painel-combustivel-postos #localizador {
+        flex: 1;
+        margin-bottom: 0;
+    }
+
+    .painel-combustivel-coluna > .section-box {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .painel-combustivel-coluna .gauge-wrap {
+        flex: 1;
+    }
+
+    .painel-combustivel-coluna > .results-grid {
+        flex: none;
+        min-width: 0;
+    }
+
+    .painel-combustivel-postos #resultadosPostos {
+        flex: none;
+        min-width: 0;
+        margin-bottom: 0;
+    }
+}
+/* Celular: mantém um bloco embaixo do outro */
+@media (max-width: 768px) {
+    .painel-combustivel-postos {
+        grid-template-columns: 1fr;
+    }
 }
 
 @media (max-width: 480px) {
