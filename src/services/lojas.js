@@ -31,9 +31,9 @@
     const { requisicao, csv, normalizar, numero } = app.services.supabase;
 
     async function carregar() {
-        const dados = await requisicao('lojas', { query: 'select=id,nome,marca,endereco,cidade,estado,latitude,longitude,link_maps&order=id.asc' });
+      const dados = await requisicao('lojas', { query: 'select=id,nome,marca,endereco,cidade,estado,latitude,longitude,link_maps,usuario_id&order=id.asc' });
         app.lojas = dados.map(loja => ({
-            id: loja.id, Nome: loja.nome, Marca: loja.marca, Endereço: loja.endereco,
+            id: loja.id, usuarioId: loja.usuario_id, Nome: loja.nome, Marca: loja.marca, Endereço: loja.endereco,
             Cidade: loja.cidade, Estado: loja.estado, lat: loja.latitude == null ? null : Number(loja.latitude),
             lon: loja.longitude == null ? null : Number(loja.longitude), linkMaps: loja.link_maps
         }));

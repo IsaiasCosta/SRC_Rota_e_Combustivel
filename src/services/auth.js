@@ -17,6 +17,77 @@
     function obterToken() {
         return sessao?.access_token || null;
     }
+    function obterUsuarioId() {
+        return sessao?.user?.id || null;
+    }
+    function obterNomeUsuario() {
+        const usuario = sessao?.user;
+
+        if (!usuario) return '';
+
+        const nome = usuario.user_metadata?.nome_completo;
+
+        if (typeof nome === 'string' && nome.trim()) {
+           return nome.trim().split(/[\s_]+/)[0];
+        }
+
+        return usuario.email || '';
+    }
+
+    function usuarioTemNome() {
+        const nome = sessao?.user?.user_metadata?.nome_completo;
+
+        return typeof nome === 'string' && nome.trim().length > 0;
+    }
+
+    async function atualizarNomeUsuario(nome) {
+        const nomeLimpo = nome.trim();
+
+        if (!nomeLimpo || nomeLimpo.length > 120) {
+            throw new Error('Informe um nome de até 120 caracteres.');
+        }
+
+        const token = obterToken();
+
+        if (!token) {
+            throw new Error('Sessão não encontrada. Entre novamente.');
+        }
+
+        const { supabaseUrl, supabaseAnonKey } = configuracao();
+
+        const resposta = await fetch(
+            new URL('/auth/v1/user', supabaseUrl),
+            {
+                method: 'PUT',
+                headers: {
+                    apikey: supabaseAnonKey,
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    data: {
+                        nome_completo: nomeLimpo
+                    }
+                })
+            }
+        );
+
+        const usuario = await resposta.json().catch(() => ({}));
+
+        if (!resposta.ok) {
+            throw new Error(
+                usuario.msg ||
+                usuario.error_description ||
+                usuario.message ||
+                'Não foi possível salvar o nome.'
+            );
+        }
+
+        sessao.user = usuario;
+        salvarSessao(sessao);
+
+        return usuario;
+    }
 
     function salvarSessao(dados) {
         sessao = dados;
@@ -57,12 +128,15 @@
         return dados;
     }
 
-    async function cadastrar(email, senha) {
+    async function cadastrar(nome,email, senha) {
         return requisicaoAuth(
             '/auth/v1/signup',
             {
                 email,
-                password: senha
+                password: senha,
+                data: {
+                    nome_completo: nome
+                }
             }
         );
     }
@@ -214,6 +288,10 @@
         cadastrar,
         entrar,
         obterToken,
+        obterUsuarioId,
+        obterNomeUsuario,
+        usuarioTemNome,
+        atualizarNomeUsuario,
         verificarSessao,
         processarRecuperacao,
         definirNovaSenha,

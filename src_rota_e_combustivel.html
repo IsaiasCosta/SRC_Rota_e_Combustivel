@@ -51,47 +51,45 @@
     </section>
 
     <section id="telaCadastro" class="login-container" hidden>
-    <form id="formCadastroUsuario" class="login-card">
-        <h1>Criar conta</h1>
-        <p>Cadastre-se para acessar o SRC Rota e Combustível.</p>
+        <form id="formCadastroUsuario" class="login-card">
+            <h1>Criar conta</h1>
+            <p>Cadastre-se para acessar o SRC Rota e Combustível.</p>
 
-        <label for="emailCadastro">E-mail</label>
-        <input
-            type="email"
-            id="emailCadastro"
-            autocomplete="email"
-            required
-        >
+            <label for="nomeCadastro">Nome completo</label>
+            <input type="text" id="nomeCadastro" placeholder="Seu nome completo" autocomplete="name" maxlength="120"
+                required>
 
-        <label for="senhaCadastro">Senha</label>
-        <input
-            type="password"
-            id="senhaCadastro"
-            autocomplete="new-password"
-            minlength="12"
-            required
-        >
+            <label for="emailCadastro">E-mail</label>
+            <input type="email" id="emailCadastro" autocomplete="email" required>
 
-        <label for="confirmarSenhaCadastro">Confirmar senha</label>
-        <input
-            type="password"
-            id="confirmarSenhaCadastro"
-            autocomplete="new-password"
-            minlength="12"
-            required
-        >
+            <label for="senhaCadastro">Senha</label>
+            <div class="login-senha-container">
+                <input type="password" id="senhaCadastro" autocomplete="new-password" minlength="12" required>
 
-        <button type="submit" id="btnCadastrarUsuario">
-            Cadastrar
-        </button>
+                <button type="button" id="btnMostrarSenhaCadastro" class="btn-mostrar-senha" aria-label="Mostrar senha"
+                    aria-pressed="false">
+                    Mostrar
+                </button>
+            </div>
 
-        <button type="button" id="btnVoltarLogin">
-            Voltar para o login
-        </button>
 
-        <p id="statusCadastroUsuario" role="status" aria-live="polite"></p>
-    </form>
-</section>
+            <label for="confirmarSenhaCadastro">Confirmar senha</label>
+            <div class="login-senha-container">
+                <input type="password" id="confirmarSenhaCadastro" autocomplete="new-password" minlength="12" required>
+
+      
+            </div>
+            <button type="submit" id="btnCadastrarUsuario">
+                Cadastrar
+            </button>
+
+            <button type="button" id="btnVoltarLogin">
+                Voltar para o login
+            </button>
+
+            <p id="statusCadastroUsuario" role="status" aria-live="polite"></p>
+        </form>
+    </section>
 
     <section id="telaNovaSenha" class="login-container" hidden>
         <form id="formNovaSenha" class="login-card">
@@ -125,12 +123,36 @@
             </div>
             <div class="header-actions">
                 <span class="version-badge">Painel do veículo</span>
-
+                <span id="nomeUsuarioLogado" aria-label="Usuário conectado"></span>
+                <button type="button" id="btnDefinirNome" class="btn-logout" hidden>
+                    Definir meu nome
+                </button>
                 <button type="button" id="btnLogout" class="btn-logout">
                     Sair
                 </button>
             </div>
         </header>
+
+        <dialog id="modalNomeUsuario" aria-labelledby="tituloModalNome">
+            <form id="formNomeUsuario">
+                <h2 id="tituloModalNome">Definir meu nome</h2>
+                <p>Informe como você deseja ser identificado no painel.</p>
+
+                <label for="campoNomeUsuario">Seu nome</label>
+                <input type="text" id="campoNomeUsuario" autocomplete="given-name" maxlength="120" required>
+
+                <p id="statusNomeUsuario" role="status" aria-live="polite"></p>
+
+                <div class="modal-nome-acoes">
+                    <button type="button" id="btnCancelarNome">
+                        Cancelar
+                    </button>
+                    <button type="submit" id="btnSalvarNome">
+                        Salvar
+                    </button>
+                </div>
+            </form>
+        </dialog>
 
         <nav class="navigation" aria-label="Navegação do painel">
             <a href="#veiculo"><span class="navigation-icon" aria-hidden="true">🚗</span><span>Veículo e

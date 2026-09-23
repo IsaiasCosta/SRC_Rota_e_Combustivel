@@ -42,7 +42,12 @@
             const marcado = deveMarcar ? 'checked' : '';
             if (marcado) primeiraCoordenada = true;
             const link = loja.linkMaps ? `<a href="${app.utils.escaparHTML(loja.linkMaps)}" target="_blank" rel="noopener noreferrer">Maps</a>` : '';
-            const botaoEditar = `<button type="button" class="btn-secondary btn-editar-loja" data-loja-id="${loja.id}">Editar</button>`;
+            const podeEditar =
+                loja.usuarioId === app.services.auth.obterUsuarioId();
+
+            const botaoEditar = podeEditar
+                ? `<button type="button" class="btn-secondary btn-editar-loja" data-loja-id="${loja.id}">Editar</button>`
+                : '';
             return `<label class="loja-opcao ${temCoordenadas ? '' : 'loja-sem-coordenadas'}"><input type="checkbox" value="${loja.id}" ${marcado}>
         <span><strong>${app.utils.escaparHTML(loja.Nome)}</strong><small>${app.utils.escaparHTML(loja.Marca || 'Sem marca')} • ${app.utils.escaparHTML(loja.Endereço)}, ${app.utils.escaparHTML(loja.Cidade)}/${app.utils.escaparHTML(loja.Estado)} ${link}</small>${temCoordenadas ? '' : '<small class="aviso-coordenadas">Sem coordenadas: informe antes de calcular a rota.</small>'}</span>${botaoEditar}</label>`;
         }).join('');

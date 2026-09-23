@@ -40,10 +40,10 @@
             telaLogin.hidden = false;
             painel.hidden = true;
         });
-        
+
         formularioCadastro.addEventListener('submit', async event => {
             event.preventDefault();
-
+            const nome = document.getElementById('nomeCadastro').value.trim();
             const email = document.getElementById('emailCadastro').value.trim();
             const senha = document.getElementById('senhaCadastro').value;
             const confirmacao = document.getElementById('confirmarSenhaCadastro').value;
@@ -63,7 +63,7 @@
             statusCadastroUsuario.textContent = 'Criando conta...';
 
             try {
-                await app.services.auth.cadastrar(email, senha);
+                await app.services.auth.cadastrar(nome, email, senha);
 
                 formularioCadastro.reset();
                 statusCadastroUsuario.textContent =
@@ -100,10 +100,90 @@
                 );
             });
         }
+        
+        const botaoMostrarSenhasCadastro = document.getElementById('btnMostrarSenhaCadastro');
+        const campoSenhaCadastro = document.getElementById('senhaCadastro');
+        const campoConfirmarSenha = document.getElementById('confirmarSenhaCadastro');
 
+        if (botaoMostrarSenhasCadastro && campoSenhaCadastro && campoConfirmarSenha) {
+            botaoMostrarSenhasCadastro.addEventListener('click', () => {
+                const senhaVisivel = campoSenhaCadastro.type === 'text';
+                const novoTipo = senhaVisivel ? 'password' : 'text';
+
+                campoSenhaCadastro.type = novoTipo;
+                campoConfirmarSenha.type = novoTipo;
+
+                botaoMostrarSenhasCadastro.textContent = senhaVisivel ? 'Mostrar' : 'Ocultar';
+                botaoMostrarSenhasCadastro.setAttribute(
+                    'aria-label',
+                    senhaVisivel ? 'Mostrar senhas' : 'Ocultar senhas'
+                );
+                botaoMostrarSenhasCadastro.setAttribute('aria-pressed', String(!senhaVisivel));
+            });
+        }
         async function iniciarPainel() {
             if (painelInicializado) return;
             painelInicializado = true;
+            const nomeUsuarioLogado = document.getElementById('nomeUsuarioLogado');
+            const botaoDefinirNome = document.getElementById('btnDefinirNome');
+
+            function atualizarIdentificacao() {
+                const identificacao = app.services.auth.obterNomeUsuario();
+
+                if (nomeUsuarioLogado) {
+                    nomeUsuarioLogado.textContent = identificacao;
+                }
+
+                if (botaoDefinirNome) {
+                    botaoDefinirNome.hidden = app.services.auth.usuarioTemNome();
+                }
+            }
+
+            atualizarIdentificacao();
+
+            const modalNome = document.getElementById('modalNomeUsuario');
+            const formularioNome = document.getElementById('formNomeUsuario');
+            const campoNome = document.getElementById('campoNomeUsuario');
+            const statusNome = document.getElementById('statusNomeUsuario');
+            const botaoCancelarNome = document.getElementById('btnCancelarNome');
+            const botaoSalvarNome = document.getElementById('btnSalvarNome');
+
+            if (botaoDefinirNome && modalNome && formularioNome) {
+                botaoDefinirNome.addEventListener('click', () => {
+                    campoNome.value = '';
+                    statusNome.textContent = '';
+                    modalNome.showModal();
+                    campoNome.focus();
+                });
+
+                botaoCancelarNome.addEventListener('click', () => {
+                    modalNome.close();
+                });
+
+                formularioNome.addEventListener('submit', async event => {
+                    event.preventDefault();
+
+                    const nome = campoNome.value.trim();
+
+                    if (!nome) {
+                        statusNome.textContent = 'Informe seu nome.';
+                        return;
+                    }
+
+                    botaoSalvarNome.disabled = true;
+                    statusNome.textContent = 'Salvando...';
+
+                    try {
+                        await app.services.auth.atualizarNomeUsuario(nome);
+                        atualizarIdentificacao();
+                        modalNome.close();
+                    } catch (error) {
+                        statusNome.textContent = error.message;
+                    } finally {
+                        botaoSalvarNome.disabled = false;
+                    }
+                });
+            }
 
             const cadastro = app.controllers.cadastro.inicializar();
             app.controllers.roteirizacao.inicializar();
@@ -152,8 +232,14 @@
                     botao.disabled = false;
                 });
 
-                cadastro.definirDisponibilidade(true);
-                importacao.definirDisponibilidade(true);
+                const administrador =
+                    app.services.auth.obterUsuarioId() ===
+                    'f2dc8ed7-6063-4c2f-90df-95fd241892d3';
+
+                document.getElementById('importacaoPostos').hidden = !administrador;
+
+                cadastro.definirDisponibilidade(administrador);
+                importacao.definirDisponibilidade(administrador);
 
                 try {
                     await app.services.lojas.carregar();
