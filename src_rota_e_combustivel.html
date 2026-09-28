@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SRC Rota e Combustível | Painel de controle</title>
+    <link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
@@ -124,27 +125,13 @@
 
     <div class="dashboard-container" id="painelPrincipal" hidden>
         <header class="header">
-            <div class="brand-mark">
-                <img src="assets/images/logo-rota-combustivel-transparente.png" alt="SRC — Rota e Combustível"
-                    width="1774" height="887">
-            </div>
-            <div>
-                <p class="eyebrow">OPERAÇÃO NA ESTRADA</p>
-                <h1>SRC ROTA E COMBUSTÍVEL</h1>
-                <span>PAINEL DE CONTROLE - LOCALIZADOR DE POSTOS & GESTÃO DE COMBUSTÍVEL</span>
-            </div>
+            <a class="brand-mark" href="#inicio" aria-label="SRC Rota e Combustível — início"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#pump"></use></svg><span><strong>SRC</strong><span>Rota e Combustível</span></span></a>
             <div class="header-actions">
-                <span class="version-badge">Painel do veículo</span>
-                <span id="nomeUsuarioLogado" aria-label="Usuário conectado"></span>
-                <button type="button" id="btnDefinirNome" class="btn-logout" hidden>
-                    Definir meu nome
-                </button>
-                <button type="button" id="btnLogout" class="btn-logout">
-                    Sair
-                </button>
+                <span class="user-identification"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#user"></use></svg><span id="nomeUsuarioLogado" aria-label="Usuário conectado"></span></span>
+                <button type="button" id="btnDefinirNome" class="btn-secondary" hidden>Definir meu nome</button>
+                <button type="button" id="btnLogout" class="btn-logout"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#logout"></use></svg> Sair</button>
             </div>
         </header>
-
         <dialog id="modalNomeUsuario" aria-labelledby="tituloModalNome">
             <form id="formNomeUsuario">
                 <h2 id="tituloModalNome">Definir meu nome</h2>
@@ -167,34 +154,77 @@
         </dialog>
 
         <nav class="navigation" aria-label="Navegação do painel">
-            <a href="#veiculo"><span class="navigation-icon" aria-hidden="true">🚗</span><span>Veículo e
-                    autonomia</span></a>
-            <a href="#localizador"><span class="navigation-icon" aria-hidden="true">⌖</span><span>Localizar
-                    postos</span></a>
-            <a href="#importacaoPostos"><span class="navigation-icon" aria-hidden="true">♙</span><span>Cadastrar
-                    postos</span></a>
-            <a href="#planejamentoRota"><span class="navigation-icon" aria-hidden="true">▱</span><span>Planejamento
-                    de rota</span></a>
-            <a href="#cadastroLojas"><span class="navigation-icon" aria-hidden="true">▤</span><span>Cadastrar
-                    lojas</span></a>
+            <a href="#inicio" aria-current="page"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#home"></use></svg><span>Painel Principal</span></a>
+            <a href="#postosRecomendados"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#pin"></use></svg><span>Postos de Combustível</span></a>
+            <a href="#importacaoPostos"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#store"></use></svg><span>Cadastrar postos</span></a>
+            <a href="#configuracoes"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#pump"></use></svg><span>Configurar Combustível</span></a>
+            <a href="#planejamentoRota"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#map"></use></svg><span>Planejamento de rota</span></a>
+            <a href="#cadastroLojas"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#store"></use></svg><span>Cadastrar lojas</span></a>
         </nav>
-        <p id="statusArmazenamento" class="helper" role="status">Parâmetros salvos neste navegador. Busca de
-            endereço e rotas requer internet.</p>
-
-        <div class="section-box" id="veiculo">
-            <div class="section-heading titulo-centralizado">
-                <h2>Parâmetros do veículo</h2>
+        <main class="painel-content" id="inicio">
+            <div class="painel-introducao">
+                <h1>Encontre o posto ideal e siga com segurança</h1>
+                <p>Veja seu combustível, encontre os melhores postos na sua rota e saiba se você pode seguir.</p>
             </div>
+            <div class="dashboard-grid">
+                <section class="section-box combustivel-card" id="veiculo" aria-labelledby="tituloVeiculo">
+                    <div class="section-heading"><h2 id="tituloVeiculo"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#pump"></use></svg> Seu Combustível</h2><span class="helper" id="atualizacaoCombustivel">Dados do veículo</span></div>
+                    <div class="combustivel-layout">
+                        <div class="combustivel-principal">
+                            <div class="gauge-wrap" id="gaugeContainer"></div>
+                            <div class="gauge-readout sr-only" id="gaugeReadout"></div>
+                            <div class="autonomia-destaque">
+                                <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#pump"></use></svg>
+                                <div><p>Você pode rodar aproximadamente</p><output id="outAutonomiaSegura" aria-live="polite">—</output><span>com margem de segurança.</span></div>
+                            </div>
+                            <div class="status-alert" id="outStatusPosto" role="status">Aguardando os parâmetros do veículo.</div>
+                        </div>
+                        <div class="combustivel-dados">
+                            <dl>
+                                <div><dt><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#pump"></use></svg> Combustível atual</dt><dd id="outLitros">—</dd></div>
+                                <div><dt><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#chart"></use></svg> Capacidade do tanque</dt><dd id="outCapacidadeTotal">—</dd></div>
+                                <div><dt><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#percent"></use></svg> Consumo médio</dt><dd id="outConsumo">—</dd></div>
+                                <div><dt><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#road"></use></svg> Autonomia estimada</dt><dd id="outAutonomia">—</dd></div>
+                            </dl>
+                            <button type="button" class="btn-secondary atualizar-dados" id="btnAtualizarDados"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#refresh"></use></svg> Atualizar dados</button>
+                        </div>
+                    </div>
+                </section>
+                <section class="section-box localizador-card" id="localizador" aria-labelledby="tituloLocalizador">
+                    <div class="section-heading"><h2 id="tituloLocalizador"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#pin"></use></svg> Encontrar postos próximos</h2><span class="help-icon" title="Busca nos postos cadastrados, ordenados pela distância calculada." aria-label="Busca nos postos cadastrados, ordenados pela distância calculada.">?</span></div>
+                    <p class="helper busca-descricao">Use sua localização para encontrar os 3 postos mais próximos e avaliar a autonomia até cada um.</p>
+                    <button class="btn-calc" id="btnGPS"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#send"></use></svg> Usar minha localização e encontrar postos</button>
+                    <details class="busca-endereco"><summary>Ou buscar por endereço ou cidade</summary>
+                        <div class="input-group"><label for="inpOrigem">Onde o veículo está agora?</label><input type="text" id="inpOrigem" placeholder="Ex.: Contagem, MG" aria-describedby="ajudaOrigem"></div>
+                        <p class="helper" id="ajudaOrigem">Endereço e cidade fornecem uma localização aproximada. O GPS é mais preciso.</p>
+                        <button class="btn-secondary" id="btnBuscarCidade">Localizar postos</button>
+                    </details>
+                    <p class="helper" id="quantidadePostos"></p>
+                    <div id="statusBusca" class="helper" role="status" aria-live="polite"></div>
+                </section>
+                <section class="section-box recomendacoes-card" id="postosRecomendados" aria-labelledby="tituloPostos">
+                    <div class="section-heading"><h2 id="tituloPostos"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#pump"></use></svg> Postos recomendados para você</h2><span class="help-icon" title="As cores indicam a autonomia calculada para cada trajeto." aria-label="As cores indicam a autonomia calculada para cada trajeto.">?</span></div>
+                    <div class="empty-state" id="postosVazios"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#pin"></use></svg><h3>Encontre sua próxima parada</h3><p>Use sua localização ou informe um endereço para comparar os postos e o combustível necessário.</p></div>
+                    <div id="resultadosPostos" style="display:none;" aria-live="polite"></div>
+                </section>
+                <section class="section-box mapa-card" id="mapaRota" aria-labelledby="tituloMapa">
+                    <div class="section-heading"><h2 id="tituloMapa"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#map"></use></svg> Sua rota no mapa</h2><button type="button" class="icon-button" id="btnExpandirMapa" aria-label="Ampliar mapa" aria-pressed="false"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#expand"></use></svg></button></div>
+                    <div class="mapa-area"><div id="mapaPostos" aria-label="Mapa com sua localização e os postos encontrados"></div><div class="empty-state" id="mapaVazio"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#map"></use></svg><h3>Sua rota começa aqui</h3><p>Encontre postos para visualizar sua localização e os trajetos no mapa.</p></div></div>
+                    <p class="helper mapa-status" id="statusMapa" role="status"></p>
+                </section>
+            </div>
+            <details class="section-box configuracoes" id="configuracoes">
+                <summary><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#settings"></use></svg> Parâmetros do veículo <span>Editar dados</span></summary>
+                <p class="helper">Os cálculos são atualizados ao alterar os campos abaixo.</p>
             <div class="inputs-grid">
                 <div class="input-group">
                     <label for="inpCapacidade">Capacidade do tanque (L)</label>
                     <input type="number" id="inpCapacidade" value="560" min="1" step="1" required
                         aria-describedby="ajudaCapacidade">
-                    <small id="ajudaCapacidade" class="helper">Informe a capacidade total, por exemplo, 100 ou 600
-                        L.</small>
+                    <small id="ajudaCapacidade" class="helper">Capacidade total em litros.</small>
                 </div>
                 <div class="input-group">
-                    <label for="inpNivel">Nível no Painel</label>
+                    <label for="inpNivel">Nível no painel</label>
                     <select id="inpNivel">
                         <option value="0">Vazio (0%)</option>
                         <option value="0.10">Reserva (10%)</option>
@@ -207,9 +237,9 @@
                 <div class="input-group">
                     <label for="inpCarga">Carga</label>
                     <select id="inpCarga">
-                        <option value="CARREGADO" selected>CARREGADO</option>
-                        <option value="PARCIAL">PARCIAL</option>
-                        <option value="VAZIO">VAZIO</option>
+                        <option value="CARREGADO" selected>Carregado</option>
+                        <option value="PARCIAL">Parcial</option>
+                        <option value="VAZIO">Vazio</option>
                     </select>
                 </div>
                 <div class="input-group">
@@ -226,83 +256,8 @@
                     </select>
                 </div>
             </div>
-        </div>
-
-        <div class="painel-combustivel-postos">
-            <div class="painel-combustivel-coluna">
-
-                <div class="section-box">
-                    <h2 class="titulo-centralizado">Medidor de Combustível</h2>
-                    <p class="helper">O combustível disponível é calculado pela capacidade e pelo nível informado.
-                        Exemplo:
-                        600 L a 50% = 300 L disponíveis.</p>
-                    <div class="gauge-wrap" id="gaugeContainer"></div>
-                    <div class="gauge-readout" id="gaugeReadout"
-                        style="text-align:center; margin-top:10px; font-size:13px; color:#94a3b8;"></div>
-                </div>
-
-                <div class="results-grid">
-                    <div class="info-card">
-                        <div class="info-item">
-                            <label>Capacidade do tanque</label>
-                            <div class="value" id="outCapacidadeTotal">0.0 L</div>
-                        </div>
-                    </div>
-                    <div class="info-card">
-                        <div class="info-item">
-                            <label>Litros no Momento</label>
-                            <div class="value" id="outLitros">0.0 L</div>
-                        </div>
-                    </div>
-                    <div class="info-card">
-                        <div class="info-item">
-                            <label>Autonomia estimada</label>
-                            <div class="value" id="outAutonomia">0.0 km</div>
-                        </div>
-                    </div>
-                    <div class="info-card">
-                        <div class="info-item">
-                            <label>Autonomia com margem</label>
-                            <div class="value" id="outAutonomiaSegura">0.0 km</div>
-                        </div>
-                    </div>
-
-                    <div class="status-alert status-success" id="outStatusPosto" role="status"
-                        style="grid-column:1 / -1;">
-                        🟢 TANQUE CHEIO - SEM ALERTAS NO MOMENTO
-                    </div>
-                </div>
-            </div>
-            <div class="painel-postos-coluna">
-                <div class="section-box section-purple" id="localizador">
-                    <div class="section-heading titulo-centralizado">
-                        <h2>Localizar postos</h2><span class="tag" id="quantidadePostos"></span>
-                    </div>
-                    <p class="helper">Busca na lista de postos cadastrados. Confira os endereços e as coordenadas antes de
-                        viajar.</p>
-                    <div class="inputs-grid">
-                        <div class="input-group" style="grid-column:1 / -1;">
-                            <label for="inpOrigem">Onde o veículo está agora?</label>
-                            <input type="text" id="inpOrigem"
-                                placeholder="Ex.: Av. Juscelino Kubitschek, Contagem, MG ou apenas Contagem">
-                            <small style="display:block;color:#94a3b8;margin-top:5px;">
-                                Endereço = localização aproximada pelo mapa. Cidade = estimativa; GPS é mais preciso.
-                            </small>
-                        </div>
-                    </div>
-                    <button class="btn-calc" id="btnBuscarCidade" style="margin-top:15px;">
-                        🔎 Localizar Postos
-                    </button>
-                    <button class="btn-gps" id="btnGPS">
-                        📡 Usar Minha Localização Atual (GPS)
-                    </button>
-                    <div id="statusBusca" role="status" aria-live="polite"
-                        style="margin-top:10px;color:#94a3b8;font-size:12px;">
-                    </div>
-                </div>
-                  <div class="section-box" id="resultadosPostos" style="display:none;"></div>
-            </div>
-        </div>
+                <p id="statusArmazenamento" class="helper" role="status">Parâmetros salvos neste navegador. Busca de endereço e rotas requer internet.</p>
+            </details>
         <section class="section-box" id="importacaoPostos" aria-labelledby="tituloImportacao">
             <div class="cadastro-cabecalho">
                 <h2 id="tituloImportacao">Cadastrar postos</h2>
@@ -536,8 +491,10 @@
             </details>
         </section>
 
+        </main>
     </div>
 
+    <script src="assets/vendor/leaflet/leaflet.js" defer></script>
     <script src="src/config.js" defer></script>
     <script src="src/data/postos.js" defer></script>
     <script src="src/utils/formatacao.js" defer></script>
@@ -552,7 +509,9 @@
     <script src="src/services/mapas.js" defer></script>
     <script src="src/ui/medidor.js" defer></script>
     <script src="src/ui/veiculo.js" defer></script>
+    <script src="src/ui/mapa.js" defer></script>
     <script src="src/ui/postos.js" defer></script>
+    <script src="src/ui/layout.js" defer></script>
     <script src="src/controllers/painel.js" defer></script>
     <script src="src/controllers/localizador.js" defer></script>
     <script src="src/controllers/importacao.js" defer></script>

@@ -46,7 +46,7 @@ async function responderGeocodificacao(url, res) {
 // Servir apenas a página e seus recursos declarados. Backups e ferramentas são privados.
 function criarServidor({ diretorio = root, pagina = entry, arquivoBanco } = {}) {
     diretorio = path.resolve(diretorio);
-    const tipos = { '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.png': 'image/png', '.csv': 'text/csv; charset=utf-8' };
+    const tipos = { '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.svg': 'image/svg+xml', '.png': 'image/png', '.csv': 'text/csv; charset=utf-8' };
     const db = abrirBanco({ arquivo: arquivoBanco });
     if (db && typeof db.then === 'function') return db.then(banco => criarServidorComBanco({ diretorio, pagina, tipos }, banco));
     return criarServidorComBanco({ diretorio, pagina, tipos }, db);
@@ -96,7 +96,7 @@ function criarServidorComBanco({ diretorio, pagina, tipos }, db) {
         fs.readFile(path.join(diretorio, pagina), 'utf8', (htmlError, html) => {
             if (htmlError) { res.writeHead(500); return res.end('Página indisponível.'); }
             const publicos = new Map([['/', pagina], ['/index.html', pagina], [`/${pagina}`, pagina]]);
-            for (const match of html.matchAll(/(?:src|href)="((?:src|assets)\/[^"?#]+)"/g)) {
+            for (const match of html.matchAll(/(?:src|href)="((?:src|assets)\/[^"?#]+)(?:[?#][^"]*)?"/g)) {
                 const file = match[1];
                 if (path.resolve(diretorio, file).startsWith(diretorio + path.sep)) {
                     publicos.set(`/${file}`, file);

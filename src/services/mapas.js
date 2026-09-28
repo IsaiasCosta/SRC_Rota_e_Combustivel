@@ -58,7 +58,7 @@ async function obterRotaOSRM(local, posto) {
     const url =
         `https://router.project-osrm.org/route/v1/driving/` +
         `${local.lon},${local.lat};${posto.lon},${posto.lat}` +
-        `?overview=false&steps=false`;
+        `?overview=simplified&geometries=geojson&steps=false`;
 
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 10000);
@@ -81,7 +81,7 @@ async function obterRotaOSRM(local, posto) {
 
         const { distance, duration } = dados.routes[0];
         if (!Number.isFinite(distance) || distance < 0 || !Number.isFinite(duration) || duration < 0) throw new Error('Rota inválida.');
-        return { distanciaKm: distance / 1000, tempoMin: duration / 60 };
+        return { distanciaKm: distance / 1000, tempoMin: duration / 60, geometria: dados.routes[0].geometry || null };
     } finally {
         clearTimeout(timeout);
     }
@@ -121,8 +121,15 @@ async function obterRotaSequencial(origem, lojas) {
 function identificarPosto(posto) {
     return [posto.nomeMapa || posto.Nome, posto.Endereço, posto.Cidade, posto.Estado, 'Brasil']
         .map(valor => String(valor ?? '').trim())
-        .filter(Boolean)
+        .filter(valor => valor && !/^(endereço\s+)?n[aã]o informado$/i.test(valor))
         .join(', ');
+}
+
+function enderecoCompleto(posto) {
+    return ['Endereço', 'Cidade', 'Estado'].every(campo => {
+        const texto = String(posto?.[campo] ?? '').trim();
+        return texto && !/^(endereço\s+)?n[aã]o informado$/i.test(texto);
+    });
 }
 
 function identificarDestino(posto) {
@@ -130,7 +137,7 @@ function identificarDestino(posto) {
         .map(valor => String(valor ?? '').trim());
     // O endereço completo prevalece sobre coordenadas que podem ser aproximadas.
     // Nomes internos (ex.: POSTO 621) não devem desviar a busca do número informado.
-    if (endereco.every(Boolean)) {
+    if (enderecoCompleto(posto)) {
         return [String(posto.nomeMapa ?? '').trim(), ...endereco, 'Brasil'].filter(Boolean).join(', ');
     }
     return coordenadasValidas(posto) ? `${posto.lat},${posto.lon}` : identificarPosto(posto);
@@ -149,13 +156,65 @@ function criarLinkRota(posto, origem) {
 }
 
 function criarLinkRotaMulti(origem, lojas) {
-    const url = new URL('https://www.google.com/maps/dir/');
-    url.searchParams.set('api', '1');
-    url.searchParams.set('origin', `${origem.lat},${origem.lon}`);
-    url.searchParams.set('destination', identificarDestino(lojas[lojas.length - 1]));
-    url.searchParams.set('waypoints', lojas.slice(0, -1).map(identificarDestino).join('|'));
-    url.searchParams.set('travelmode', 'driving');
+    if (!coordenadasValidas(origem)) throw new Error('Origem inválida para abrir a rota.');
+    if (!Array.isArray(lojas) || !lojas.length) throw new Error('Selecione ao menos um destino.');
+    if (lojas.length > 4) throw new Error('Divida a rota em grupos de até quatro destinos.');
+    const url = new URL(criarLinkRota(lojas[lojas.length - 1], origem));
+    const paradas = lojas.slice(0, -1);
+    if (paradas.length) {
+        url.searchParams.set('waypoints', paradas.map(p => identificarDestino(p).replace(/\|/g, ' ')).join('|'));
+        if (paradas.every(p => p.placeId)) url.searchParams.set('waypoint_place_ids', paradas.map(p => p.placeId).join('|'));
+    }
+    if (url.href.length > 2048) throw new Error('O link da rota excede o limite do Google Maps.');
     return url.href;
+}
+
+// Divide sem omitir paradas; cada parte começa no destino da parte anterior.
+function criarLinksRotaMulti(origem, lojas) {
+    if (!Array.isArray(lojas) || !lojas.length) throw new Error('Selecione ao menos um destino.');
+    const links = [];
+    for (let inicio = 0; inicio < lojas.length;) {
+        const pontoInicial = inicio ? lojas[inicio - 1] : origem;
+        let fim = Math.min(inicio + 4, lojas.length);
+        let href;
+        while (fim > inicio) {
+            try {
+                const url = new URL(criarLinkRotaMulti(pontoInicial, lojas.slice(inicio, fim)));
+                if (inicio) {
+                    url.searchParams.set('origin', identificarDestino(pontoInicial));
+                    if (pontoInicial.placeId) url.searchParams.set('origin_place_id', pontoInicial.placeId);
+                }
+                if (url.href.length > 2048) throw new Error('O link da rota excede o limite do Google Maps.');
+                href = url.href;
+                break;
+            } catch (erro) {
+                if (fim === inicio + 1) throw erro;
+                fim--;
+            }
+        }
+        links.push({ href, primeiraParada: inicio + 1, ultimaParada: fim });
+        inicio = fim;
+    }
+    return links;
+}
+
+function criarLinkLoja(loja) {
+    // Links de pesquisa gerados anteriormente podem conter cidade/UF desatualizadas.
+    // Preserve links específicos compartilhados e identificadores de estabelecimentos.
+    try {
+        const url = new URL(loja.linkMaps);
+        const host = url.hostname;
+        const google = /^(www\.)?google\.com(\.br)?$/.test(host) && url.pathname.startsWith('/maps');
+        const curto = host === 'maps.app.goo.gl' || (host === 'goo.gl' && url.pathname.startsWith('/maps/'));
+        if (url.protocol === 'https:' && (google || curto)) {
+            const pesquisaGerada = /^\/maps\/search\/?$/.test(url.pathname) && url.searchParams.get('api') === '1'
+                && !url.searchParams.has('query_place_id');
+            const query = url.searchParams.get('query') || '';
+            const ponto = /^\s*-?\d+(\.\d+)?\s*,\s*-?\d+(\.\d+)?\s*$/.test(query);
+            if (!pesquisaGerada || ponto) return url.href;
+        }
+    } catch { /* Usa o cadastro atual quando não há um link válido. */ }
+    return criarLinkPosto(loja);
 }
 
 function criarLinkPosto(posto) {
@@ -166,5 +225,5 @@ function criarLinkPosto(posto) {
     return url.href;
 }
 
-app.services.mapas = { geocodificarOrigem, obterRotaOSRM, obterRotaSequencial, criarLinkRota, criarLinkRotaMulti, criarLinkPosto };
+app.services.mapas = { geocodificarOrigem, obterRotaOSRM, obterRotaSequencial, criarLinkRota, criarLinkRotaMulti, criarLinksRotaMulti, criarLinkPosto, criarLinkLoja, enderecoCompleto };
 })(window.RotaCombustivel);

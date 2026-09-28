@@ -45,9 +45,14 @@ const { requisicao, csv, normalizar, numero } = app.services.supabase;
 const { identidadePosto } = app.utils;
 const campos = 'id,nome,nome_mapa,endereco,cidade,estado,latitude,longitude,cnpj';
 
+function converterCoordenada(valor) {
+    if (typeof valor !== 'number' && (typeof valor !== 'string' || !valor.trim())) return null;
+    return numero(valor);
+}
+
 function mapear(posto) {
     return { id: posto.id, Nome: posto.nome, nomeMapa: posto.nome_mapa, Endereço: posto.endereco,
-        Cidade: posto.cidade, Estado: posto.estado, lat: Number(posto.latitude), lon: Number(posto.longitude), cnpj: posto.cnpj };
+        Cidade: posto.cidade, Estado: posto.estado, lat: converterCoordenada(posto.latitude), lon: converterCoordenada(posto.longitude), cnpj: posto.cnpj };
 }
 
 async function carregar() {

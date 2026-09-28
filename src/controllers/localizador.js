@@ -28,6 +28,9 @@ function definirBusca(ativa) {
     document.getElementById('resultadosPostos').setAttribute('aria-busy', String(ativa));
     if (ativa) {
         ultimosResultados = null;
+        app.ui.mapa?.limpar();
+        const vazio = document.getElementById('postosVazios');
+        if (vazio) vazio.hidden = false;
         document.getElementById('resultadosPostos').style.display = 'none';
     }
 }
@@ -55,7 +58,7 @@ function buscarGPS() {
             if (!coordenadasValidas(localizacaoAtual)) {
                 setStatusBusca('O GPS retornou coordenadas inválidas. Tente novamente ou busque por endereço.');
                 definirBusca(false);
-                btn.textContent = '📡 Usar Minha Localização Atual (GPS)';
+                btn.textContent = 'Usar minha localização e encontrar postos';
                 return;
             }
 
@@ -66,7 +69,7 @@ function buscarGPS() {
             buscarPostosMaisProximos(localizacaoAtual).catch(erro => setStatusBusca(erro.message)).finally(() => {
                 definirBusca(false);
                 btn.disabled = false;
-                btn.textContent = "📡 Usar Minha Localização Atual (GPS)";
+                btn.textContent = "Usar minha localização e encontrar postos";
             });
         },
         error => {
@@ -79,7 +82,7 @@ function buscarGPS() {
             setStatusBusca(mensagens[error.code] || error.message);
             definirBusca(false);
             btn.disabled = false;
-            btn.textContent = "📡 Usar Minha Localização Atual (GPS)";
+            btn.textContent = "Usar minha localização e encontrar postos";
         },
         {
             enableHighAccuracy: true,
@@ -119,7 +122,7 @@ async function buscarPostos() {
     } finally {
         definirBusca(false);
         btn.disabled = false;
-        btn.textContent = "🔎 Localizar Postos";
+        btn.textContent = "Localizar postos";
     }
 }
 
@@ -158,7 +161,8 @@ async function buscarPostosMaisProximos(local) {
                     ...posto,
                     distancia: rota.distanciaKm,
                     tempoMin: rota.tempoMin,
-                    tipoDistancia: "ROTA"
+                    tipoDistancia: "ROTA",
+                    geometria: rota.geometria
                 };
             } catch (erro) {
                 if (erro.code === 'NoRoute') {

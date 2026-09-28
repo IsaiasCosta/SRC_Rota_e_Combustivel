@@ -33,10 +33,10 @@ function calcular() {
     const parametros = app.ui.veiculo.lerParametros();
     const { nivel, capacidadeTotal, combustivelAtual, autonomia, autonomiaSegura } = app.domain.combustivel.calcularAutonomia(parametros);
 
-    document.getElementById("outCapacidadeTotal").textContent = `${capacidadeTotal.toFixed(1)} L`;
-    document.getElementById("outLitros").textContent = `${combustivelAtual.toFixed(1)} L`;
-    document.getElementById("outAutonomia").textContent = `${autonomia.toFixed(1)} km`;
-    document.getElementById("outAutonomiaSegura").textContent = `${autonomiaSegura.toFixed(1)} km`;
+    document.getElementById("outCapacidadeTotal").textContent = `${capacidadeTotal.toLocaleString('pt-BR', { maximumFractionDigits: 1 })} L`;
+    document.getElementById("outLitros").textContent = `${combustivelAtual.toLocaleString('pt-BR', { maximumFractionDigits: 1 })} L`;
+    document.getElementById("outAutonomia").textContent = `${autonomia.toLocaleString('pt-BR', { maximumFractionDigits: 1 })} km`;
+    document.getElementById("outAutonomiaSegura").textContent = `${autonomiaSegura.toLocaleString('pt-BR', { maximumFractionDigits: 1 })} km`;
 
     const status = document.getElementById("outStatusPosto");
     if (!parametros.validos) {
@@ -54,6 +54,7 @@ function calcular() {
         status.textContent = "🟢 NÍVEL DE COMBUSTÍVEL NORMAL";
     }
 
+    app.ui.layout?.atualizarResumo(parametros);
     app.ui.medidor.atualizarMedidor(nivel, combustivelAtual, capacidadeTotal);
     if (parametros.validos) salvarParametros();
     app.controllers.localizador.atualizarResultados();

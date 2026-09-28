@@ -1,0 +1,3578 @@
+{
+  "geradoEm": "2026-09-25T20:25:47.087Z",
+  "escopo": "Arquivo de referência e SQLite local. Validação estrutural e cruzamento de cadastros; não confirma o destino resolvido pelo Google nem o acesso físico. Supabase não consultado.",
+  "postos": {
+    "total": 49,
+    "coordenadasInvalidas": [],
+    "linksInconsistentes": [],
+    "coordenadasRepetidas": [
+      [
+        {
+          "nome": "POSTO REDE BRASIL",
+          "endereco": "Rodovia BR-101 Norte, 3616",
+          "cidade": "Serra",
+          "uf": "ES",
+          "lat": -20.2046526,
+          "lon": -40.2689504
+        },
+        {
+          "nome": "POSTO SERRA",
+          "endereco": "Rodovia BR 101 Norte, 3616",
+          "cidade": "Serra",
+          "uf": "ES",
+          "lat": -20.2046526,
+          "lon": -40.2689504
+        }
+      ]
+    ],
+    "conferenciaPendente": [
+      "POSTO 100 TEOFILO OTONI",
+      "POSTO 601 BARBACENA",
+      "POSTO 603 UBÁ",
+      "POSTO 605 JANUARIA",
+      "POSTO 606 UBERABA",
+      "POSTO 607 UBERLANDIA",
+      "POSTO 609 CORINTO",
+      "POSTO 612 SETE LAGOAS",
+      "POSTO 616 MONTES CLAROS",
+      "POSTO 617 J F - SÃO MATEUS",
+      "POSTO 618 J F - MARIANO PR",
+      "POSTO 619 JANAUBA",
+      "POSTO 620 IPATINGA",
+      "POSTO 622 CORONEL FABRICIANO",
+      "POSTO 624 TAIOBEIRAS",
+      "Posto Dharma",
+      "Posto Contorno",
+      "Posto São Thomé VI",
+      "Posto Pereira e Maciel",
+      "POSTO REDE BRASIL",
+      "POSTO SAO JOAO DEL REI",
+      "POSTO SERRA",
+      "POSTO 604 SJDR (MATOZINHOS)",
+      "Posto Dom Pedro Betim",
+      "Posto Dom Pedro Contagem Fernão Dias"
+    ],
+    "registros": [
+      {
+        "nome": "Caxuxa I",
+        "endereco": "BR-262, km 523",
+        "cidade": "Luz",
+        "uf": "MG",
+        "lat": -19.783915,
+        "lon": -45.657545,
+        "historico": "revisado",
+        "coordenadasNoBrasil": true,
+        "linkMapa": "https://www.google.com/maps/search/?api=1&query=Posto+Caxuxa+Luz%2C+BR-262%2C+km+523%2C+Luz%2C+MG%2C+Brasil",
+        "linkRota": "https://www.google.com/maps/dir/?api=1&destination=Posto+Caxuxa+Luz%2C+BR-262%2C+km+523%2C+Luz%2C+MG%2C+Brasil&travelmode=driving&origin=-19.9%2C-44",
+        "linkCoordenadas": "https://www.google.com/maps/search/?api=1&query=-19.783915%2C-45.657545",
+        "linksCoerentes": true
+      },
+      {
+        "nome": "Caxuxa III (Dorjó)",
+        "endereco": "BR-262, km 526",
+        "cidade": "Luz",
+        "uf": "MG",
+        "lat": -19.78374771,
+        "lon": -45.68611741,
+        "historico": "revisado",
+        "coordenadasNoBrasil": true,
+        "linkMapa": "https://www.google.com/maps/search/?api=1&query=Posto+Caxuxa+Dorj%C3%B3%2C+BR-262%2C+km+526%2C+Luz%2C+MG%2C+Brasil",
+        "linkRota": "https://www.google.com/maps/dir/?api=1&destination=Posto+Caxuxa+Dorj%C3%B3%2C+BR-262%2C+km+526%2C+Luz%2C+MG%2C+Brasil&travelmode=driving&origin=-19.9%2C-44",
+        "linkCoordenadas": "https://www.google.com/maps/search/?api=1&query=-19.78374771%2C-45.68611741",
+        "linksCoerentes": true
+      },
+      {
+        "nome": "Caxuxa Rodão",
+        "endereco": "BR-262, km 482",
+        "cidade": "Bom Despacho",
+        "uf": "MG",
+        "lat": -19.78314019,
+        "lon": -45.27031163,
+        "historico": "revisado",
+        "coordenadasNoBrasil": true,
+        "linkMapa": "https://www.google.com/maps/search/?api=1&query=Posto+Caxuxa+Rod%C3%A3o%2C+BR-262%2C+km+482%2C+Bom+Despacho%2C+MG%2C+Brasil",
+        "linkRota": "https://www.google.com/maps/dir/?api=1&destination=Posto+Caxuxa+Rod%C3%A3o%2C+BR-262%2C+km+482%2C+Bom+Despacho%2C+MG%2C+Brasil&travelmode=driving&origin=-19.9%2C-44",
+        "linkCoordenadas": "https://www.google.com/maps/search/?api=1&query=-19.78314019%2C-45.27031163",
+        "linksCoerentes": true
+      },
+      {
+        "nome": "Caxuxa Lombada",
+        "endereco": "BR-262, km 478,5",
+        "cidade": "Bom Despacho",
+        "uf": "MG",
+        "lat": -19.7855515,
+        "lon": -45.2361622,
+        "historico": "revisado",
+        "coordenadasNoBrasil": true,
+        "linkMapa": "https://www.google.com/maps/search/?api=1&query=Posto+Caxuxa+Lombada%2C+BR-262%2C+km+478%2C5%2C+Bom+Despacho%2C+MG%2C+Brasil",
+        "linkRota": "https://www.google.com/maps/dir/?api=1&destination=Posto+Caxuxa+Lombada%2C+BR-262%2C+km+478%2C5%2C+Bom+Despacho%2C+MG%2C+Brasil&travelmode=driving&origin=-19.9%2C-44",
+        "linkCoordenadas": "https://www.google.com/maps/search/?api=1&query=-19.7855515%2C-45.2361622",
+        "linksCoerentes": true
+      },
+      {
+        "nome": "Caxuxa São João",
+        "endereco": "Av. Lima Guimarães, 80",
+        "cidade": "Pitangui",
+        "uf": "MG",
+        "lat": -19.6843813,
+        "lon": -44.89224451,
+        "historico": "revisado",
+        "coordenadasNoBrasil": true,
+        "linkMapa": "https://www.google.com/maps/search/?api=1&query=Posto+Caxuxa+S%C3%A3o+Jo%C3%A3o%2C+Av.+Lima+Guimar%C3%A3es%2C+80%2C+Pitangui%2C+MG%2C+Brasil",
+        "linkRota": "https://www.google.com/maps/dir/?api=1&destination=Posto+Caxuxa+S%C3%A3o+Jo%C3%A3o%2C+Av.+Lima+Guimar%C3%A3es%2C+80%2C+Pitangui%2C+MG%2C+Brasil&travelmode=driving&origin=-19.9%2C-44",
+        "linkCoordenadas": "https://www.google.com/maps/search/?api=1&query=-19.6843813%2C-44.89224451",
+        "linksCoerentes": true
+      },
+      {
+        "nome": "Caxuxa Biquinhas",
+        "endereco": "Rua Prefeito Airton Xavier de Oliveira, 432",
+        "cidade": "Biquinhas",
+        "uf": "MG",
+        "lat": -18.7815988,
+        "lon": -45.5011658,
+        "historico": "revisado",
+        "coordenadasNoBrasil": true,
+        "linkMapa": "https://www.google.com/maps/search/?api=1&query=Posto+Caxuxa+Biquinhas%2C+Rua+Prefeito+Airton+Xavier+de+Oliveira%2C+432%2C+Biquinhas%2C+MG%2C+Brasil",
+        "linkRota": "https://www.google.com/maps/dir/?api=1&destination=Posto+Caxuxa+Biquinhas%2C+Rua+Prefeito+Airton+Xavier+de+Oliveira%2C+432%2C+Biquinhas%2C+MG%2C+Brasil&travelmode=driving&origin=-19.9%2C-44",
+        "linkCoordenadas": "https://www.google.com/maps/search/?api=1&query=-18.7815988%2C-45.5011658",
+        "linksCoerentes": true
+      },
+      {
+        "nome": "Caxuxa Barril",
+        "endereco": "BR-262, km 511",
+        "cidade": "Luz",
+        "uf": "MG",
+        "lat": -19.7829019,
+        "lon": -45.564868,
+        "historico": "revisado",
+        "coordenadasNoBrasil": true,
+        "linkMapa": "https://www.google.com/maps/search/?api=1&query=Posto+Caxuxa+Barril%2C+BR-262%2C+km+511%2C+Luz%2C+MG%2C+Brasil",
+        "linkRota": "https://www.google.com/maps/dir/?api=1&destination=Posto+Caxuxa+Barril%2C+BR-262%2C+km+511%2C+Luz%2C+MG%2C+Brasil&travelmode=driving&origin=-19.9%2C-44",
+        "linkCoordenadas": "https://www.google.com/maps/search/?api=1&query=-19.7829019%2C-45.564868",
+        "linksCoerentes": true
+      },
+      {
+        "nome": "Caxuxa Milênio",
+        "endereco": "Avenida Laura de Andrade, 190",
+        "cidade": "Arcos",
+        "uf": "MG",
+        "lat": -20.2897088,
+        "lon": -45.54804526,
+        "historico": "revisado",
+        "coordenadasNoBrasil": true,
+        "linkMapa": "https://www.google.com/maps/search/?api=1&query=Posto+Caxuxa+Mil%C3%AAnio%2C+Avenida+Laura+de+Andrade%2C+190%2C+Arcos%2C+MG%2C+Brasil",
+        "linkRota": "https://www.google.com/maps/dir/?api=1&destination=Posto+Caxuxa+Mil%C3%AAnio%2C+Avenida+Laura+de+Andrade%2C+190%2C+Arcos%2C+MG%2C+Brasil&travelmode=driving&origin=-19.9%2C-44",
+        "linkCoordenadas": "https://www.google.com/maps/search/?api=1&query=-20.2897088%2C-45.54804526",
+        "linksCoerentes": true
+      },
+      {
+        "nome": "Caxuxa Lava-Pés",
+        "endereco": "Rua Alzira Torres, 547",
+        "cidade": "Bambuí",
+        "uf": "MG",
+        "lat": -20.0174465,
+        "lon": -45.984369,
+        "historico": "revisado",
+        "coordenadasNoBrasil": true,
+        "linkMapa": "https://www.google.com/maps/search/?api=1&query=Posto+Caxuxa+Lava+P%C3%A9s%2C+Rua+Alzira+Torres%2C+547%2C+Bambu%C3%AD%2C+MG%2C+Brasil",
+        "linkRota": "https://www.google.com/maps/dir/?api=1&destination=Posto+Caxuxa+Lava+P%C3%A9s%2C+Rua+Alzira+Torres%2C+547%2C+Bambu%C3%AD%2C+MG%2C+Brasil&travelmode=driving&origin=-19.9%2C-44",
+        "linkCoordenadas": "https://www.google.com/maps/search/?api=1&query=-20.0174465%2C-45.984369",
+        "linksCoerentes": true
+      },
+      {
+        "nome": "Caxuxa Girassol",
+        "endereco": "Rua Indalécio Alvares Gonzales, 1755",
+        "cidade": "Bambuí",
+        "uf": "MG",
+        "lat": -20.0127467,
+        "lon": -45.9505037,
+        "historico": "revisado",
+        "coordenadasNoBrasil": true,
+        "linkMapa": "https://www.google.com/maps/search/?api=1&query=Posto+Caxuxa+Girassol%2C+Rua+Indal%C3%A9cio+Alvares+Gonzales%2C+1755%2C+Bambu%C3%AD%2C+MG%2C+Brasil",
+        "linkRota": "https://www.google.com/maps/dir/?api=1&destination=Posto+Caxuxa+Girassol%2C+Rua+Indal%C3%A9cio+Alvares+Gonzales%2C+1755%2C+Bambu%C3%AD%2C+MG%2C+Brasil&travelmode=driving&origin=-19.9%2C-44",
+        "linkCoordenadas": "https://www.google.com/maps/search/?api=1&query=-20.0127467%2C-45.9505037",
+        "linksCoerentes": true
+      },
+      {
+        "nome": "Caxuxa Juá",
+        "endereco": "BR-354, km 471",
+        "cidade": "Arcos",
+        "uf": "MG",
+        "lat": -20.2723772,
+        "lon": -45.57558267,
+        "historico": "revisado",
+        "coordenadasNoBrasil": true,
+        "linkMapa": "https://www.google.com/maps/search/?api=1&query=Posto+Caxuxa+Ju%C3%A1%2C+BR-354%2C+km+471%2C+Arcos%2C+MG%2C+Brasil",
+        "linkRota": "https://www.google.com/maps/dir/?api=1&destination=Posto+Caxuxa+Ju%C3%A1%2C+BR-354%2C+km+471%2C+Arcos%2C+MG%2C+Brasil&travelmode=driving&origin=-19.9%2C-44",
+        "linkCoordenadas": "https://www.google.com/maps/search/?api=1&query=-20.2723772%2C-45.57558267",
+        "linksCoerentes": true
+      },
+      {
+        "nome": "Caxuxa Veredas",
+        "endereco": "BR-365, km 323",
+        "cidade": "João Pinheiro",
+        "uf": "MG",
+        "lat": -18.27571709,
+        "lon": -45.89504126,
+        "historico": "revisado",
+        "coordenadasNoBrasil": true,
+        "linkMapa": "https://www.google.com/maps/search/?api=1&query=Posto+Caxuxa+Veredas%2C+BR-365%2C+km+323%2C+Jo%C3%A3o+Pinheiro%2C+MG%2C+Brasil",
+        "linkRota": "https://www.google.com/maps/dir/?api=1&destination=Posto+Caxuxa+Veredas%2C+BR-365%2C+km+323%2C+Jo%C3%A3o+Pinheiro%2C+MG%2C+Brasil&travelmode=driving&origin=-19.9%2C-44",
+        "linkCoordenadas": "https://www.google.com/maps/search/?api=1&query=-18.27571709%2C-45.89504126",
+        "linksCoerentes": true
+      },
+      {
+        "nome": "Caxuxa JK",
+        "endereco": "BR-040, km 226",
+        "cidade": "São Gonçalo do Abaeté",
+        "uf": "MG",
+        "lat": -17.9914226,
+        "lon": -45.6015846,
+        "historico": "revisado",
+        "coordenadasNoBrasil": true,
+        "linkMapa": "https://www.google.com/maps/search/?api=1&query=Posto+Caxuxa+JK%2C+BR-040%2C+km+226%2C+S%C3%A3o+Gon%C3%A7alo+do+Abaet%C3%A9%2C+MG%2C+Brasil",
+        "linkRota": "https://www.google.com/maps/dir/?api=1&destination=Posto+Caxuxa+JK%2C+BR-040%2C+km+226%2C+S%C3%A3o+Gon%C3%A7alo+do+Abaet%C3%A9%2C+MG%2C+Brasil&travelmode=driving&origin=-19.9%2C-44",
+        "linkCoordenadas": "https://www.google.com/maps/search/?api=1&query=-17.9914226%2C-45.6015846",
+        "linksCoerentes": true
+      },
+      {
+        "nome": "Caxuxa Monte Líbano",
+        "endereco": "BR-262, km 526",
+        "cidade": "Luz",
+        "uf": "MG",
+        "lat": -19.78200204,
+        "lon": -45.67750458,
+        "historico": "revisado",
+        "coordenadasNoBrasil": true,
+        "linkMapa": "https://www.google.com/maps/search/?api=1&query=Posto+Caxuxa+Monte+L%C3%ADbano%2C+BR-262%2C+km+526%2C+Luz%2C+MG%2C+Brasil",
+        "linkRota": "https://www.google.com/maps/dir/?api=1&destination=Posto+Caxuxa+Monte+L%C3%ADbano%2C+BR-262%2C+km+526%2C+Luz%2C+MG%2C+Brasil&travelmode=driving&origin=-19.9%2C-44",
+        "linkCoordenadas": "https://www.google.com/maps/search/?api=1&query=-19.78200204%2C-45.67750458",
+        "linksCoerentes": true
+      },
+      {
+        "nome": "Caxuxa Lagoense",
+        "endereco": "MG-170, km 28",
+        "cidade": "Lagoa da Prata",
+        "uf": "MG",
+        "lat": -20.02488215,
+        "lon": -45.51527491,
+        "historico": "revisado",
+        "coordenadasNoBrasil": true,
+        "linkMapa": "https://www.google.com/maps/search/?api=1&query=Posto+Caxuxa+Lagoense%2C+MG-170%2C+km+28%2C+Lagoa+da+Prata%2C+MG%2C+Brasil",
+        "linkRota": "https://www.google.com/maps/dir/?api=1&destination=Posto+Caxuxa+Lagoense%2C+MG-170%2C+km+28%2C+Lagoa+da+Prata%2C+MG%2C+Brasil&travelmode=driving&origin=-19.9%2C-44",
+        "linkCoordenadas": "https://www.google.com/maps/search/?api=1&query=-20.02488215%2C-45.51527491",
+        "linksCoerentes": true
+      },
+      {
+        "nome": "Caxuxa Moinho 1",
+        "endereco": "BR-381, km 802 (Sul)",
+        "cidade": "São Gonçalo do Sapucaí",
+        "uf": "MG",
+        "lat": -21.94480285,
+        "lon": -45.6213245,
+        "historico": "revisado",
+        "coordenadasNoBrasil": true,
+        "linkMapa": "https://www.google.com/maps/search/?api=1&query=Posto+Caxuxa+Moinho+I%2C+BR-381%2C+km+802+%28Sul%29%2C+S%C3%A3o+Gon%C3%A7alo+do+Sapuca%C3%AD%2C+MG%2C+Brasil",
+        "linkRota": "https://www.google.com/maps/dir/?api=1&destination=Posto+Caxuxa+Moinho+I%2C+BR-381%2C+km+802+%28Sul%29%2C+S%C3%A3o+Gon%C3%A7alo+do+Sapuca%C3%AD%2C+MG%2C+Brasil&travelmode=driving&origin=-19.9%2C-44",
+        "linkCoordenadas": "https://www.google.com/maps/search/?api=1&query=-21.94480285%2C-45.6213245",
+        "linksCoerentes": true
+      },
+      {
+        "nome": "Caxuxa Moinho 2",
+        "endereco": "BR-381, km 802 (Norte)",
+        "cidade": "São Gonçalo do Sapucaí",
+        "uf": "MG",
+        "lat": -21.9458708,
+        "lon": -45.619304,
+        "historico": "revisado",
+        "coordenadasNoBrasil": true,
+        "linkMapa": "https://www.google.com/maps/search/?api=1&query=Posto+Caxuxa+Moinho+II%2C+BR-381%2C+km+802+%28Norte%29%2C+S%C3%A3o+Gon%C3%A7alo+do+Sapuca%C3%AD%2C+MG%2C+Brasil",
+        "linkRota": "https://www.google.com/maps/dir/?api=1&destination=Posto+Caxuxa+Moinho+II%2C+BR-381%2C+km+802+%28Norte%29%2C+S%C3%A3o+Gon%C3%A7alo+do+Sapuca%C3%AD%2C+MG%2C+Brasil&travelmode=driving&origin=-19.9%2C-44",
+        "linkCoordenadas": "https://www.google.com/maps/search/?api=1&query=-21.9458708%2C-45.619304",
+        "linksCoerentes": true
+      },
+      {
+        "nome": "Caxuxa Curvelo",
+        "endereco": "BR-135, km 615",
+        "cidade": "Curvelo",
+        "uf": "MG",
+        "lat": -18.7086677,
+        "lon": -44.442745,
+        "historico": "revisado",
+        "coordenadasNoBrasil": true,
+        "linkMapa": "https://www.google.com/maps/search/?api=1&query=Posto+Caxuxa+Curvelo%2C+BR-135%2C+km+615%2C+Curvelo%2C+MG%2C+Brasil",
+        "linkRota": "https://www.google.com/maps/dir/?api=1&destination=Posto+Caxuxa+Curvelo%2C+BR-135%2C+km+615%2C+Curvelo%2C+MG%2C+Brasil&travelmode=driving&origin=-19.9%2C-44",
+        "linkCoordenadas": "https://www.google.com/maps/search/?api=1&query=-18.7086677%2C-44.442745",
+        "linksCoerentes": true
+      },
+      {
+        "nome": "Caxuxa Natal",
+        "endereco": "BR-262, km 497",
+        "cidade": "Moema",
+        "uf": "MG",
+        "lat": -19.78523793,
+        "lon": -45.4152354,
+        "historico": "revisado",
+        "coordenadasNoBrasil": true,
+        "linkMapa": "https://www.google.com/maps/search/?api=1&query=Posto+Caxuxa+Natal%2C+BR-262%2C+km+497%2C+Moema%2C+MG%2C+Brasil",
+        "linkRota": "https://www.google.com/maps/dir/?api=1&destination=Posto+Caxuxa+Natal%2C+BR-262%2C+km+497%2C+Moema%2C+MG%2C+Brasil&travelmode=driving&origin=-19.9%2C-44",
+        "linkCoordenadas": "https://www.google.com/maps/search/?api=1&query=-19.78523793%2C-45.4152354",
+        "linksCoerentes": true
+      },
+      {
+        "nome": "Caxuxa Profetas",
+        "endereco": "BR-040, km 614,6",
+        "cidade": "Congonhas",
+        "uf": "MG",
+        "lat": -20.53360526,
+        "lon": -43.823614,
+        "historico": "revisado",
+        "coordenadasNoBrasil": true,
+        "linkMapa": "https://www.google.com/maps/search/?api=1&query=Posto+Caxuxa+Profetas%2C+BR-040%2C+km+614%2C6%2C+Congonhas%2C+MG%2C+Brasil",
+        "linkRota": "https://www.google.com/maps/dir/?api=1&destination=Posto+Caxuxa+Profetas%2C+BR-040%2C+km+614%2C6%2C+Congonhas%2C+MG%2C+Brasil&travelmode=driving&origin=-19.9%2C-44",
+        "linkCoordenadas": "https://www.google.com/maps/search/?api=1&query=-20.53360526%2C-43.823614",
+        "linksCoerentes": true
+      },
+      {
+        "nome": "Caxuxa Estrela",
+        "endereco": "Av. Francisco Campos, 5",
+        "cidade": "Estrela do Indaiá",
+        "uf": "MG",
+        "lat": -19.52199972,
+        "lon": -45.78768171,
+        "historico": "revisado",
+        "coordenadasNoBrasil": true,
+        "linkMapa": "https://www.google.com/maps/search/?api=1&query=Posto+Caxuxa+Estrela%2C+Av.+Francisco+Campos%2C+5%2C+Estrela+do+Indai%C3%A1%2C+MG%2C+Brasil",
+        "linkRota": "https://www.google.com/maps/dir/?api=1&destination=Posto+Caxuxa+Estrela%2C+Av.+Francisco+Campos%2C+5%2C+Estrela+do+Indai%C3%A1%2C+MG%2C+Brasil&travelmode=driving&origin=-19.9%2C-44",
+        "linkCoordenadas": "https://www.google.com/maps/search/?api=1&query=-19.52199972%2C-45.78768171",
+        "linksCoerentes": true
+      },
+      {
+        "nome": "Caxuxa 2000",
+        "endereco": "Rua Paralela, s/n",
+        "cidade": "Japaraíba",
+        "uf": "MG",
+        "lat": -20.14012164,
+        "lon": -45.51258148,
+        "historico": "revisado",
+        "coordenadasNoBrasil": true,
+        "linkMapa": "https://www.google.com/maps/search/?api=1&query=Posto+2000%2C+Rua+Paralela%2C+s%2Fn%2C+Japara%C3%ADba%2C+MG%2C+Brasil",
+        "linkRota": "https://www.google.com/maps/dir/?api=1&destination=Posto+2000%2C+Rua+Paralela%2C+s%2Fn%2C+Japara%C3%ADba%2C+MG%2C+Brasil&travelmode=driving&origin=-19.9%2C-44",
+        "linkCoordenadas": "https://www.google.com/maps/search/?api=1&query=-20.14012164%2C-45.51258148",
+        "linksCoerentes": true
+      },
+      {
+        "nome": "POSTO 100 TEOFILO OTONI",
+        "endereco": "Avenida Sidônio Otoní, 683",
+        "cidade": "Teófilo Otoni",
+        "uf": "MG",
+        "lat": -17.851674,
+        "lon": -41.509085,
+        "historico": "pendente",
+        "coordenadasNoBrasil": true,
+        "linkMapa": "https://www.google.com/maps/search/?api=1&query=Avenida+Sid%C3%B4nio+Oton%C3%AD%2C+683%2C+Te%C3%B3filo+Otoni%2C+MG%2C+Brasil",
+        "linkRota": "https://www.google.com/maps/dir/?api=1&destination=Avenida+Sid%C3%B4nio+Oton%C3%AD%2C+683%2C+Te%C3%B3filo+Otoni%2C+MG%2C+Brasil&travelmode=driving&origin=-19.9%2C-44",
+        "linkCoordenadas": "https://www.google.com/maps/search/?api=1&query=-17.851674%2C-41.509085",
+        "linksCoerentes": true
+      },
+      {
+        "nome": "POSTO 601 BARBACENA",
+        "endereco": "Rua Benjamin Constant, 200",
+        "cidade": "Barbacena",
+        "uf": "MG",
+        "lat": -21.2161322,
+        "lon": -43.7697524,
+        "historico": "pendente",
+        "coordenadasNoBrasil": true,
+        "linkMapa": "https://www.google.com/maps/search/?api=1&query=Posto+Ipiranga%2C+Rua+Benjamin+Constant%2C+200%2C+Barbacena%2C+MG%2C+Brasil",
+        "linkRota": "https://www.google.com/maps/dir/?api=1&destination=Posto+Ipiranga%2C+Rua+Benjamin+Constant%2C+200%2C+Barbacena%2C+MG%2C+Brasil&travelmode=driving&origin=-19.9%2C-44",
+        "linkCoordenadas": "https://www.google.com/maps/search/?api=1&query=-21.2161322%2C-43.7697524",
+        "linksCoerentes": true
+      },
+      {
+        "nome": "POSTO 603 UBÁ",
+        "endereco": "Rua Frei Cornélio, 14",
+        "cidade": "Ubá",
+        "uf": "MG",
+        "lat": -21.1156319,
+        "lon": -42.9563743,
+        "historico": "pendente",
+        "coordenadasNoBrasil": true,
+        "linkMapa": "https://www.google.com/maps/search/?api=1&query=Posto+BH%2C+Rua+Frei+Corn%C3%A9lio%2C+14%2C+Ub%C3%A1%2C+MG%2C+Brasil",
+        "linkRota": "https://www.google.com/maps/dir/?api=1&destination=Posto+BH%2C+Rua+Frei+Corn%C3%A9lio%2C+14%2C+Ub%C3%A1%2C+MG%2C+Brasil&travelmode=driving&origin=-19.9%2C-44",
+        "linkCoordenadas": "https://www.google.com/maps/search/?api=1&query=-21.1156319%2C-42.9563743",
+        "linksCoerentes": true
+      },
+      {
+        "nome": "POSTO 605 JANUARIA",
+        "endereco": "Avenida Marechal Deodoro da Fonseca, 370",
+        "cidade": "Januária",
+        "uf": "MG",
+        "lat": -15.4908954,
+        "lon": -44.3649615,
+        "historico": "pendente",
+        "coordenadasNoBrasil": true,
+        "linkMapa": "https://www.google.com/maps/search/?api=1&query=Posto+Joelma%2C+Avenida+Marechal+Deodoro+da+Fonseca%2C+370%2C+Janu%C3%A1ria%2C+MG%2C+Brasil",
+        "linkRota": "https://www.google.com/maps/dir/?api=1&destination=Posto+Joelma%2C+Avenida+Marechal+Deodoro+da+Fonseca%2C+370%2C+Janu%C3%A1ria%2C+MG%2C+Brasil&travelmode=driving&origin=-19.9%2C-44",
+        "linkCoordenadas": "https://www.google.com/maps/search/?api=1&query=-15.4908954%2C-44.3649615",
+        "linksCoerentes": true
+      },
+      {
+        "nome": "POSTO 606 UBERABA",
+        "endereco": "Rua Coronel Cacildo Arantes, 50",
+        "cidade": "Uberaba",
+        "uf": "MG",
+        "lat": -19.7568232,
+        "lon": -47.9788803,
+        "historico": "pendente",
+        "coordenadasNoBrasil": true,
+        "linkMapa": "https://www.google.com/maps/search/?api=1&query=POSTO+BH%2C+Rua+Coronel+Cacildo+Arantes%2C+50%2C+Uberaba%2C+MG%2C+Brasil",
+        "linkRota": "https://www.google.com/maps/dir/?api=1&destination=POSTO+BH%2C+Rua+Coronel+Cacildo+Arantes%2C+50%2C+Uberaba%2C+MG%2C+Brasil&travelmode=driving&origin=-19.9%2C-44",
+        "linkCoordenadas": "https://www.google.com/maps/search/?api=1&query=-19.7568232%2C-47.9788803",
+        "linksCoerentes": true
+      },
+      {
+        "nome": "POSTO 607 UBERLANDIA",
+        "endereco": "Avenida João Leão, 7085",
+        "cidade": "Uberlândia",
+        "uf": "MG",
+        "lat": -18.903694,
+        "lon": -48.233042,
+        "historico": "pendente",
+        "coordenadasNoBrasil": true,
+        "linkMapa": "https://www.google.com/maps/search/?api=1&query=Posto+BH+Supermercado%2C+Avenida+Jo%C3%A3o+Le%C3%A3o%2C+7085%2C+Uberl%C3%A2ndia%2C+MG%2C+Brasil",
+        "linkRota": "https://www.google.com/maps/dir/?api=1&destination=Posto+BH+Supermercado%2C+Avenida+Jo%C3%A3o+Le%C3%A3o%2C+7085%2C+Uberl%C3%A2ndia%2C+MG%2C+Brasil&travelmode=driving&origin=-19.9%2C-44",
+        "linkCoordenadas": "https://www.google.com/maps/search/?api=1&query=-18.903694%2C-48.233042",
+        "linksCoerentes": true
+      },
+      {
+        "nome": "POSTO 609 CORINTO",
+        "endereco": "Avenida Amarante Ribeiro",
+        "cidade": "Corinto",
+        "uf": "MG",
+        "lat": -18.3640352,
+        "lon": -44.4617448,
+        "historico": "pendente",
+        "coordenadasNoBrasil": true,
+        "linkMapa": "https://www.google.com/maps/search/?api=1&query=Posto+Positivo+de+Corinto+Ltda.%2C+Avenida+Amarante+Ribeiro%2C+Corinto%2C+MG%2C+Brasil",
+        "linkRota": "https://www.google.com/maps/dir/?api=1&destination=Posto+Positivo+de+Corinto+Ltda.%2C+Avenida+Amarante+Ribeiro%2C+Corinto%2C+MG%2C+Brasil&travelmode=driving&origin=-19.9%2C-44",
+        "linkCoordenadas": "https://www.google.com/maps/search/?api=1&query=-18.3640352%2C-44.4617448",
+        "linksCoerentes": true
+      },
+      {
+        "nome": "POSTO 612 SETE LAGOAS",
+        "endereco": "Avenida Tunico Reis, 122",
+        "cidade": "Sete Lagoas",
+        "uf": "MG",
+        "lat": -19.4673306,
+        "lon": -44.227269,
+        "historico": "pendente",
+        "coordenadasNoBrasil": true,
+        "linkMapa": "https://www.google.com/maps/search/?api=1&query=Avenida+Tunico+Reis%2C+122%2C+Sete+Lagoas%2C+MG%2C+Brasil",
+        "linkRota": "https://www.google.com/maps/dir/?api=1&destination=Avenida+Tunico+Reis%2C+122%2C+Sete+Lagoas%2C+MG%2C+Brasil&travelmode=driving&origin=-19.9%2C-44",
+        "linkCoordenadas": "https://www.google.com/maps/search/?api=1&query=-19.4673306%2C-44.227269",
+        "linksCoerentes": true
+      },
+      {
+        "nome": "POSTO 616 MONTES CLAROS",
+        "endereco": "Avenida Donato Quintino, 08",
+        "cidade": "Montes Claros",
+        "uf": "MG",
+        "lat": -16.740054,
+        "lon": -43.871503,
+        "historico": "pendente",
+        "coordenadasNoBrasil": true,
+        "linkMapa": "https://www.google.com/maps/search/?api=1&query=Avenida+Donato+Quintino%2C+08%2C+Montes+Claros%2C+MG%2C+Brasil",
+        "linkRota": "https://www.google.com/maps/dir/?api=1&destination=Avenida+Donato+Quintino%2C+08%2C+Montes+Claros%2C+MG%2C+Brasil&travelmode=driving&origin=-19.9%2C-44",
+        "linkCoordenadas": "https://www.google.com/maps/search/?api=1&query=-16.740054%2C-43.871503",
+        "linksCoerentes": true
+      },
+      {
+        "nome": "POSTO 617 J F - SÃO MATEUS",
+        "endereco": "Ladeira Alexandre Leonel, 200",
+        "cidade": "Juiz de Fora",
+        "uf": "MG",
+        "lat": -21.7824797,
+        "lon": -43.3577077,
+        "historico": "pendente",
+        "coordenadasNoBrasil": true,
+        "linkMapa": "https://www.google.com/maps/search/?api=1&query=Posto+Shell%2C+Ladeira+Alexandre+Leonel%2C+200%2C+Juiz+de+Fora%2C+MG%2C+Brasil",
+        "linkRota": "https://www.google.com/maps/dir/?api=1&destination=Posto+Shell%2C+Ladeira+Alexandre+Leonel%2C+200%2C+Juiz+de+Fora%2C+MG%2C+Brasil&travelmode=driving&origin=-19.9%2C-44",
+        "linkCoordenadas": "https://www.google.com/maps/search/?api=1&query=-21.7824797%2C-43.3577077",
+        "linksCoerentes": true
+      },
+      {
+        "nome": "POSTO 618 J F - MARIANO PR",
+        "endereco": "Avenida Brasil, 6123",
+        "cidade": "Juiz de Fora",
+        "uf": "MG",
+        "lat": -21.7446832,
+        "lon": -43.362845,
+        "historico": "pendente",
+        "coordenadasNoBrasil": true,
+        "linkMapa": "https://www.google.com/maps/search/?api=1&query=Posto+Bonit%C3%A3o%2C+Avenida+Brasil%2C+6123%2C+Juiz+de+Fora%2C+MG%2C+Brasil",
+        "linkRota": "https://www.google.com/maps/dir/?api=1&destination=Posto+Bonit%C3%A3o%2C+Avenida+Brasil%2C+6123%2C+Juiz+de+Fora%2C+MG%2C+Brasil&travelmode=driving&origin=-19.9%2C-44",
+        "linkCoordenadas": "https://www.google.com/maps/search/?api=1&query=-21.7446832%2C-43.362845",
+        "linksCoerentes": true
+      },
+      {
+        "nome": "POSTO 619 JANAUBA",
+        "endereco": "Rua São Pedro, 650",
+        "cidade": "Janaúba",
+        "uf": "MG",
+        "lat": -15.806798,
+        "lon": -43.301347,
+        "historico": "pendente",
+        "coordenadasNoBrasil": true,
+        "linkMapa": "https://www.google.com/maps/search/?api=1&query=Rua+S%C3%A3o+Pedro%2C+650%2C+Jana%C3%BAba%2C+MG%2C+Brasil",
+        "linkRota": "https://www.google.com/maps/dir/?api=1&destination=Rua+S%C3%A3o+Pedro%2C+650%2C+Jana%C3%BAba%2C+MG%2C+Brasil&travelmode=driving&origin=-19.9%2C-44",
+        "linkCoordenadas": "https://www.google.com/maps/search/?api=1&query=-15.806798%2C-43.301347",
+        "linksCoerentes": true
+      },
+      {
+        "nome": "POSTO 620 IPATINGA",
+        "endereco": "Avenida Alberto Giovanini, 165",
+        "cidade": "Ipatinga",
+        "uf": "MG",
+        "lat": -19.4432188,
+        "lon": -42.5556997,
+        "historico": "pendente",
+        "coordenadasNoBrasil": true,
+        "linkMapa": "https://www.google.com/maps/search/?api=1&query=Avenida+Alberto+Giovanini%2C+165%2C+Ipatinga%2C+MG%2C+Brasil",
+        "linkRota": "https://www.google.com/maps/dir/?api=1&destination=Avenida+Alberto+Giovanini%2C+165%2C+Ipatinga%2C+MG%2C+Brasil&travelmode=driving&origin=-19.9%2C-44",
+        "linkCoordenadas": "https://www.google.com/maps/search/?api=1&query=-19.4432188%2C-42.5556997",
+        "linksCoerentes": true
+      },
+      {
+        "nome": "POSTO 621 PADRE EUSTAQUIO",
+        "endereco": "Rua Pará de Minas, 788",
+        "cidade": "Belo Horizonte",
+        "uf": "MG",
+        "lat": -19.914019,
+        "lon": -43.9889773,
+        "historico": "revisado_anteriormente",
+        "coordenadasNoBrasil": true,
+        "linkMapa": "https://www.google.com/maps/search/?api=1&query=Posto+Bretas+Duarte%2C+Rua+Par%C3%A1+de+Minas%2C+788%2C+Belo+Horizonte%2C+MG%2C+Brasil",
+        "linkRota": "https://www.google.com/maps/dir/?api=1&destination=Posto+Bretas+Duarte%2C+Rua+Par%C3%A1+de+Minas%2C+788%2C+Belo+Horizonte%2C+MG%2C+Brasil&travelmode=driving&origin=-19.9%2C-44",
+        "linkCoordenadas": "https://www.google.com/maps/search/?api=1&query=-19.914019%2C-43.9889773",
+        "linksCoerentes": true
+      },
+      {
+        "nome": "POSTO 622 CORONEL FABRICIANO",
+        "endereco": "Praça Sérvulo Roque, 86",
+        "cidade": "Coronel Fabriciano",
+        "uf": "MG",
+        "lat": -19.5259676,
+        "lon": -42.6250227,
+        "historico": "pendente",
+        "coordenadasNoBrasil": true,
+        "linkMapa": "https://www.google.com/maps/search/?api=1&query=Shell%2C+Pra%C3%A7a+S%C3%A9rvulo+Roque%2C+86%2C+Coronel+Fabriciano%2C+MG%2C+Brasil",
+        "linkRota": "https://www.google.com/maps/dir/?api=1&destination=Shell%2C+Pra%C3%A7a+S%C3%A9rvulo+Roque%2C+86%2C+Coronel+Fabriciano%2C+MG%2C+Brasil&travelmode=driving&origin=-19.9%2C-44",
+        "linkCoordenadas": "https://www.google.com/maps/search/?api=1&query=-19.5259676%2C-42.6250227",
+        "linksCoerentes": true
+      },
+      {
+        "nome": "POSTO 623 CINQUENTENARIO",
+        "endereco": "Rua Úrsula Paulino, 763",
+        "cidade": "Belo Horizonte",
+        "uf": "MG",
+        "lat": -19.9550962,
+        "lon": -43.9840226,
+        "historico": "revisado",
+        "coordenadasNoBrasil": true,
+        "linkMapa": "https://www.google.com/maps/search/?api=1&query=Posto+Shell%2C+Rua+%C3%9Arsula+Paulino%2C+763%2C+Belo+Horizonte%2C+MG%2C+Brasil",
+        "linkRota": "https://www.google.com/maps/dir/?api=1&destination=Posto+Shell%2C+Rua+%C3%9Arsula+Paulino%2C+763%2C+Belo+Horizonte%2C+MG%2C+Brasil&travelmode=driving&origin=-19.9%2C-44",
+        "linkCoordenadas": "https://www.google.com/maps/search/?api=1&query=-19.9550962%2C-43.9840226",
+        "linksCoerentes": true
+      },
+      {
+        "nome": "POSTO 624 TAIOBEIRAS",
+        "endereco": "LMG-626, 905",
+        "cidade": "Taiobeiras",
+        "uf": "MG",
+        "lat": -15.825184,
+        "lon": -42.217902,
+        "historico": "pendente",
+        "coordenadasNoBrasil": true,
+        "linkMapa": "https://www.google.com/maps/search/?api=1&query=LMG-626%2C+905%2C+Taiobeiras%2C+MG%2C+Brasil",
+        "linkRota": "https://www.google.com/maps/dir/?api=1&destination=LMG-626%2C+905%2C+Taiobeiras%2C+MG%2C+Brasil&travelmode=driving&origin=-19.9%2C-44",
+        "linkCoordenadas": "https://www.google.com/maps/search/?api=1&query=-15.825184%2C-42.217902",
+        "linksCoerentes": true
+      },
+      {
+        "nome": "Posto Dharma",
+        "endereco": "Avenida Adélino de Oliveira Verdigueiro, 1195",
+        "cidade": "Três Corações",
+        "uf": "MG",
+        "lat": -21.709042,
+        "lon": -45.256042,
+        "historico": "pendente",
+        "coordenadasNoBrasil": true,
+        "linkMapa": "https://www.google.com/maps/search/?api=1&query=Posto+S%C3%A3o+Thom%C3%A9+4+Elo%2B%2C+Avenida+Ad%C3%A9lino+de+Oliveira+Verdigueiro%2C+1195%2C+Tr%C3%AAs+Cora%C3%A7%C3%B5es%2C+MG%2C+Brasil",
+        "linkRota": "https://www.google.com/maps/dir/?api=1&destination=Posto+S%C3%A3o+Thom%C3%A9+4+Elo%2B%2C+Avenida+Ad%C3%A9lino+de+Oliveira+Verdigueiro%2C+1195%2C+Tr%C3%AAs+Cora%C3%A7%C3%B5es%2C+MG%2C+Brasil&travelmode=driving&origin=-19.9%2C-44",
+        "linkCoordenadas": "https://www.google.com/maps/search/?api=1&query=-21.709042%2C-45.256042",
+        "linksCoerentes": true
+      },
+      {
+        "nome": "Posto Contorno",
+        "endereco": "Avenida Prefeito Orlando Rezende Andrade, 841",
+        "cidade": "Três Corações",
+        "uf": "MG",
+        "lat": -21.6793176,
+        "lon": -45.2670481,
+        "historico": "pendente",
+        "coordenadasNoBrasil": true,
+        "linkMapa": "https://www.google.com/maps/search/?api=1&query=Posto+Ipiranga%2C+Avenida+Prefeito+Orlando+Rezende+Andrade%2C+841%2C+Tr%C3%AAs+Cora%C3%A7%C3%B5es%2C+MG%2C+Brasil",
+        "linkRota": "https://www.google.com/maps/dir/?api=1&destination=Posto+Ipiranga%2C+Avenida+Prefeito+Orlando+Rezende+Andrade%2C+841%2C+Tr%C3%AAs+Cora%C3%A7%C3%B5es%2C+MG%2C+Brasil&travelmode=driving&origin=-19.9%2C-44",
+        "linkCoordenadas": "https://www.google.com/maps/search/?api=1&query=-21.6793176%2C-45.2670481",
+        "linksCoerentes": true
+      },
+      {
+        "nome": "Posto São Thomé VI",
+        "endereco": "Avenida Deputado Renato Azeredo, 3959",
+        "cidade": "Três Corações",
+        "uf": "MG",
+        "lat": -21.665693,
+        "lon": -45.277004,
+        "historico": "pendente",
+        "coordenadasNoBrasil": true,
+        "linkMapa": "https://www.google.com/maps/search/?api=1&query=Posto+S%C3%A3o+Thom%C3%A9+2+BR%2C+Avenida+Deputado+Renato+Azeredo%2C+3959%2C+Tr%C3%AAs+Cora%C3%A7%C3%B5es%2C+MG%2C+Brasil",
+        "linkRota": "https://www.google.com/maps/dir/?api=1&destination=Posto+S%C3%A3o+Thom%C3%A9+2+BR%2C+Avenida+Deputado+Renato+Azeredo%2C+3959%2C+Tr%C3%AAs+Cora%C3%A7%C3%B5es%2C+MG%2C+Brasil&travelmode=driving&origin=-19.9%2C-44",
+        "linkCoordenadas": "https://www.google.com/maps/search/?api=1&query=-21.665693%2C-45.277004",
+        "linksCoerentes": true
+      },
+      {
+        "nome": "Posto Pereira e Maciel",
+        "endereco": "Avenida Manuel Vida, 800",
+        "cidade": "Varginha",
+        "uf": "MG",
+        "lat": -21.586458,
+        "lon": -45.447659,
+        "historico": "pendente",
+        "coordenadasNoBrasil": true,
+        "linkMapa": "https://www.google.com/maps/search/?api=1&query=Avenida+Manuel+Vida%2C+800%2C+Varginha%2C+MG%2C+Brasil",
+        "linkRota": "https://www.google.com/maps/dir/?api=1&destination=Avenida+Manuel+Vida%2C+800%2C+Varginha%2C+MG%2C+Brasil&travelmode=driving&origin=-19.9%2C-44",
+        "linkCoordenadas": "https://www.google.com/maps/search/?api=1&query=-21.586458%2C-45.447659",
+        "linksCoerentes": true
+      },
+      {
+        "nome": "POSTO REDE BRASIL",
+        "endereco": "Rodovia BR-101 Norte, 3616",
+        "cidade": "Serra",
+        "uf": "ES",
+        "lat": -20.2046526,
+        "lon": -40.2689504,
+        "historico": "pendente",
+        "coordenadasNoBrasil": true,
+        "linkMapa": "https://www.google.com/maps/search/?api=1&query=Rede+Mais+Brasil%2C+Rodovia+BR-101+Norte%2C+3616%2C+Serra%2C+ES%2C+Brasil",
+        "linkRota": "https://www.google.com/maps/dir/?api=1&destination=Rede+Mais+Brasil%2C+Rodovia+BR-101+Norte%2C+3616%2C+Serra%2C+ES%2C+Brasil&travelmode=driving&origin=-19.9%2C-44",
+        "linkCoordenadas": "https://www.google.com/maps/search/?api=1&query=-20.2046526%2C-40.2689504",
+        "linksCoerentes": true
+      },
+      {
+        "nome": "POSTO SAO JOAO DEL REI",
+        "endereco": "Avenida Leite de Castro, 261",
+        "cidade": "São João del Rei",
+        "uf": "MG",
+        "lat": -21.127351,
+        "lon": -44.2505571,
+        "historico": "pendente",
+        "coordenadasNoBrasil": true,
+        "linkMapa": "https://www.google.com/maps/search/?api=1&query=Posto+BH%2C+Avenida+Leite+de+Castro%2C+261%2C+S%C3%A3o+Jo%C3%A3o+del+Rei%2C+MG%2C+Brasil",
+        "linkRota": "https://www.google.com/maps/dir/?api=1&destination=Posto+BH%2C+Avenida+Leite+de+Castro%2C+261%2C+S%C3%A3o+Jo%C3%A3o+del+Rei%2C+MG%2C+Brasil&travelmode=driving&origin=-19.9%2C-44",
+        "linkCoordenadas": "https://www.google.com/maps/search/?api=1&query=-21.127351%2C-44.2505571",
+        "linksCoerentes": true
+      },
+      {
+        "nome": "POSTO SERRA",
+        "endereco": "Rodovia BR 101 Norte, 3616",
+        "cidade": "Serra",
+        "uf": "ES",
+        "lat": -20.2046526,
+        "lon": -40.2689504,
+        "historico": "pendente",
+        "coordenadasNoBrasil": true,
+        "linkMapa": "https://www.google.com/maps/search/?api=1&query=Rede+Mais+Brasil%2C+Rodovia+BR+101+Norte%2C+3616%2C+Serra%2C+ES%2C+Brasil",
+        "linkRota": "https://www.google.com/maps/dir/?api=1&destination=Rede+Mais+Brasil%2C+Rodovia+BR+101+Norte%2C+3616%2C+Serra%2C+ES%2C+Brasil&travelmode=driving&origin=-19.9%2C-44",
+        "linkCoordenadas": "https://www.google.com/maps/search/?api=1&query=-20.2046526%2C-40.2689504",
+        "linksCoerentes": true
+      },
+      {
+        "nome": "POSTO 604 SJDR (MATOZINHOS)",
+        "endereco": "Avenida Sete de Setembro, 10",
+        "cidade": "São João del Rei",
+        "uf": "MG",
+        "lat": -21.126691,
+        "lon": -44.23981,
+        "historico": "sem correspondência pelo nome",
+        "coordenadasNoBrasil": true,
+        "linkMapa": "https://www.google.com/maps/search/?api=1&query=Avenida+Sete+de+Setembro%2C+10%2C+S%C3%A3o+Jo%C3%A3o+del+Rei%2C+MG%2C+Brasil",
+        "linkRota": "https://www.google.com/maps/dir/?api=1&destination=Avenida+Sete+de+Setembro%2C+10%2C+S%C3%A3o+Jo%C3%A3o+del+Rei%2C+MG%2C+Brasil&travelmode=driving&origin=-19.9%2C-44",
+        "linkCoordenadas": "https://www.google.com/maps/search/?api=1&query=-21.126691%2C-44.23981",
+        "linksCoerentes": true
+      },
+      {
+        "nome": "Posto Dom Pedro Betim",
+        "endereco": "BR-381, Betim - MG",
+        "cidade": "Betim",
+        "uf": "MG",
+        "lat": -19.9764579,
+        "lon": -44.1999935,
+        "historico": "pendente",
+        "coordenadasNoBrasil": true,
+        "linkMapa": "https://www.google.com/maps/search/?api=1&query=Posto+Dom+Pedro+Betim+%28Posto+da+Curva%29%2C+BR-381%2C+Betim+-+MG%2C+Betim%2C+MG%2C+Brasil",
+        "linkRota": "https://www.google.com/maps/dir/?api=1&destination=Posto+Dom+Pedro+Betim+%28Posto+da+Curva%29%2C+BR-381%2C+Betim+-+MG%2C+Betim%2C+MG%2C+Brasil&travelmode=driving&origin=-19.9%2C-44",
+        "linkCoordenadas": "https://www.google.com/maps/search/?api=1&query=-19.9764579%2C-44.1999935",
+        "linksCoerentes": true
+      },
+      {
+        "nome": "Posto Dom Pedro Contagem Fernão Dias",
+        "endereco": "BR-381, Contagem - MG",
+        "cidade": "Contagem",
+        "uf": "MG",
+        "lat": -19.9616348,
+        "lon": -44.0503835,
+        "historico": "pendente",
+        "coordenadasNoBrasil": true,
+        "linkMapa": "https://www.google.com/maps/search/?api=1&query=Posto+Dom+Pedro+Contagem+Fern%C3%A3o+Dias%2C+BR-381%2C+Contagem+-+MG%2C+Contagem%2C+MG%2C+Brasil",
+        "linkRota": "https://www.google.com/maps/dir/?api=1&destination=Posto+Dom+Pedro+Contagem+Fern%C3%A3o+Dias%2C+BR-381%2C+Contagem+-+MG%2C+Contagem%2C+MG%2C+Brasil&travelmode=driving&origin=-19.9%2C-44",
+        "linkCoordenadas": "https://www.google.com/maps/search/?api=1&query=-19.9616348%2C-44.0503835",
+        "linksCoerentes": true
+      }
+    ]
+  },
+  "bancoPostos": {
+    "total": 49,
+    "divergenciasReferencia": []
+  },
+  "lojas": {
+    "total": 704,
+    "semCoordenadas": [
+      {
+        "id": 15,
+        "nome": "BASE ROYAL FIC - SÃO GONÇALO DO SAP...",
+        "endereco": "Rodovia José Benedito de Paiva, 4.500",
+        "cidade": "São Gonçalo do Sapucaí",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 18,
+        "nome": "BASE VIBRA",
+        "endereco": "Rua Cento e Três, 486",
+        "cidade": "Betim",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 30,
+        "nome": "CD FAZENDINHA G4",
+        "endereco": "4WPV+6C6 Contagem - Parque Industrial, Co...",
+        "cidade": "Contagem",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 31,
+        "nome": "CD RAIZZ VIANA",
+        "endereco": "Est Ladeira Grande",
+        "cidade": "Viana",
+        "uf": "ES",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 33,
+        "nome": "CD VIANA - NOVO",
+        "endereco": "Endereço não informado",
+        "cidade": "Viana",
+        "uf": "ES",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 39,
+        "nome": "CONTROL TACOGRAFOS",
+        "endereco": "Avenida Marginal Rodovia, 132",
+        "cidade": "Betim",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 44,
+        "nome": "DEVA MONTES CLAROS",
+        "endereco": "BR-251, nº 1700 - Chácara Recanto dos Araç...",
+        "cidade": "Montes Claros",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 45,
+        "nome": "DEVA POUSO ALEGRE",
+        "endereco": "Rodovia Fernão Dias, km 847,8",
+        "cidade": "Pouso Alegre",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 66,
+        "nome": "Epa 025 - Coronel Fabriciano",
+        "endereco": "Rua Doutor Moacir Birro, 7",
+        "cidade": "Coronel Fabriciano",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 73,
+        "nome": "Epa 032 - Jucaí",
+        "endereco": "Rua Jucaí, 2330",
+        "cidade": "Belo Horizonte",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 89,
+        "nome": "Epa 051 - Conselheiro Lafaiete",
+        "endereco": "Rua Barão do Suaçuí, 105",
+        "cidade": "Conselheiro Lafaiete",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 101,
+        "nome": "Epa 106 - Independência",
+        "endereco": "Rua Mariza Afonso, 342",
+        "cidade": "Belo Horizonte",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 126,
+        "nome": "Epa 241 - Gutierrez",
+        "endereco": "Avenida Marquês de Valença, 170",
+        "cidade": "Belo Horizonte",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 128,
+        "nome": "Epa 252 - Granja de Freitas",
+        "endereco": "Endereço não informado",
+        "cidade": "Belo Horizonte",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 129,
+        "nome": "EXATA METROLOGIA",
+        "endereco": "Rua Doutor Wenceslau Braz, 712",
+        "cidade": "Varginha",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 134,
+        "nome": "GERALDO ROSA",
+        "endereco": "Rua Geraldo Rosa Filho, 216A",
+        "cidade": "Belo Horizonte",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 144,
+        "nome": "LC - LAVRAS III SHOPPING",
+        "endereco": "Av 18 de Maio, Shopping Cidade da Serra",
+        "cidade": "Lavras",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 150,
+        "nome": "LOJA 104 DONATO QUINTINO",
+        "endereco": "Rua Joaquim Martins de Oliveira, 581",
+        "cidade": "Montes Claros",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 155,
+        "nome": "LOJA 110 VARZEA DA PALMA",
+        "endereco": "Rua Tomás Antônio Gonzaga, 149",
+        "cidade": "Várzea da Palma",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 159,
+        "nome": "LOJA 114 OURO BRANCO",
+        "endereco": "Rua Ivanilde Martins Bueno, 60",
+        "cidade": "Ouro Branco",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 170,
+        "nome": "LOJA 124 INDUSTRIAL",
+        "endereco": "Rua Coronel Antônio Benjamin Camargos, 59",
+        "cidade": "Contagem",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 171,
+        "nome": "LOJA 125 SABARÁ",
+        "endereco": "Avenida Expedicionário Romeu Jerônimo Dant...",
+        "cidade": "Sabará",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 209,
+        "nome": "LOJA 160 SAO DAMIÃO",
+        "endereco": "Rua Aquidabam, 182",
+        "cidade": "Vespasiano",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 214,
+        "nome": "LOJA 165 VIA SHOPPING",
+        "endereco": "Rua Agnelo Macedo, 123",
+        "cidade": "Belo Horizonte",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 222,
+        "nome": "LOJA 172 PITANGUI",
+        "endereco": "Rua Mauro Miguel dos Santos, 20",
+        "cidade": "Pitangui",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 231,
+        "nome": "LOJA 180 VARZEA DA PALMA II",
+        "endereco": "Avenida Maximiliano Gaidzinski, 1150",
+        "cidade": "Várzea da Palma",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 232,
+        "nome": "LOJA 181 DURVAL DE BARROS",
+        "endereco": "Rua Padre Pedro Vidigal, 113",
+        "cidade": "Ibirité",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 240,
+        "nome": "LOJA 189 LAVRAS DISTRITO",
+        "endereco": "Rua Alcides Thomaz Da Silva, 15",
+        "cidade": "Lavras",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 246,
+        "nome": "LOJA 195 TRES PONTAS",
+        "endereco": "Rua Doutor Pedro A Meimberg, 174",
+        "cidade": "Três Pontas",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 250,
+        "nome": "LOJA 199 LAMBARI",
+        "endereco": "Rua Venceslau Braz, 67",
+        "cidade": "Lambari",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 254,
+        "nome": "LOJA 206 SERRA DO CIPÓ",
+        "endereco": "Endereço não informado",
+        "cidade": "Santana do Riacho",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 268,
+        "nome": "LOJA 219 PIUMHI",
+        "endereco": "Avenida Doutor Oswaldo Soares Machado, 427",
+        "cidade": "Piumhi",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 281,
+        "nome": "LOJA 230 CAMINHO NOVO",
+        "endereco": "Rua Cesário Alvin, 68",
+        "cidade": "Barbacena",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 284,
+        "nome": "LOJA 233 SANTOS DUMONT",
+        "endereco": "Rua Coronel Severiano de Rezende, 61",
+        "cidade": "Santos Dumont",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 286,
+        "nome": "LOJA 235 UBÁ",
+        "endereco": "Praça Newton Carneiro, 10",
+        "cidade": "Ubá",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 287,
+        "nome": "LOJA 236 MURIAE",
+        "endereco": "Rua Doutor Luís Gonzaga, 127",
+        "cidade": "Muriaé",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 290,
+        "nome": "LOJA 239 POUSO ALEGRE",
+        "endereco": "BR-459, s/n Rodovia Presidente Juscelino Ku...",
+        "cidade": "Pouso Alegre",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 291,
+        "nome": "LOJA 24 ARCOS",
+        "endereco": "Avenida João Vaz Sobrinho Trecho I, 1530",
+        "cidade": "Arcos",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 296,
+        "nome": "LOJA 244 SARZEDO II",
+        "endereco": "Rodovia MG 040, 832",
+        "cidade": "Sarzedo",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 299,
+        "nome": "LOJA 247 PEDRO LEOPOLDO III",
+        "endereco": "Rua Agenor Teixeira da Costa, 264",
+        "cidade": "Pedro Leopoldo",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 301,
+        "nome": "LOJA 249 ESMERALDAS/SAO PEDRO",
+        "endereco": "João Guimarães Rosa, 9",
+        "cidade": "Esmeraldas",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 305,
+        "nome": "LOJA 253 MARTINHO CAMPOS",
+        "endereco": "Rodovia Mg 420, 85",
+        "cidade": "Martinho Campos",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 310,
+        "nome": "LOJA 258 CATAGUASES",
+        "endereco": "Avenida Sizenenando Dutra de Siqueira, 800",
+        "cidade": "Cataguases",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 313,
+        "nome": "LOJA 260 MONTES CLAROS/COCA COLA",
+        "endereco": "Avenida Armitas Jacques De Morais, 3513",
+        "cidade": "Montes Claros",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 314,
+        "nome": "LOJA 261 NOVA SERRANA",
+        "endereco": "Rua Alameda Rosa Branca, 98",
+        "cidade": "Nova Serrana",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 319,
+        "nome": "LOJA 266 VISCONDE DO RIO BRANCO",
+        "endereco": "Rua Francisco Assis Pinto, 157",
+        "cidade": "Visconde do Rio Branco",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 321,
+        "nome": "LOJA 268 RECREIO",
+        "endereco": "Vila Dona Emilia Guedes James, 285",
+        "cidade": "Recreio",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 322,
+        "nome": "LOJA 269 LEOPOLDINA CENTRO",
+        "endereco": "Rua Acácio Serpa, 646",
+        "cidade": "Leopoldina",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 325,
+        "nome": "LOJA 271 SHOPPING JUSTINÓPOLIS",
+        "endereco": "Rua Santa Filomena, 10",
+        "cidade": "Ribeirão das Neves",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 327,
+        "nome": "LOJA 273 SÃO GONÇALO II",
+        "endereco": "Estrada Em-080 Pará Cordislândia, 870",
+        "cidade": "São Gonçalo do Sapucaí",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 328,
+        "nome": "LOJA 274 PATOS DE MINAS MARABÁ",
+        "endereco": "Rua Arnaldo L. de Oliveira, 75",
+        "cidade": "Patos de Minas",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 331,
+        "nome": "LOJA 277 ESPINOSA",
+        "endereco": "Avenida Juscelino Kubitscheck, 725",
+        "cidade": "Espinosa",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 341,
+        "nome": "LOJA 286 DIAMANTINA",
+        "endereco": "Rua K, 65",
+        "cidade": "Diamantina",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 344,
+        "nome": "LOJA 289 DANDARA",
+        "endereco": "Rua Estanislau Pedro Boardman, 100",
+        "cidade": "Ribeirão das Neves",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 349,
+        "nome": "LOJA 293 CORINTO",
+        "endereco": "Rua Joaquim Batista Barbosa, 298",
+        "cidade": "Corinto",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 380,
+        "nome": "LOJA 321 CAPITÓLIO",
+        "endereco": "Rua 02, 40",
+        "cidade": "Capitólio",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 383,
+        "nome": "LOJA 324 SANTA LUZIA KENNEDY",
+        "endereco": "MG-020, 599 - Barreiro do Amaral, Santa Luzia",
+        "cidade": "Santa Luzia",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 394,
+        "nome": "LOJA 334 IPATINGA CENTRO",
+        "endereco": "Avenida Mª Jorge São de Sales, 155",
+        "cidade": "Ipatinga",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 408,
+        "nome": "LOJA 347 UBERABA STA.BEATRIZ",
+        "endereco": "Avenida Santa Beatriz da Silva, 1501 / St.Ben...",
+        "cidade": "Uberaba",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 411,
+        "nome": "LOJA 35 DOM SILVERIO",
+        "endereco": "MG-05, 80",
+        "cidade": "Belo Horizonte",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 420,
+        "nome": "LOJA 358 ARAGUARI",
+        "endereco": "Avenida Coronel Teodolino Pereira Araújo, 11",
+        "cidade": "Araguari",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 421,
+        "nome": "LOJA 359 ITUIUTABA CENTRO",
+        "endereco": "Avenida Cinco, 384",
+        "cidade": "Ituiutaba",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 425,
+        "nome": "LOJA 362 PARACATU JOQUEI",
+        "endereco": "Rua Almir Alaor Porto Adjuto, 250",
+        "cidade": "Paracatu",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 426,
+        "nome": "LOJA 363 MATOZINHOS IV",
+        "endereco": "Rua Algenor G, 152",
+        "cidade": "Matozinhos",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 430,
+        "nome": "LOJA 367 CURVELO II",
+        "endereco": "Rua Rita Otaviano Alvare, 104",
+        "cidade": "Curvelo",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 432,
+        "nome": "LOJA 37 BRUMADINHO",
+        "endereco": "ROD AUGUSTO DINIZ MURTA, 15",
+        "cidade": "Brumadinho",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 439,
+        "nome": "LOJA 376 VARGINHA AYRTON SEN",
+        "endereco": "Avenida Airton Senna da Silva, 111",
+        "cidade": "Varginha",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 440,
+        "nome": "LOJA 378 JUIZ DE FORA VI",
+        "endereco": "Rua Josué de Queirós, 280",
+        "cidade": "Juiz de Fora",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 442,
+        "nome": "LOJA 38 MONTES CLAROS",
+        "endereco": "Rua Izabel de Souza Ramada, 486",
+        "cidade": "Montes Claros",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 450,
+        "nome": "LOJA 40 JARDIM INDUSTRIAL",
+        "endereco": "Rua Monsenhor João Rodrigues Guimarães, 2...",
+        "cidade": "Contagem",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 458,
+        "nome": "LOJA 469 IBIA",
+        "endereco": "Rua Prefeito Ivo Mendes, 703",
+        "cidade": "Ibiá",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 459,
+        "nome": "LOJA 48 SERRANO",
+        "endereco": "Rua Araciacaba, 34",
+        "cidade": "Belo Horizonte",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 463,
+        "nome": "LOJA 503 SAO MATHEUS",
+        "endereco": "Endereço não informado",
+        "cidade": "São Mateus",
+        "uf": "ES",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 464,
+        "nome": "LOJA 503 SAO MATHEUS",
+        "endereco": "Endereço não informado",
+        "cidade": "São Mateus",
+        "uf": "ES",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 467,
+        "nome": "LOJA 505 MARATAIZES",
+        "endereco": "Estrada Morro dos Sem Terra, 477",
+        "cidade": "Marataízes",
+        "uf": "ES",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 468,
+        "nome": "LOJA 505 MARATAIZES",
+        "endereco": "Estrada Morro dos Sem Terra, 477",
+        "cidade": "Marataízes",
+        "uf": "ES",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 469,
+        "nome": "LOJA 506 JACARAIPE",
+        "endereco": "Avenida Abido Saad, 2340",
+        "cidade": "Serra",
+        "uf": "ES",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 480,
+        "nome": "LOJA 514 ITAPOA",
+        "endereco": "Travessa Independência, 440",
+        "cidade": "Vila Velha",
+        "uf": "ES",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 487,
+        "nome": "LOJA 520 ALBERTO TORRES",
+        "endereco": "Rua Guido Prati, 181",
+        "cidade": "Vila Velha",
+        "uf": "ES",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 506,
+        "nome": "LOJA 533 GUARAPARI IPIRANGA",
+        "endereco": "Rua Simplício de Almeida Neto, 32",
+        "cidade": "Guarapari",
+        "uf": "ES",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 510,
+        "nome": "LOJA 536 CACHOEIRO DO ITAPIMIRIM",
+        "endereco": "Avenida Alan Kardec, 51",
+        "cidade": "Cachoeiro de Itapemirim",
+        "uf": "ES",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 511,
+        "nome": "LOJA 537 MARECHAL FLORIANO",
+        "endereco": "Avenida Arthur Haese, 228",
+        "cidade": "Marechal Floriano",
+        "uf": "ES",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 514,
+        "nome": "LOJA 54 BARREIRINHO",
+        "endereco": "Avenida João Evangelista Grossi, 5356",
+        "cidade": "Ibirité",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 517,
+        "nome": "LOJA 542 SÃO PATRICIO",
+        "endereco": "Rodovia Contorno de Jacaraípe, 464",
+        "cidade": "Serra",
+        "uf": "ES",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 522,
+        "nome": "LOJA 546 VIANA",
+        "endereco": "Avenida Hozache Ferreira Brant, 59",
+        "cidade": "Viana",
+        "uf": "ES",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 538,
+        "nome": "LOJA 605 FEIRA DE SANTANA",
+        "endereco": "Rua Frei Aureliano Grotamares, 709-767",
+        "cidade": "Feira de Santana",
+        "uf": "BA",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 539,
+        "nome": "LOJA 606 BOM JESUS DA LAPA",
+        "endereco": "Av. Leolino Francisco Dourado, (Liô Dourado),...",
+        "cidade": "Bom Jesus da Lapa",
+        "uf": "BA",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 541,
+        "nome": "LOJA 608 BRUMADO",
+        "endereco": "Avenida Lindolfo Azevedo Brito, 1000",
+        "cidade": "Brumado",
+        "uf": "BA",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 545,
+        "nome": "LOJA 611 EUNAPOLIS",
+        "endereco": "Rua Princesa Isabel, 192",
+        "cidade": "Eunápolis",
+        "uf": "BA",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 547,
+        "nome": "LOJA 613 NOVA VIÇOSA BA",
+        "endereco": "4575+PJ8 Posto da Mata, Nova Viçosa - BA",
+        "cidade": "Nova Viçosa",
+        "uf": "BA",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 552,
+        "nome": "LOJA 618 GUAXUPÉ",
+        "endereco": "Rua Ferroviario Jovelino F De Mello, 140",
+        "cidade": "Guaxupé",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 553,
+        "nome": "LOJA 619 ALFENAS",
+        "endereco": "Avenida Jovino Fernandes de Sales, 1081",
+        "cidade": "Alfenas",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 556,
+        "nome": "LOJA 621 SANTA RITA SAPUCAI",
+        "endereco": "Rua Benedito Resende Vilela, 26",
+        "cidade": "Santa Rita do Sapucaí",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 557,
+        "nome": "LOJA 622 VIÇOSA",
+        "endereco": "Avenida Governador Ozanan Coelho, 133",
+        "cidade": "Viçosa",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 560,
+        "nome": "LOJA 625 CARATINGA",
+        "endereco": "Avenida Presi. Tancredo Neves, 1750",
+        "cidade": "Caratinga",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 567,
+        "nome": "LOJA 631 TEOFILO OTONI S. CRIST.",
+        "endereco": "Rua João Alexandrino Nascimento, 89",
+        "cidade": "Teófilo Otoni",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 569,
+        "nome": "LOJA 633 TEOFILO OTONI LUIZ. B.",
+        "endereco": "Avenida Doutor Luís Boali Pôrto Salman, 545",
+        "cidade": "Teófilo Otoni",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 572,
+        "nome": "LOJA 636 TEOFILO OTONI FRANC. SA",
+        "endereco": "Avenida Francisco Sá, 359",
+        "cidade": "Teófilo Otoni",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 573,
+        "nome": "LOJA 637 NANUQUE NOVO HORIZONTE",
+        "endereco": "Rua Canário, 157",
+        "cidade": "Nanuque",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 577,
+        "nome": "LOJA 640 MACAUBAS BA",
+        "endereco": "Avenida Ático Vilas Bôas da Mota, 908",
+        "cidade": "Macaúbas",
+        "uf": "BA",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 585,
+        "nome": "LOJA 71 SARZEDO",
+        "endereco": "Rua Hélio Magalhães Henriques, 66",
+        "cidade": "Sarzedo",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 590,
+        "nome": "LOJA 76 CONGONHAS",
+        "endereco": "Avenida Presidente Getúlio Vargas, 143b",
+        "cidade": "Congonhas",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 598,
+        "nome": "LOJA 84 VESPASIANO",
+        "endereco": "Rua Padre Jose Senabre Sanroman, 112",
+        "cidade": "Vespasiano",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 600,
+        "nome": "LOJA 86 NOVA LIMA II",
+        "endereco": "Rua Trinta e Dois, 85",
+        "cidade": "Nova Lima",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 619,
+        "nome": "MODELAÇO",
+        "endereco": "Endereço não informado",
+        "cidade": "Betim",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 627,
+        "nome": "PATIO EXPEDIÇÃO CD G2 G3",
+        "endereco": "Endereço não informado",
+        "cidade": "Contagem",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 629,
+        "nome": "PORTO SEGURO",
+        "endereco": "AV ADONO MUSSER",
+        "cidade": "PORTO SEGURO",
+        "uf": "BA",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 631,
+        "nome": "POSTO 601 BARBACENA",
+        "endereco": "Rua Benjamin Constant, 200",
+        "cidade": "Barbacena",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 636,
+        "nome": "POSTO 605 JANUARIA",
+        "endereco": "Avenida Marechal Deodoro da Fonseca, 370",
+        "cidade": "Januária",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 637,
+        "nome": "POSTO 606 UBERABA",
+        "endereco": "Rua Coronel Cacildo Arantes, 50",
+        "cidade": "Uberaba",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 638,
+        "nome": "POSTO 607 UBERLANDIA",
+        "endereco": "Avenida João Leão, 7085",
+        "cidade": "Uberlândia",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 640,
+        "nome": "POSTO 612 SETE LAGOAS",
+        "endereco": "Avenida Tunico Réis, 122",
+        "cidade": "Sete Lagoas",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 645,
+        "nome": "POSTO 620 IPATINGA",
+        "endereco": "Avenida Alberto Giovannini, 165",
+        "cidade": "Ipatinga",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 647,
+        "nome": "POSTO 622 CORONEL FABRICIANO",
+        "endereco": "Praça Sérvulo Roque, 86",
+        "cidade": "Coronel Fabriciano",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 655,
+        "nome": "Posto Caxuxa Girassol",
+        "endereco": "Endereço não informado",
+        "cidade": "Bambuí",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 657,
+        "nome": "Posto Caxuxa III (Dorjó)",
+        "endereco": "BR-262, km 526",
+        "cidade": "Luz",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 663,
+        "nome": "Posto Caxuxa Milênio",
+        "endereco": "Avenida Laura de Andrade, 190",
+        "cidade": "Arcos",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 666,
+        "nome": "Posto Caxuxa Monte Líbano",
+        "endereco": "BR-262, KM 526",
+        "cidade": "Luz",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 667,
+        "nome": "Posto Caxuxa Natal",
+        "endereco": "BR-262, km 497",
+        "cidade": "Moema",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 674,
+        "nome": "Posto Pereira e Maciel",
+        "endereco": "Avenida Manuel Vida, 800",
+        "cidade": "Varginha",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 686,
+        "nome": "SALA DE NOTAS G1",
+        "endereco": "Endereço não informado",
+        "cidade": "Contagem",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 687,
+        "nome": "São Cristóvão Lubrificantes",
+        "endereco": "Rua Vinícius de Morais, 415",
+        "cidade": "Divinópolis",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 690,
+        "nome": "SOS MOLAS",
+        "endereco": "Rua Bernarda Silvestre, 38",
+        "cidade": "Contagem",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 698,
+        "nome": "UAI (CAIXA PRETA)",
+        "endereco": "Avenida Severino Ballesteros, 3364",
+        "cidade": "Contagem",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 704,
+        "nome": "Epa 077 - Carandaí",
+        "endereco": "Avenida Afrânio de Melo Franco, 62",
+        "cidade": "Carandaí",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      }
+    ],
+    "coordenadasForaBrasil": [
+      {
+        "id": 703,
+        "nome": "Epa 070 - Jaraguá",
+        "endereco": "Rua Izabel Bueno, 445",
+        "cidade": "Belo Horizonte",
+        "uf": "MG",
+        "lat": 0,
+        "lon": 0
+      }
+    ],
+    "enderecosIncompletos": [
+      {
+        "id": 33,
+        "nome": "CD VIANA - NOVO",
+        "endereco": "Endereço não informado",
+        "cidade": "Viana",
+        "uf": "ES",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 128,
+        "nome": "Epa 252 - Granja de Freitas",
+        "endereco": "Endereço não informado",
+        "cidade": "Belo Horizonte",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 254,
+        "nome": "LOJA 206 SERRA DO CIPÓ",
+        "endereco": "Endereço não informado",
+        "cidade": "Santana do Riacho",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 463,
+        "nome": "LOJA 503 SAO MATHEUS",
+        "endereco": "Endereço não informado",
+        "cidade": "São Mateus",
+        "uf": "ES",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 464,
+        "nome": "LOJA 503 SAO MATHEUS",
+        "endereco": "Endereço não informado",
+        "cidade": "São Mateus",
+        "uf": "ES",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 619,
+        "nome": "MODELAÇO",
+        "endereco": "Endereço não informado",
+        "cidade": "Betim",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 627,
+        "nome": "PATIO EXPEDIÇÃO CD G2 G3",
+        "endereco": "Endereço não informado",
+        "cidade": "Contagem",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 655,
+        "nome": "Posto Caxuxa Girassol",
+        "endereco": "Endereço não informado",
+        "cidade": "Bambuí",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      },
+      {
+        "id": 686,
+        "nome": "SALA DE NOTAS G1",
+        "endereco": "Endereço não informado",
+        "cidade": "Contagem",
+        "uf": "MG",
+        "lat": null,
+        "lon": null
+      }
+    ],
+    "linksDivergentes": [
+      {
+        "id": 31,
+        "nome": "CD RAIZZ VIANA",
+        "endereco": "Est Ladeira Grande",
+        "cidade": "Viana",
+        "uf": "ES",
+        "lat": null,
+        "lon": null,
+        "linkCadastrado": "https://www.google.com/maps/search/?api=1&query=Est+Ladeira+Grande,+,+Viana,+Brasil",
+        "linkNaInterface": "https://www.google.com/maps/search/?api=1&query=Est+Ladeira+Grande%2C+Viana%2C+ES%2C+Brasil"
+      },
+      {
+        "id": 33,
+        "nome": "CD VIANA - NOVO",
+        "endereco": "Endereço não informado",
+        "cidade": "Viana",
+        "uf": "ES",
+        "lat": null,
+        "lon": null,
+        "linkCadastrado": "https://www.google.com/maps/search/?api=1&query=,+Viana,+ES,+Brasil",
+        "linkNaInterface": "https://www.google.com/maps/search/?api=1&query=CD+VIANA+-+NOVO%2C+Viana%2C+ES%2C+Brasil"
+      },
+      {
+        "id": 128,
+        "nome": "Epa 252 - Granja de Freitas",
+        "endereco": "Endereço não informado",
+        "cidade": "Belo Horizonte",
+        "uf": "MG",
+        "lat": null,
+        "lon": null,
+        "linkCadastrado": "https://www.google.com/maps/search/?api=1&query=,+Belo+Horizonte,+MG,+Brasil",
+        "linkNaInterface": "https://www.google.com/maps/search/?api=1&query=Epa+252+-+Granja+de+Freitas%2C+Belo+Horizonte%2C+MG%2C+Brasil"
+      },
+      {
+        "id": 254,
+        "nome": "LOJA 206 SERRA DO CIPÓ",
+        "endereco": "Endereço não informado",
+        "cidade": "Santana do Riacho",
+        "uf": "MG",
+        "lat": null,
+        "lon": null,
+        "linkCadastrado": "https://www.google.com/maps/search/?api=1&query=,+Santana+do+Riacho,+MG,+Brasil",
+        "linkNaInterface": "https://www.google.com/maps/search/?api=1&query=LOJA+206+SERRA+DO+CIP%C3%93%2C+Santana+do+Riacho%2C+MG%2C+Brasil"
+      },
+      {
+        "id": 463,
+        "nome": "LOJA 503 SAO MATHEUS",
+        "endereco": "Endereço não informado",
+        "cidade": "São Mateus",
+        "uf": "ES",
+        "lat": null,
+        "lon": null,
+        "linkCadastrado": "https://www.google.com/maps/search/?api=1&query=,+São+Mateus,+ES,+Brasil",
+        "linkNaInterface": "https://www.google.com/maps/search/?api=1&query=LOJA+503+SAO+MATHEUS%2C+S%C3%A3o+Mateus%2C+ES%2C+Brasil"
+      },
+      {
+        "id": 464,
+        "nome": "LOJA 503 SAO MATHEUS",
+        "endereco": "Endereço não informado",
+        "cidade": "São Mateus",
+        "uf": "ES",
+        "lat": null,
+        "lon": null,
+        "linkCadastrado": "https://www.google.com/maps/search/?api=1&query=,+,+ES,+Brasil",
+        "linkNaInterface": "https://www.google.com/maps/search/?api=1&query=LOJA+503+SAO+MATHEUS%2C+S%C3%A3o+Mateus%2C+ES%2C+Brasil"
+      },
+      {
+        "id": 465,
+        "nome": "LOJA 504 COLATINA",
+        "endereco": "BR-259, 175",
+        "cidade": "Colatina",
+        "uf": "ES",
+        "lat": -19.5118255,
+        "lon": -40.6044996,
+        "linkCadastrado": "https://www.google.com/maps/search/?api=1&query=BR-259,+175,+,+ES,+Brasil",
+        "linkNaInterface": "https://www.google.com/maps/search/?api=1&query=BR-259%2C+175%2C+Colatina%2C+ES%2C+Brasil"
+      },
+      {
+        "id": 467,
+        "nome": "LOJA 505 MARATAIZES",
+        "endereco": "Estrada Morro dos Sem Terra, 477",
+        "cidade": "Marataízes",
+        "uf": "ES",
+        "lat": null,
+        "lon": null,
+        "linkCadastrado": "https://www.google.com/maps/search/?api=1&query=Estrada+Morro+dos+Sem+Terra,+477,+,+ES,+Brasil",
+        "linkNaInterface": "https://www.google.com/maps/search/?api=1&query=Estrada+Morro+dos+Sem+Terra%2C+477%2C+Marata%C3%ADzes%2C+ES%2C+Brasil"
+      },
+      {
+        "id": 471,
+        "nome": "LOJA 508 LARANJEIRAS",
+        "endereco": "Avenida Primeira Avenida, 464",
+        "cidade": "Serra",
+        "uf": "ES",
+        "lat": -20.1951871,
+        "lon": -40.2558468,
+        "linkCadastrado": "https://www.google.com/maps/search/?api=1&query=Avenida+Primeira+Avenida,+464,+,+ES,+Brasil",
+        "linkNaInterface": "https://www.google.com/maps/search/?api=1&query=Avenida+Primeira+Avenida%2C+464%2C+Serra%2C+ES%2C+Brasil"
+      },
+      {
+        "id": 474,
+        "nome": "LOJA 509 SERRA",
+        "endereco": "Rodovia Governador Mário Covas, 4462",
+        "cidade": "Serra",
+        "uf": "ES",
+        "lat": -20.0244439,
+        "lon": -40.3994178,
+        "linkCadastrado": "https://www.google.com/maps/search/?api=1&query=Rodovia+Governador+Mário+Covas,+4462,+,+ES,+Brasil",
+        "linkNaInterface": "https://www.google.com/maps/search/?api=1&query=Rodovia+Governador+M%C3%A1rio+Covas%2C+4462%2C+Serra%2C+ES%2C+Brasil"
+      },
+      {
+        "id": 483,
+        "nome": "LOJA 517 ARIBIRI",
+        "endereco": "Rua Ramiro Leal Reis, 253",
+        "cidade": "Vila Velha",
+        "uf": "ES",
+        "lat": -20.3404993,
+        "lon": -40.3204415,
+        "linkCadastrado": "https://www.google.com/maps/search/?api=1&query=Rua+Ramiro+Leal+Reis,+253,+,+ES,+Brasil",
+        "linkNaInterface": "https://www.google.com/maps/search/?api=1&query=Rua+Ramiro+Leal+Reis%2C+253%2C+Vila+Velha%2C+ES%2C+Brasil"
+      },
+      {
+        "id": 487,
+        "nome": "LOJA 520 ALBERTO TORRES",
+        "endereco": "Rua Guido Prati, 181",
+        "cidade": "Vila Velha",
+        "uf": "ES",
+        "lat": null,
+        "lon": null,
+        "linkCadastrado": "https://www.google.com/maps/search/?api=1&query=Rua+Guido+Prati,+181,+,+ES,+Brasil",
+        "linkNaInterface": "https://www.google.com/maps/search/?api=1&query=Rua+Guido+Prati%2C+181%2C+Vila+Velha%2C+ES%2C+Brasil"
+      },
+      {
+        "id": 496,
+        "nome": "LOJA 528 JARDIM AMERICA",
+        "endereco": "Avenida Mário Gurgel, 1053",
+        "cidade": "Cariacica",
+        "uf": "ES",
+        "lat": -20.3314734,
+        "lon": -40.3631013,
+        "linkCadastrado": "https://www.google.com/maps/search/?api=1&query=Avenida+Mário+Gurgel,+1053,+,+ES,+Brasil",
+        "linkNaInterface": "https://www.google.com/maps/search/?api=1&query=Avenida+M%C3%A1rio+Gurgel%2C+1053%2C+Cariacica%2C+ES%2C+Brasil"
+      },
+      {
+        "id": 497,
+        "nome": "LOJA 529 EXPEDITO GARCIA",
+        "endereco": "Rua Vicente Celestino, 43",
+        "cidade": "Cariacica",
+        "uf": "ES",
+        "lat": -20.342799,
+        "lon": -40.3838569,
+        "linkCadastrado": "https://www.google.com/maps/search/?api=1&query=Rua+Vicente+Celestino,+43,+,+ES,+Brasil",
+        "linkNaInterface": "https://www.google.com/maps/search/?api=1&query=Rua+Vicente+Celestino%2C+43%2C+Cariacica%2C+ES%2C+Brasil"
+      },
+      {
+        "id": 500,
+        "nome": "LOJA 530 MARACANA",
+        "endereco": "Rua Valfredo Ferreira Paiva, 1063",
+        "cidade": "Cariacica",
+        "uf": "ES",
+        "lat": -20.3446186,
+        "lon": -40.3837446,
+        "linkCadastrado": "https://www.google.com/maps/search/?api=1&query=Rua+Valfredo+Ferreira+Paiva,+1063,+,+ES,+Brasil",
+        "linkNaInterface": "https://www.google.com/maps/search/?api=1&query=Rua+Valfredo+Ferreira+Paiva%2C+1063%2C+Cariacica%2C+ES%2C+Brasil"
+      },
+      {
+        "id": 502,
+        "nome": "LOJA 531 MOXUARA",
+        "endereco": "Rua Dos Apóstolos, 105",
+        "cidade": "Cariacica",
+        "uf": "ES",
+        "lat": -20.3426672,
+        "lon": -40.3984167,
+        "linkCadastrado": "https://www.google.com/maps/search/?api=1&query=Rua+Dos+Apóstolos,+105,+,+ES,+Brasil",
+        "linkNaInterface": "https://www.google.com/maps/search/?api=1&query=Rua+Dos+Ap%C3%B3stolos%2C+105%2C+Cariacica%2C+ES%2C+Brasil"
+      },
+      {
+        "id": 504,
+        "nome": "LOJA 532 GUARAPARI MUQUIABA",
+        "endereco": "Rodovia Jones dos Santos Neves, 3167",
+        "cidade": "Guarapari",
+        "uf": "ES",
+        "lat": -20.6683631,
+        "lon": -40.4991535,
+        "linkCadastrado": "https://www.google.com/maps/search/?api=1&query=Rodovia+Jones+dos+Santos+Neves,+3167,+,+ES,+Brasil",
+        "linkNaInterface": "https://www.google.com/maps/search/?api=1&query=Rodovia+Jones+dos+Santos+Neves%2C+3167%2C+Guarapari%2C+ES%2C+Brasil"
+      },
+      {
+        "id": 506,
+        "nome": "LOJA 533 GUARAPARI IPIRANGA",
+        "endereco": "Rua Simplício de Almeida Neto, 32",
+        "cidade": "Guarapari",
+        "uf": "ES",
+        "lat": null,
+        "lon": null,
+        "linkCadastrado": "https://www.google.com/maps/search/?api=1&query=Rua+Simplício+de+Almeida+Neto,+32,+,+ES,+Brasil",
+        "linkNaInterface": "https://www.google.com/maps/search/?api=1&query=Rua+Simpl%C3%ADcio+de+Almeida+Neto%2C+32%2C+Guarapari%2C+ES%2C+Brasil"
+      },
+      {
+        "id": 507,
+        "nome": "LOJA 534 PATIO MIX",
+        "endereco": "Avenida Prefeito Samuel Batista Cruz, 3281",
+        "cidade": "Linhares",
+        "uf": "ES",
+        "lat": -19.396881,
+        "lon": -40.0639915,
+        "linkCadastrado": "https://www.google.com/maps/search/?api=1&query=Avenida+Prefeito+Samuel+Batista+Cruz,+3281,+,+ES,+Brasil",
+        "linkNaInterface": "https://www.google.com/maps/search/?api=1&query=Avenida+Prefeito+Samuel+Batista+Cruz%2C+3281%2C+Linhares%2C+ES%2C+Brasil"
+      },
+      {
+        "id": 515,
+        "nome": "LOJA 540",
+        "endereco": "Avenida Doutor Olivio Lira, 353",
+        "cidade": "Vila Velha",
+        "uf": "ES",
+        "lat": -20.3412088,
+        "lon": -40.2894105,
+        "linkCadastrado": "https://www.google.com/maps/search/?api=1&query=Avenida+Doutor+Olivio+Lira,+353,+,+ES,+Brasil",
+        "linkNaInterface": "https://www.google.com/maps/search/?api=1&query=Avenida+Doutor+Olivio+Lira%2C+353%2C+Vila+Velha%2C+ES%2C+Brasil"
+      },
+      {
+        "id": 619,
+        "nome": "MODELAÇO",
+        "endereco": "Endereço não informado",
+        "cidade": "Betim",
+        "uf": "MG",
+        "lat": null,
+        "lon": null,
+        "linkCadastrado": "https://www.google.com/maps/search/?api=1&query=,+Betim,+MG,+Brasil",
+        "linkNaInterface": "https://www.google.com/maps/search/?api=1&query=MODELA%C3%87O%2C+Betim%2C+MG%2C+Brasil"
+      },
+      {
+        "id": 627,
+        "nome": "PATIO EXPEDIÇÃO CD G2 G3",
+        "endereco": "Endereço não informado",
+        "cidade": "Contagem",
+        "uf": "MG",
+        "lat": null,
+        "lon": null,
+        "linkCadastrado": "https://www.google.com/maps/search/?api=1&query=,+Contagem,+MG,+Brasil",
+        "linkNaInterface": "https://www.google.com/maps/search/?api=1&query=PATIO+EXPEDI%C3%87%C3%83O+CD+G2+G3%2C+Contagem%2C+MG%2C+Brasil"
+      },
+      {
+        "id": 655,
+        "nome": "Posto Caxuxa Girassol",
+        "endereco": "Endereço não informado",
+        "cidade": "Bambuí",
+        "uf": "MG",
+        "lat": null,
+        "lon": null,
+        "linkCadastrado": "https://www.google.com/maps/search/?api=1&query=,+Bambuí,+MG,+Brasil",
+        "linkNaInterface": "https://www.google.com/maps/search/?api=1&query=Posto+Caxuxa+Girassol%2C+Bambu%C3%AD%2C+MG%2C+Brasil"
+      },
+      {
+        "id": 678,
+        "nome": "POSTO SERRA",
+        "endereco": "Rodovia Br 101 Norte, 3616",
+        "cidade": "Serra",
+        "uf": "ES",
+        "lat": -20.3066947,
+        "lon": -40.3948862,
+        "linkCadastrado": "https://www.google.com/maps/search/?api=1&query=Rodovia+Br+101+Norte,+3616,+,+ES,+Brasil",
+        "linkNaInterface": "https://www.google.com/maps/search/?api=1&query=Rodovia+Br+101+Norte%2C+3616%2C+Serra%2C+ES%2C+Brasil"
+      },
+      {
+        "id": 686,
+        "nome": "SALA DE NOTAS G1",
+        "endereco": "Endereço não informado",
+        "cidade": "Contagem",
+        "uf": "MG",
+        "lat": null,
+        "lon": null,
+        "linkCadastrado": "https://www.google.com/maps/search/?api=1&query=,+Contagem,+MG,+Brasil",
+        "linkNaInterface": "https://www.google.com/maps/search/?api=1&query=SALA+DE+NOTAS+G1%2C+Contagem%2C+MG%2C+Brasil"
+      }
+    ],
+    "coordenadasRepetidas": [
+      [
+        {
+          "id": 4,
+          "nome": "400 ANDRADAS II",
+          "endereco": "Avenida dos Andradas, 4000",
+          "cidade": "Belo Horizonte",
+          "uf": "MG",
+          "lat": -19.9181789,
+          "lon": -43.9117169
+        },
+        {
+          "id": 451,
+          "nome": "LOJA 400 ANDRADAS II",
+          "endereco": "Avenida dos Andradas, 4000",
+          "cidade": "Belo Horizonte",
+          "uf": "MG",
+          "lat": -19.9181789,
+          "lon": -43.9117169
+        }
+      ],
+      [
+        {
+          "id": 7,
+          "nome": "ALMOXARIFADO 2",
+          "endereco": "BR-040, 527",
+          "cidade": "Contagem",
+          "uf": "MG",
+          "lat": -19.8865629,
+          "lon": -44.0502146
+        },
+        {
+          "id": 28,
+          "nome": "CD DMA",
+          "endereco": "BR-040, 527",
+          "cidade": "Contagem",
+          "uf": "MG",
+          "lat": -19.8865629,
+          "lon": -44.0502146
+        }
+      ],
+      [
+        {
+          "id": 11,
+          "nome": "BASE POTENCIAL",
+          "endereco": "Rodovia Fernão Dias, 357",
+          "cidade": "Betim",
+          "uf": "MG",
+          "lat": -19.9720888,
+          "lon": -44.1836617
+        },
+        {
+          "id": 130,
+          "nome": "FACCHINI",
+          "endereco": "Rodovia Fernão Dias, Km 506",
+          "cidade": "Betim",
+          "uf": "MG",
+          "lat": -19.9720888,
+          "lon": -44.1836617
+        }
+      ],
+      [
+        {
+          "id": 17,
+          "nome": "Base Viana Ponto",
+          "endereco": "Rodovia Governador Mário Covas, SN",
+          "cidade": "Viana",
+          "uf": "ES",
+          "lat": -20.3765191,
+          "lon": -40.4442445
+        },
+        {
+          "id": 20,
+          "nome": "BWR MECANICA",
+          "endereco": "BR-262, 10",
+          "cidade": "Viana",
+          "uf": "ES",
+          "lat": -20.3765191,
+          "lon": -40.4442445
+        }
+      ],
+      [
+        {
+          "id": 25,
+          "nome": "CD - BA HORTIFRUTI",
+          "endereco": "BR-116, 726",
+          "cidade": "Vitória da Conquista",
+          "uf": "BA",
+          "lat": -14.8582284,
+          "lon": -40.8495707
+        },
+        {
+          "id": 26,
+          "nome": "CD - BA SECOS",
+          "endereco": "BR-116, 726",
+          "cidade": "Vitória da Conquista",
+          "uf": "BA",
+          "lat": -14.8582284,
+          "lon": -40.8495707
+        }
+      ],
+      [
+        {
+          "id": 27,
+          "nome": "CD BOA VISTA",
+          "endereco": "Rua das Contendas, 1385",
+          "cidade": "Contagem",
+          "uf": "MG",
+          "lat": -19.8597154,
+          "lon": -44.0585514
+        },
+        {
+          "id": 628,
+          "nome": "PORTARIA/FECHAMENTO DE PONTO",
+          "endereco": "Rua das Contendas, 1835",
+          "cidade": "Contagem",
+          "uf": "MG",
+          "lat": -19.8597154,
+          "lon": -44.0585514
+        },
+        {
+          "id": 689,
+          "nome": "SERVIÇO CD BOA VISTA",
+          "endereco": "Rua das Contendas, 1835",
+          "cidade": "Contagem",
+          "uf": "MG",
+          "lat": -19.8597154,
+          "lon": -44.0585514
+        }
+      ],
+      [
+        {
+          "id": 32,
+          "nome": "CD SERRA",
+          "endereco": "Avenida Eldes Scherrer Souza, 2001",
+          "cidade": "Serra",
+          "uf": "ES",
+          "lat": -20.1945379,
+          "lon": -40.2554749
+        },
+        {
+          "id": 476,
+          "nome": "LOJA 510 MURUNDU",
+          "endereco": "Avenida Eldes Scherrer Souza, 2001",
+          "cidade": "Serra",
+          "uf": "ES",
+          "lat": -20.1945379,
+          "lon": -40.2554749
+        }
+      ],
+      [
+        {
+          "id": 34,
+          "nome": "CENTRAL DMA",
+          "endereco": "Rodovia Presidente Juscelino Kubitschek, 527",
+          "cidade": "Contagem",
+          "uf": "MG",
+          "lat": -19.8469262,
+          "lon": -44.0731579
+        },
+        {
+          "id": 617,
+          "nome": "MARQUINHOS BAU",
+          "endereco": "Rodovia Presidente Juscelino Kubitschek, 448",
+          "cidade": "Contagem",
+          "uf": "MG",
+          "lat": -19.8469262,
+          "lon": -44.0731579
+        }
+      ],
+      [
+        {
+          "id": 36,
+          "nome": "CENTRO AUTOMOTIVO - NEW ADVENTURE",
+          "endereco": "Avenida João Gomes Cardoso, 1787",
+          "cidade": "Contagem",
+          "uf": "MG",
+          "lat": -19.8903332,
+          "lon": -44.0364893
+        },
+        {
+          "id": 581,
+          "nome": "LOJA 68 JARDIM LAGUNA",
+          "endereco": "Avenida João Gomes Cardoso, 30",
+          "cidade": "Contagem",
+          "uf": "MG",
+          "lat": -19.8903332,
+          "lon": -44.0364893
+        }
+      ],
+      [
+        {
+          "id": 58,
+          "nome": "Epa 013 - Cidade Nova",
+          "endereco": "Avenida Cristiano Machado, 2250",
+          "cidade": "Belo Horizonte",
+          "uf": "MG",
+          "lat": -19.8637833,
+          "lon": -43.9307974
+        },
+        {
+          "id": 348,
+          "nome": "LOJA 292 CRISTIANO MACHADO/SAO BER...",
+          "endereco": "Avenida Cristiano Machado, 9365",
+          "cidade": "Belo Horizonte",
+          "uf": "MG",
+          "lat": -19.8637833,
+          "lon": -43.9307974
+        }
+      ],
+      [
+        {
+          "id": 79,
+          "nome": "Epa 038 - Venda Nova",
+          "endereco": "Rua Padre Pedro Pinto, 2450",
+          "cidade": "Belo Horizonte",
+          "uf": "MG",
+          "lat": -19.821125,
+          "lon": -43.9528598
+        },
+        {
+          "id": 97,
+          "nome": "Epa 085 - Venda Nova",
+          "endereco": "Rua Padre Pedro Pinto, 3260",
+          "cidade": "Belo Horizonte",
+          "uf": "MG",
+          "lat": -19.821125,
+          "lon": -43.9528598
+        },
+        {
+          "id": 190,
+          "nome": "LOJA 143 VENDA NOVA II",
+          "endereco": "Rua Padre Pedro Pinto, 34",
+          "cidade": "Belo Horizonte",
+          "uf": "MG",
+          "lat": -19.821125,
+          "lon": -43.9528598
+        }
+      ],
+      [
+        {
+          "id": 94,
+          "nome": "Epa 079 - Betânia",
+          "endereco": "Rua Úrsula Paulino, 2405",
+          "cidade": "Belo Horizonte",
+          "uf": "MG",
+          "lat": -19.9586038,
+          "lon": -43.9878152
+        },
+        {
+          "id": 648,
+          "nome": "POSTO 623 CINQUENTENARIO",
+          "endereco": "Rua Úrsula Paulino, 763",
+          "cidade": "Belo Horizonte",
+          "uf": "MG",
+          "lat": -19.9586038,
+          "lon": -43.9878152
+        }
+      ],
+      [
+        {
+          "id": 112,
+          "nome": "Epa 152 - Lagoa Santa",
+          "endereco": "Avenida Acadêmico Nilo Figueiredo, 2057",
+          "cidade": "Lagoa Santa",
+          "uf": "MG",
+          "lat": -19.6430581,
+          "lon": -43.9046377
+        },
+        {
+          "id": 118,
+          "nome": "Epa 227 - Lagoa Santa - Bela Vista",
+          "endereco": "Avenida Acadêmico Nilo Figueiredo, 2400",
+          "cidade": "Lagoa Santa",
+          "uf": "MG",
+          "lat": -19.6430581,
+          "lon": -43.9046377
+        }
+      ],
+      [
+        {
+          "id": 143,
+          "nome": "LC - BARREIRO AMARO",
+          "endereco": "Avenida Afonso Vaz de Melo, 2210",
+          "cidade": "Belo Horizonte",
+          "uf": "MG",
+          "lat": -19.9750069,
+          "lon": -44.022269
+        },
+        {
+          "id": 382,
+          "nome": "LOJA 323 TIROL",
+          "endereco": "Avenida Afonso Vaz de Melo, 2210",
+          "cidade": "Belo Horizonte",
+          "uf": "MG",
+          "lat": -19.9750069,
+          "lon": -44.022269
+        }
+      ],
+      [
+        {
+          "id": 148,
+          "nome": "LOJA 102 PARANA",
+          "endereco": "Rua dos Guaranis, 539",
+          "cidade": "Belo Horizonte",
+          "uf": "MG",
+          "lat": -19.9150366,
+          "lon": -43.9420377
+        },
+        {
+          "id": 462,
+          "nome": "LOJA 50 GUARANI",
+          "endereco": "Rua dos Guaranis, 325",
+          "cidade": "Belo Horizonte",
+          "uf": "MG",
+          "lat": -19.9150366,
+          "lon": -43.9420377
+        }
+      ],
+      [
+        {
+          "id": 360,
+          "nome": "LOJA 303 UBERLANDIA JOSE I S",
+          "endereco": "Avenida Professor José Inácio de Souza, 401",
+          "cidade": "Uberlândia",
+          "uf": "MG",
+          "lat": -18.8951543,
+          "lon": -48.2660332
+        },
+        {
+          "id": 614,
+          "nome": "LOJA UBERLANDIA JOSE I S",
+          "endereco": "Avenida Professor José Inácio de Souza, 401",
+          "cidade": "Uberlândia",
+          "uf": "MG",
+          "lat": -18.8951543,
+          "lon": -48.2660332
+        }
+      ],
+      [
+        {
+          "id": 413,
+          "nome": "LOJA 351 UBERLANDIA CRUZ.PEIX",
+          "endereco": "Avenida Floriano Peixoto, 1419",
+          "cidade": "Uberlândia",
+          "uf": "MG",
+          "lat": -18.9040587,
+          "lon": -48.2653166
+        },
+        {
+          "id": 415,
+          "nome": "LOJA 353 UBERLANDIA FLORIANO",
+          "endereco": "Avenida Floriano Peixoto, 4680",
+          "cidade": "Uberlândia",
+          "uf": "MG",
+          "lat": -18.9040587,
+          "lon": -48.2653166
+        }
+      ],
+      [
+        {
+          "id": 427,
+          "nome": "LOJA 364 PEDRO LEOPOLDO IV",
+          "endereco": "Rua Doutor Cristiano Otoni, 327",
+          "cidade": "Pedro Leopoldo",
+          "uf": "MG",
+          "lat": -19.6203439,
+          "lon": -44.0404331
+        },
+        {
+          "id": 607,
+          "nome": "LOJA 93 PEDRO LEOPOLDO",
+          "endereco": "Rua Doutor Cristiano Otoni, 5",
+          "cidade": "Pedro Leopoldo",
+          "uf": "MG",
+          "lat": -19.6203439,
+          "lon": -44.0404331
+        }
+      ],
+      [
+        {
+          "id": 435,
+          "nome": "LOJA 372 MONTES CLAROS VIII",
+          "endereco": "Avenida Donato Quintino, 120",
+          "cidade": "Montes Claros",
+          "uf": "MG",
+          "lat": -16.7427155,
+          "lon": -43.8667243
+        },
+        {
+          "id": 641,
+          "nome": "POSTO 616 MONTES CLAROS",
+          "endereco": "Avenida Donato Quintino, 08",
+          "cidade": "Montes Claros",
+          "uf": "MG",
+          "lat": -16.7427155,
+          "lon": -43.8667243
+        }
+      ],
+      [
+        {
+          "id": 443,
+          "nome": "LOJA 380 JUIZ DE FORA VII",
+          "endereco": "Ladeira Alexandre Leonel, 200",
+          "cidade": "Juiz de Fora",
+          "uf": "MG",
+          "lat": -21.7827423,
+          "lon": -43.3580431
+        },
+        {
+          "id": 642,
+          "nome": "POSTO 617 J F - SÃO MATEUS",
+          "endereco": "Ladeira Alexandre Leonel, 200",
+          "cidade": "Juiz de Fora",
+          "uf": "MG",
+          "lat": -21.7827423,
+          "lon": -43.3580431
+        }
+      ],
+      [
+        {
+          "id": 465,
+          "nome": "LOJA 504 COLATINA",
+          "endereco": "BR-259, 175",
+          "cidade": "Colatina",
+          "uf": "ES",
+          "lat": -19.5118255,
+          "lon": -40.6044996
+        },
+        {
+          "id": 466,
+          "nome": "LOJA 504 COLATINA",
+          "endereco": "BR-259, 175",
+          "cidade": "Colatina",
+          "uf": "ES",
+          "lat": -19.5118255,
+          "lon": -40.6044996
+        }
+      ],
+      [
+        {
+          "id": 471,
+          "nome": "LOJA 508 LARANJEIRAS",
+          "endereco": "Avenida Primeira Avenida, 464",
+          "cidade": "Serra",
+          "uf": "ES",
+          "lat": -20.1951871,
+          "lon": -40.2558468
+        },
+        {
+          "id": 472,
+          "nome": "LOJA 508 LARANJEIRAS",
+          "endereco": "Avenida Primeira Avenida, 464",
+          "cidade": "Serra",
+          "uf": "ES",
+          "lat": -20.1951871,
+          "lon": -40.2558468
+        }
+      ],
+      [
+        {
+          "id": 473,
+          "nome": "LOJA 509 SERRA",
+          "endereco": "Rodovia Governador Mário Covas, 4462",
+          "cidade": "Serra",
+          "uf": "ES",
+          "lat": -20.0244439,
+          "lon": -40.3994178
+        },
+        {
+          "id": 474,
+          "nome": "LOJA 509 SERRA",
+          "endereco": "Rodovia Governador Mário Covas, 4462",
+          "cidade": "Serra",
+          "uf": "ES",
+          "lat": -20.0244439,
+          "lon": -40.3994178
+        },
+        {
+          "id": 519,
+          "nome": "LOJA 544 CARAPINA",
+          "endereco": "Rodovia Governador Mário Covas",
+          "cidade": "Serra",
+          "uf": "ES",
+          "lat": -20.0244439,
+          "lon": -40.3994178
+        }
+      ],
+      [
+        {
+          "id": 478,
+          "nome": "LOJA 512 PAUL",
+          "endereco": "Avenida Jerônimo Monteiro, 4830",
+          "cidade": "Vila Velha",
+          "uf": "ES",
+          "lat": -20.3411253,
+          "lon": -40.3270811
+        },
+        {
+          "id": 481,
+          "nome": "Loja 515",
+          "endereco": "Avenida Jerônimo Monteiro, 4830",
+          "cidade": "Vila Velha",
+          "uf": "ES",
+          "lat": -20.3411253,
+          "lon": -40.3270811
+        }
+      ],
+      [
+        {
+          "id": 495,
+          "nome": "LOJA 528 JARDIM AMERICA",
+          "endereco": "Avenida Mário Gurgel, 1053",
+          "cidade": "Cariacica",
+          "uf": "ES",
+          "lat": -20.3314734,
+          "lon": -40.3631013
+        },
+        {
+          "id": 496,
+          "nome": "LOJA 528 JARDIM AMERICA",
+          "endereco": "Avenida Mário Gurgel, 1053",
+          "cidade": "Cariacica",
+          "uf": "ES",
+          "lat": -20.3314734,
+          "lon": -40.3631013
+        }
+      ],
+      [
+        {
+          "id": 497,
+          "nome": "LOJA 529 EXPEDITO GARCIA",
+          "endereco": "Rua Vicente Celestino, 43",
+          "cidade": "Cariacica",
+          "uf": "ES",
+          "lat": -20.342799,
+          "lon": -40.3838569
+        },
+        {
+          "id": 498,
+          "nome": "LOJA 529 EXPEDITO GARCIA",
+          "endereco": "Rua Vicente Celestino, 43",
+          "cidade": "Cariacica",
+          "uf": "ES",
+          "lat": -20.342799,
+          "lon": -40.3838569
+        }
+      ],
+      [
+        {
+          "id": 500,
+          "nome": "LOJA 530 MARACANA",
+          "endereco": "Rua Valfredo Ferreira Paiva, 1063",
+          "cidade": "Cariacica",
+          "uf": "ES",
+          "lat": -20.3446186,
+          "lon": -40.3837446
+        },
+        {
+          "id": 501,
+          "nome": "LOJA 530 MARACANA",
+          "endereco": "Rua Valfredo Ferreira Paiva, 1063",
+          "cidade": "Cariacica",
+          "uf": "ES",
+          "lat": -20.3446186,
+          "lon": -40.3837446
+        }
+      ],
+      [
+        {
+          "id": 502,
+          "nome": "LOJA 531 MOXUARA",
+          "endereco": "Rua Dos Apóstolos, 105",
+          "cidade": "Cariacica",
+          "uf": "ES",
+          "lat": -20.3426672,
+          "lon": -40.3984167
+        },
+        {
+          "id": 503,
+          "nome": "LOJA 531 MOXUARA",
+          "endereco": "Rua Dos Apóstolos, 105",
+          "cidade": "Cariacica",
+          "uf": "ES",
+          "lat": -20.3426672,
+          "lon": -40.3984167
+        }
+      ],
+      [
+        {
+          "id": 504,
+          "nome": "LOJA 532 GUARAPARI MUQUIABA",
+          "endereco": "Rodovia Jones dos Santos Neves, 3167",
+          "cidade": "Guarapari",
+          "uf": "ES",
+          "lat": -20.6683631,
+          "lon": -40.4991535
+        },
+        {
+          "id": 505,
+          "nome": "LOJA 532 GUARAPARI MUQUIABA",
+          "endereco": "Rodovia Jones dos Santos Neves, 3167",
+          "cidade": "Guarapari",
+          "uf": "ES",
+          "lat": -20.6683631,
+          "lon": -40.4991535
+        }
+      ],
+      [
+        {
+          "id": 507,
+          "nome": "LOJA 534 PATIO MIX",
+          "endereco": "Avenida Prefeito Samuel Batista Cruz, 3281",
+          "cidade": "Linhares",
+          "uf": "ES",
+          "lat": -19.396881,
+          "lon": -40.0639915
+        },
+        {
+          "id": 508,
+          "nome": "LOJA 534 PATIO MIX",
+          "endereco": "Avenida Prefeito Samuel Batista Cruz, 3281",
+          "cidade": "Linhares",
+          "uf": "ES",
+          "lat": -19.396881,
+          "lon": -40.0639915
+        }
+      ],
+      [
+        {
+          "id": 568,
+          "nome": "LOJA 632 TEOFILO OTONI JOAO. P.",
+          "endereco": "Avenida Sidônio Otoni, 685",
+          "cidade": "Teófilo Otoni",
+          "uf": "MG",
+          "lat": -17.8484171,
+          "lon": -41.4792899
+        },
+        {
+          "id": 571,
+          "nome": "LOJA 635 TEOFILO OTONI JARDIN. S VDE",
+          "endereco": "Avenida Sidônio Otoni, 1888",
+          "cidade": "Teófilo Otoni",
+          "uf": "MG",
+          "lat": -17.8484171,
+          "lon": -41.4792899
+        },
+        {
+          "id": 630,
+          "nome": "POSTO 100 TEOFILO OTONI",
+          "endereco": "Avenida Sidônio Otoni, 683",
+          "cidade": "Teófilo Otoni",
+          "uf": "MG",
+          "lat": -17.8484171,
+          "lon": -41.4792899
+        }
+      ],
+      [
+        {
+          "id": 620,
+          "nome": "movyx pf",
+          "endereco": "Rua Quinze de Novembro",
+          "cidade": "Passo Fundo",
+          "uf": "RS",
+          "lat": -28.2647823,
+          "lon": -52.4095247
+        },
+        {
+          "id": 695,
+          "nome": "TESTE TI PF",
+          "endereco": "Rua Quinze de Novembro",
+          "cidade": "Passo Fundo",
+          "uf": "RS",
+          "lat": -28.2647823,
+          "lon": -52.4095247
+        }
+      ],
+      [
+        {
+          "id": 651,
+          "nome": "Posto Caxuxa Barril",
+          "endereco": "BR-262, km 511",
+          "cidade": "Luz",
+          "uf": "MG",
+          "lat": -19.7725516,
+          "lon": -45.478383
+        },
+        {
+          "id": 656,
+          "nome": "Posto Caxuxa I",
+          "endereco": "BR-262, Km 524",
+          "cidade": "Luz",
+          "uf": "MG",
+          "lat": -19.7725516,
+          "lon": -45.478383
+        }
+      ],
+      [
+        {
+          "id": 664,
+          "nome": "Posto Caxuxa Moinho 1",
+          "endereco": "Rodovia Fernão Dias, Km 790",
+          "cidade": "São Gonçalo do Sapucaí",
+          "uf": "MG",
+          "lat": -21.8354049,
+          "lon": -45.5045115
+        },
+        {
+          "id": 665,
+          "nome": "Posto Caxuxa Moinho 2",
+          "endereco": "Rodovia Fernão Dias, 617",
+          "cidade": "São Gonçalo do Sapucaí",
+          "uf": "MG",
+          "lat": -21.8354049,
+          "lon": -45.5045115
+        }
+      ],
+      [
+        {
+          "id": 675,
+          "nome": "POSTO REDE BRASIL",
+          "endereco": "Rodovia BR-101 Norte, 3616",
+          "cidade": "Serra",
+          "uf": "ES",
+          "lat": -20.3066947,
+          "lon": -40.3948862
+        },
+        {
+          "id": 677,
+          "nome": "POSTO SERRA",
+          "endereco": "Rodovia Br 101 Norte, 3616",
+          "cidade": "Serra",
+          "uf": "ES",
+          "lat": -20.3066947,
+          "lon": -40.3948862
+        },
+        {
+          "id": 678,
+          "nome": "POSTO SERRA",
+          "endereco": "Rodovia Br 101 Norte, 3616",
+          "cidade": "Serra",
+          "uf": "ES",
+          "lat": -20.3066947,
+          "lon": -40.3948862
+        }
+      ]
+    ],
+    "divergenciasPostos": [
+      {
+        "loja": {
+          "id": 630,
+          "nome": "POSTO 100 TEOFILO OTONI",
+          "endereco": "Avenida Sidônio Otoni, 683",
+          "cidade": "Teófilo Otoni",
+          "uf": "MG",
+          "lat": -17.8484171,
+          "lon": -41.4792899
+        },
+        "posto": {
+          "nome": "POSTO 100 TEOFILO OTONI",
+          "endereco": "Avenida Sidônio Otoní, 683",
+          "cidade": "Teófilo Otoni",
+          "uf": "MG",
+          "lat": -17.851674,
+          "lon": -41.509085
+        },
+        "distanciaKm": 3.174
+      },
+      {
+        "loja": {
+          "id": 634,
+          "nome": "POSTO 603 UBÁ",
+          "endereco": "Rua Frei Cornélio, 14",
+          "cidade": "Ubá",
+          "uf": "MG",
+          "lat": -21.1157419,
+          "lon": -42.9577622
+        },
+        "posto": {
+          "nome": "POSTO 603 UBÁ",
+          "endereco": "Rua Frei Cornélio, 14",
+          "cidade": "Ubá",
+          "uf": "MG",
+          "lat": -21.1156319,
+          "lon": -42.9563743
+        },
+        "distanciaKm": 0.144
+      },
+      {
+        "loja": {
+          "id": 635,
+          "nome": "POSTO 604 SJDR (MATOZINHOS)",
+          "endereco": "Avenida Sete de Setembro, 10",
+          "cidade": "São João del Rei",
+          "uf": "MG",
+          "lat": -21.1268802,
+          "lon": -44.2384622
+        },
+        "posto": {
+          "nome": "POSTO 604 SJDR (MATOZINHOS)",
+          "endereco": "Avenida Sete de Setembro, 10",
+          "cidade": "São João del Rei",
+          "uf": "MG",
+          "lat": -21.126691,
+          "lon": -44.23981
+        },
+        "distanciaKm": 0.141
+      },
+      {
+        "loja": {
+          "id": 639,
+          "nome": "POSTO 609 CORINTO",
+          "endereco": "Avenida Amarante Ribeiro de Castro, 337",
+          "cidade": "Corinto",
+          "uf": "MG",
+          "lat": -18.3883266,
+          "lon": -44.4621668
+        },
+        "posto": {
+          "nome": "POSTO 609 CORINTO",
+          "endereco": "Avenida Amarante Ribeiro",
+          "cidade": "Corinto",
+          "uf": "MG",
+          "lat": -18.3640352,
+          "lon": -44.4617448
+        },
+        "distanciaKm": 2.701
+      },
+      {
+        "loja": {
+          "id": 641,
+          "nome": "POSTO 616 MONTES CLAROS",
+          "endereco": "Avenida Donato Quintino, 08",
+          "cidade": "Montes Claros",
+          "uf": "MG",
+          "lat": -16.7427155,
+          "lon": -43.8667243
+        },
+        "posto": {
+          "nome": "POSTO 616 MONTES CLAROS",
+          "endereco": "Avenida Donato Quintino, 08",
+          "cidade": "Montes Claros",
+          "uf": "MG",
+          "lat": -16.740054,
+          "lon": -43.871503
+        },
+        "distanciaKm": 0.589
+      },
+      {
+        "loja": {
+          "id": 643,
+          "nome": "POSTO 618 J F - MARIANO PR",
+          "endereco": "Avenida Brasil, 6123",
+          "cidade": "Juiz de Fora",
+          "uf": "MG",
+          "lat": -21.7581349,
+          "lon": -43.3432212
+        },
+        "posto": {
+          "nome": "POSTO 618 J F - MARIANO PR",
+          "endereco": "Avenida Brasil, 6123",
+          "cidade": "Juiz de Fora",
+          "uf": "MG",
+          "lat": -21.7446832,
+          "lon": -43.362845
+        },
+        "distanciaKm": 2.519
+      },
+      {
+        "loja": {
+          "id": 644,
+          "nome": "POSTO 619 JANAUBA",
+          "endereco": "Rua São Pedro, 650",
+          "cidade": "Janaúba",
+          "uf": "MG",
+          "lat": -15.8096722,
+          "lon": -43.3062824
+        },
+        "posto": {
+          "nome": "POSTO 619 JANAUBA",
+          "endereco": "Rua São Pedro, 650",
+          "cidade": "Janaúba",
+          "uf": "MG",
+          "lat": -15.806798,
+          "lon": -43.301347
+        },
+        "distanciaKm": 0.617
+      },
+      {
+        "loja": {
+          "id": 646,
+          "nome": "POSTO 621 PADRE EUSTAQUIO",
+          "endereco": "Rua Pará de Minas, 788",
+          "cidade": "Belo Horizonte",
+          "uf": "MG",
+          "lat": -19.9145408,
+          "lon": -43.9862838
+        },
+        "posto": {
+          "nome": "POSTO 621 PADRE EUSTAQUIO",
+          "endereco": "Rua Pará de Minas, 788",
+          "cidade": "Belo Horizonte",
+          "uf": "MG",
+          "lat": -19.914019,
+          "lon": -43.9889773
+        },
+        "distanciaKm": 0.288
+      },
+      {
+        "loja": {
+          "id": 648,
+          "nome": "POSTO 623 CINQUENTENARIO",
+          "endereco": "Rua Úrsula Paulino, 763",
+          "cidade": "Belo Horizonte",
+          "uf": "MG",
+          "lat": -19.9586038,
+          "lon": -43.9878152
+        },
+        "posto": {
+          "nome": "POSTO 623 CINQUENTENARIO",
+          "endereco": "Rua Úrsula Paulino, 763",
+          "cidade": "Belo Horizonte",
+          "uf": "MG",
+          "lat": -19.9550962,
+          "lon": -43.9840226
+        },
+        "distanciaKm": 0.556
+      },
+      {
+        "loja": {
+          "id": 649,
+          "nome": "POSTO 624 TAIOBEIRAS",
+          "endereco": "LMG-626, 905",
+          "cidade": "Taiobeiras",
+          "uf": "MG",
+          "lat": -15.8543933,
+          "lon": -42.0096066
+        },
+        "posto": {
+          "nome": "POSTO 624 TAIOBEIRAS",
+          "endereco": "LMG-626, 905",
+          "cidade": "Taiobeiras",
+          "uf": "MG",
+          "lat": -15.825184,
+          "lon": -42.217902
+        },
+        "distanciaKm": 22.517
+      },
+      {
+        "loja": {
+          "id": 650,
+          "nome": "Posto Caxuxa 2000",
+          "endereco": "Rua Joaquim José Lopes, 626",
+          "cidade": "Japaraíba",
+          "uf": "MG",
+          "lat": -20.1425144,
+          "lon": -45.5099475
+        },
+        "posto": {
+          "nome": "Caxuxa 2000",
+          "endereco": "Rua Paralela, s/n",
+          "cidade": "Japaraíba",
+          "uf": "MG",
+          "lat": -20.14012164,
+          "lon": -45.51258148
+        },
+        "distanciaKm": 0.383
+      },
+      {
+        "loja": {
+          "id": 651,
+          "nome": "Posto Caxuxa Barril",
+          "endereco": "BR-262, km 511",
+          "cidade": "Luz",
+          "uf": "MG",
+          "lat": -19.7725516,
+          "lon": -45.478383
+        },
+        "posto": {
+          "nome": "Caxuxa Barril",
+          "endereco": "BR-262, km 511",
+          "cidade": "Luz",
+          "uf": "MG",
+          "lat": -19.7829019,
+          "lon": -45.564868
+        },
+        "distanciaKm": 9.122
+      },
+      {
+        "loja": {
+          "id": 653,
+          "nome": "Posto Caxuxa Curvelo",
+          "endereco": "BR-135, KM 615",
+          "cidade": "Curvelo",
+          "uf": "MG",
+          "lat": -19.1859649,
+          "lon": -44.4944469
+        },
+        "posto": {
+          "nome": "Caxuxa Curvelo",
+          "endereco": "BR-135, km 615",
+          "cidade": "Curvelo",
+          "uf": "MG",
+          "lat": -18.7086677,
+          "lon": -44.442745
+        },
+        "distanciaKm": 53.351
+      },
+      {
+        "loja": {
+          "id": 654,
+          "nome": "Posto Caxuxa Estrela",
+          "endereco": "Avenida Francisco Campos, 5",
+          "cidade": "Estrela do Indaiá",
+          "uf": "MG",
+          "lat": -19.5229554,
+          "lon": -45.7813357
+        },
+        "posto": {
+          "nome": "Caxuxa Estrela",
+          "endereco": "Av. Francisco Campos, 5",
+          "cidade": "Estrela do Indaiá",
+          "uf": "MG",
+          "lat": -19.52199972,
+          "lon": -45.78768171
+        },
+        "distanciaKm": 0.674
+      },
+      {
+        "loja": {
+          "id": 656,
+          "nome": "Posto Caxuxa I",
+          "endereco": "BR-262, Km 524",
+          "cidade": "Luz",
+          "uf": "MG",
+          "lat": -19.7725516,
+          "lon": -45.478383
+        },
+        "posto": {
+          "nome": "Caxuxa I",
+          "endereco": "BR-262, km 523",
+          "cidade": "Luz",
+          "uf": "MG",
+          "lat": -19.783915,
+          "lon": -45.657545
+        },
+        "distanciaKm": 18.789
+      },
+      {
+        "loja": {
+          "id": 658,
+          "nome": "Posto Caxuxa JK",
+          "endereco": "BR-040, KM 226",
+          "cidade": "São Gonçalo do Abaeté",
+          "uf": "MG",
+          "lat": -18.1273762,
+          "lon": -45.4188701
+        },
+        "posto": {
+          "nome": "Caxuxa JK",
+          "endereco": "BR-040, km 226",
+          "cidade": "São Gonçalo do Abaeté",
+          "uf": "MG",
+          "lat": -17.9914226,
+          "lon": -45.6015846
+        },
+        "distanciaKm": 24.528
+      },
+      {
+        "loja": {
+          "id": 659,
+          "nome": "Posto Caxuxa Juá",
+          "endereco": "BR-354",
+          "cidade": "Arcos",
+          "uf": "MG",
+          "lat": -20.237324,
+          "lon": -45.6595985
+        },
+        "posto": {
+          "nome": "Caxuxa Juá",
+          "endereco": "BR-354, km 471",
+          "cidade": "Arcos",
+          "uf": "MG",
+          "lat": -20.2723772,
+          "lon": -45.57558267
+        },
+        "distanciaKm": 9.592
+      },
+      {
+        "loja": {
+          "id": 660,
+          "nome": "Posto Caxuxa Lagoense",
+          "endereco": "MG-170, km 28",
+          "cidade": "Lagoa da Prata",
+          "uf": "MG",
+          "lat": -20.0738875,
+          "lon": -45.5323836
+        },
+        "posto": {
+          "nome": "Caxuxa Lagoense",
+          "endereco": "MG-170, km 28",
+          "cidade": "Lagoa da Prata",
+          "uf": "MG",
+          "lat": -20.02488215,
+          "lon": -45.51527491
+        },
+        "distanciaKm": 5.735
+      },
+      {
+        "loja": {
+          "id": 661,
+          "nome": "Posto Caxuxa Lava-Pés",
+          "endereco": "Rua Alzira Tôrres, 547",
+          "cidade": "Bambuí",
+          "uf": "MG",
+          "lat": -20.0199637,
+          "lon": -45.9871425
+        },
+        "posto": {
+          "nome": "Caxuxa Lava-Pés",
+          "endereco": "Rua Alzira Torres, 547",
+          "cidade": "Bambuí",
+          "uf": "MG",
+          "lat": -20.0174465,
+          "lon": -45.984369
+        },
+        "distanciaKm": 0.403
+      },
+      {
+        "loja": {
+          "id": 662,
+          "nome": "Posto Caxuxa Lombada",
+          "endereco": "BR-262, 2899",
+          "cidade": "Bom Despacho",
+          "uf": "MG",
+          "lat": -19.7882193,
+          "lon": -45.2289964
+        },
+        "posto": {
+          "nome": "Caxuxa Lombada",
+          "endereco": "BR-262, km 478,5",
+          "cidade": "Bom Despacho",
+          "uf": "MG",
+          "lat": -19.7855515,
+          "lon": -45.2361622
+        },
+        "distanciaKm": 0.806
+      },
+      {
+        "loja": {
+          "id": 664,
+          "nome": "Posto Caxuxa Moinho 1",
+          "endereco": "Rodovia Fernão Dias, Km 790",
+          "cidade": "São Gonçalo do Sapucaí",
+          "uf": "MG",
+          "lat": -21.8354049,
+          "lon": -45.5045115
+        },
+        "posto": {
+          "nome": "Caxuxa Moinho 1",
+          "endereco": "BR-381, km 802 (Sul)",
+          "cidade": "São Gonçalo do Sapucaí",
+          "uf": "MG",
+          "lat": -21.94480285,
+          "lon": -45.6213245
+        },
+        "distanciaKm": 17.124
+      },
+      {
+        "loja": {
+          "id": 665,
+          "nome": "Posto Caxuxa Moinho 2",
+          "endereco": "Rodovia Fernão Dias, 617",
+          "cidade": "São Gonçalo do Sapucaí",
+          "uf": "MG",
+          "lat": -21.8354049,
+          "lon": -45.5045115
+        },
+        "posto": {
+          "nome": "Caxuxa Moinho 2",
+          "endereco": "BR-381, km 802 (Norte)",
+          "cidade": "São Gonçalo do Sapucaí",
+          "uf": "MG",
+          "lat": -21.9458708,
+          "lon": -45.619304
+        },
+        "distanciaKm": 17.063
+      },
+      {
+        "loja": {
+          "id": 668,
+          "nome": "Posto Caxuxa Profetas",
+          "endereco": "BR-040, KM 614",
+          "cidade": "Congonhas",
+          "uf": "MG",
+          "lat": -20.5701906,
+          "lon": -43.8119302
+        },
+        "posto": {
+          "nome": "Caxuxa Profetas",
+          "endereco": "BR-040, km 614,6",
+          "cidade": "Congonhas",
+          "uf": "MG",
+          "lat": -20.53360526,
+          "lon": -43.823614
+        },
+        "distanciaKm": 4.246
+      },
+      {
+        "loja": {
+          "id": 669,
+          "nome": "Posto Caxuxa Rodão",
+          "endereco": "BR-262",
+          "cidade": "Bom Despacho",
+          "uf": "MG",
+          "lat": -19.7861769,
+          "lon": -45.2327852
+        },
+        "posto": {
+          "nome": "Caxuxa Rodão",
+          "endereco": "BR-262, km 482",
+          "cidade": "Bom Despacho",
+          "uf": "MG",
+          "lat": -19.78314019,
+          "lon": -45.27031163
+        },
+        "distanciaKm": 3.941
+      },
+      {
+        "loja": {
+          "id": 670,
+          "nome": "Posto Caxuxa São João",
+          "endereco": "Avenida Lima Guimarães, 80",
+          "cidade": "Pitangui",
+          "uf": "MG",
+          "lat": -19.6864433,
+          "lon": -44.8905814
+        },
+        "posto": {
+          "nome": "Caxuxa São João",
+          "endereco": "Av. Lima Guimarães, 80",
+          "cidade": "Pitangui",
+          "uf": "MG",
+          "lat": -19.6843813,
+          "lon": -44.89224451
+        },
+        "distanciaKm": 0.288
+      },
+      {
+        "loja": {
+          "id": 671,
+          "nome": "Posto Caxuxa Veredas",
+          "endereco": "BR-365, km 323",
+          "cidade": "João Pinheiro",
+          "uf": "MG",
+          "lat": -18.0784341,
+          "lon": -45.6817388
+        },
+        "posto": {
+          "nome": "Caxuxa Veredas",
+          "endereco": "BR-365, km 323",
+          "cidade": "João Pinheiro",
+          "uf": "MG",
+          "lat": -18.27571709,
+          "lon": -45.89504126
+        },
+        "distanciaKm": 31.449
+      },
+      {
+        "loja": {
+          "id": 675,
+          "nome": "POSTO REDE BRASIL",
+          "endereco": "Rodovia BR-101 Norte, 3616",
+          "cidade": "Serra",
+          "uf": "ES",
+          "lat": -20.3066947,
+          "lon": -40.3948862
+        },
+        "posto": {
+          "nome": "POSTO REDE BRASIL",
+          "endereco": "Rodovia BR-101 Norte, 3616",
+          "cidade": "Serra",
+          "uf": "ES",
+          "lat": -20.2046526,
+          "lon": -40.2689504
+        },
+        "distanciaKm": 17.359
+      },
+      {
+        "loja": {
+          "id": 677,
+          "nome": "POSTO SERRA",
+          "endereco": "Rodovia Br 101 Norte, 3616",
+          "cidade": "Serra",
+          "uf": "ES",
+          "lat": -20.3066947,
+          "lon": -40.3948862
+        },
+        "posto": {
+          "nome": "POSTO SERRA",
+          "endereco": "Rodovia BR 101 Norte, 3616",
+          "cidade": "Serra",
+          "uf": "ES",
+          "lat": -20.2046526,
+          "lon": -40.2689504
+        },
+        "distanciaKm": 17.359
+      },
+      {
+        "loja": {
+          "id": 678,
+          "nome": "POSTO SERRA",
+          "endereco": "Rodovia Br 101 Norte, 3616",
+          "cidade": "Serra",
+          "uf": "ES",
+          "lat": -20.3066947,
+          "lon": -40.3948862
+        },
+        "posto": {
+          "nome": "POSTO SERRA",
+          "endereco": "Rodovia BR 101 Norte, 3616",
+          "cidade": "Serra",
+          "uf": "ES",
+          "lat": -20.2046526,
+          "lon": -40.2689504
+        },
+        "distanciaKm": 17.359
+      }
+    ]
+  }
+}

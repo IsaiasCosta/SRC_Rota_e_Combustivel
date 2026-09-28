@@ -1,115 +1,51 @@
-/* src/ui/postos.js */
+/* Cartões de postos: os estados vêm da análise de autonomia existente. */
 (function (app) {
 'use strict';
 const { escaparHTML, formatarTempo } = app.utils;
 const { criarLinkRota, criarLinkPosto } = app.services.mapas;
-
+const numero = valor => valor.toLocaleString('pt-BR', { maximumFractionDigits: 1 });
 function exibirResultadosPostos(listaPostos, local, parametros) {
-    const container = document.getElementById("resultadosPostos");
+    const container = document.getElementById('resultadosPostos');
     if (!container) return;
-
-    container.style.display = "block";
-
+    container.style.display = 'block';
+    const vazio = document.getElementById('postosVazios');
+    if (vazio) vazio.hidden = true;
     if (!listaPostos.length) {
-        container.innerHTML = `<h3 style="color:#ef4444">❌ Nenhum posto com coordenadas válidas.</h3>`;
+        container.innerHTML = '<p class="helper">Nenhum posto com coordenadas válidas. Confira o cadastro de postos.</p>';
+        app.ui.mapa?.exibir([], local, parametros);
         return;
     }
-
-    let html = `
-        <h3 style="color:#38bdf8;margin-bottom:6px;">🚚 ${listaPostos.length} postos entre os candidatos mais próximos</h3>
-        <div style="color:#94a3b8;font-size:11px;margin-bottom:15px;">
-            A distância abaixo é por rota quando o roteador está disponível.
-            Se o serviço falhar, aparece como estimativa. Quando o roteador não encontra trajeto, a autonomia não é avaliada.
-            Os links priorizam o endereço completo do posto. Confira o número e o estabelecimento no mapa.
-            As distâncias do painel usam as coordenadas cadastradas e podem diferir das rotas do Google Maps.
-            Rotas comuns não consideram as restrições do bitruck; confira o trajeto e o cadastro do posto antes de seguir.
-        </div>
-        <ul style="list-style:none;padding:0;margin:0;">
-    `;
-
+    let html = '<ul class="postos-lista">';
     listaPostos.forEach((p, indice) => {
         const semRota = p.tipoDistancia === 'SEM_ROTA';
         const analise = semRota
-            ? { classe: 'status-danger', texto: 'ROTA NÃO ENCONTRADA — autonomia não avaliada; confira o trajeto no mapa.', margemKm: null }
+            ? { classe: 'status-danger', texto: 'Rota não encontrada — autonomia não avaliada.', margemKm: null }
             : app.domain.combustivel.analisarAutonomia(p.distancia, parametros);
-
-        const mapsUrl = criarLinkRota(p, local);
-        const postoUrl = criarLinkPosto(p);
-
-        const tipo =
-            p.tipoDistancia === "ROTA"
-                ? "🛣️ rota rodoviária"
-                : semRota ? "Roteador não encontrou trajeto" : "📏 estimativa";
-
-        html += `
-        <li style="
-            background:#0e0f16;
-            border:1px solid #272838;
-            margin-bottom:10px;
-            padding:12px 15px;
-            border-radius:8px;
-            border-left:4px solid ${semRota ? "#ef4444" : indice === 0 ? "#22c55e" : "#a855f7"};
-        ">
-            <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;">
-                <div>
-                    <strong style="color:#fff;font-size:14px;">
-                        ${indice + 1}º — ${escaparHTML(p.Nome)}
-                    </strong>
-                    <br>
-                    <small style="color:#94a3b8;font-size:11px;">
-                        ${escaparHTML(p.Endereço)} - ${escaparHTML(p.Cidade)}/${escaparHTML(p.Estado)}
-                    </small>
-                </div>
-
-                <span style="
-                    background:#1e1b4b;
-                    color:#c084fc;
-                    border:1px solid #4c1d95;
-                    padding:5px 10px;
-                    border-radius:6px;
-                    font-size:12px;
-                    font-weight:bold;
-                    white-space:nowrap;">
-                    ${semRota ? 'Sem rota' : `~${p.distancia.toFixed(1)} km`}
-                </span>
+        const titulo = semRota ? 'Rota não encontrada' : !parametros.validos ? 'Confira os parâmetros' :
+            analise.classe === 'status-success' ? 'Você consegue chegar' :
+            analise.classe === 'status-warning' ? 'Recomendamos abastecer' : 'Combustível insuficiente';
+        const simbolo = analise.classe === 'status-success' ? '✓' : analise.classe === 'status-warning' ? '!' : '×';
+        const necessario = !semRota && parametros.validos ? 'Necessário: ' + numero(p.distancia / parametros.consumo) + ' litros' : 'Autonomia não avaliada';
+        const distancia = semRota ? 'Trajeto indisponível' : numero(p.distancia) + ' km ' + (p.tipoDistancia === 'ROTA' ? 'por rota' : '(estimativa)');
+        html += `<li class="posto-card ${analise.classe}" data-tipo-distancia="${semRota ? 'SEM_ROTA' : p.tipoDistancia === 'ROTA' ? 'ROTA' : 'ESTIMADA'}">
+            <span class="posto-numero" aria-label="Posto ${indice + 1}">${indice + 1}</span>
+            <div class="posto-identidade">
+                <strong>${escaparHTML(p.Nome)}</strong>
+                <a href="${escaparHTML(criarLinkPosto(p))}" target="_blank" rel="noopener noreferrer" aria-label="Ver ${escaparHTML(p.Nome)} no mapa">${escaparHTML(p.Endereço)} — ${escaparHTML(p.Cidade)}/${escaparHTML(p.Estado)}</a>
+                <span class="posto-distancia">${distancia}${p.tempoMin ? ' · ' + formatarTempo(p.tempoMin) : ''}</span>
             </div>
-
-            <div style="margin-top:8px;font-size:11px;color:#94a3b8;">
-                ${tipo}
-                ${p.tempoMin ? ` • ⏱️ ${formatarTempo(p.tempoMin)}` : ""}
-            </div>
-
-            <div style="
-                margin-top:8px;
-                padding:8px;
-                border-radius:6px;
-                font-size:11px;
-                border:1px solid currentColor;"
-                class="${analise.classe}">
-                ${analise.texto}
-                ${analise.margemKm === null ? '' : analise.classe === "status-success"
-                    ? ` • margem segura: ${analise.margemKm.toFixed(0)} km`
-                    : analise.classe === "status-warning"
-                        ? ` • margem até autonomia: ${analise.margemKm.toFixed(0)} km`
-                        : ` • faltariam aproximadamente: ${analise.margemKm.toFixed(0)} km`}
-            </div>
-
-            <div class="posto-links" style="margin-top:8px;">
-                <a href="${escaparHTML(postoUrl)}" target="_blank" rel="noopener noreferrer"
-                   style="color:#38bdf8;font-size:12px;text-decoration:none;">
-                    📍 Ver posto no mapa
-                </a>
-                <a href="${escaparHTML(mapsUrl)}" target="_blank" rel="noopener noreferrer"
-                   style="color:#38bdf8;font-size:12px;text-decoration:none;">
-                    🗺️ Abrir rota no Google Maps
-                </a>
+            <div class="posto-avaliacao">
+                <strong title="${escaparHTML(analise.texto)}">${simbolo} &nbsp;${titulo}</strong>
+                <small>${necessario}</small>
+                <a class="posto-rota" href="${escaparHTML(criarLinkRota(p, local))}" target="_blank" rel="noopener noreferrer" aria-label="Abrir rota para ${escaparHTML(p.Nome)}"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#send"></use></svg>Abrir rota</a>
             </div>
         </li>`;
     });
-
-    html += "</ul>";
+    html += `</ul><details class="postos-observacoes"><summary>Sobre as distâncias e a autonomia</summary>
+        <p>Distâncias por rota quando o roteador está disponível; em caso de falha, são estimativas. Sem trajeto encontrado, a autonomia não é avaliada. O verde indica alcance dentro da margem selecionada; amarelo, fora da margem; vermelho, autonomia insuficiente.</p>
+        <p>Os links priorizam o endereço completo. As coordenadas cadastradas podem diferir do Google Maps. Rotas comuns não consideram as restrições do bitruck; confira o trajeto e o posto antes de seguir.</p></details>`;
     container.innerHTML = html;
+    app.ui.mapa?.exibir(listaPostos, local, parametros);
 }
-
 app.ui.postos = { exibirResultadosPostos };
 })(window.RotaCombustivel);

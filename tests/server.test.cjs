@@ -13,14 +13,14 @@ test('servidor entrega o HTML e todos os recursos da arquitetura', async t => {
     const page = await fetch(base);
     assert.equal(page.status, 200);
     const html = await page.text();
-    const resources = [...html.matchAll(/(?:src|href)="((?:src|assets)\/[^"?#]+)"/g)];
+    const resources = [...html.matchAll(/(?:src|href)="((?:src|assets)\/[^"?#]+)(?:[?#][^"]*)?"/g)];
     assert.ok(resources.length > 1);
     for (const [, resource] of resources) {
         const response = await fetch(`${base}/${resource}`);
         assert.equal(response.status, 200, resource);
         const body = Buffer.from(await response.arrayBuffer());
         assert.ok(body.length > 0, resource);
-        const tipos = { css: 'text/css; charset=utf-8', js: 'text/javascript; charset=utf-8', png: 'image/png', csv: 'text/csv; charset=utf-8' };
+        const tipos = { css: 'text/css; charset=utf-8', js: 'text/javascript; charset=utf-8', svg: 'image/svg+xml', png: 'image/png', csv: 'text/csv; charset=utf-8' };
         assert.equal(response.headers.get('content-type'), tipos[resource.split('.').pop()]);
         if (resource.endsWith('.png')) assert.equal(body.subarray(0, 8).toString('hex'), '89504e470d0a1a0a');
         if (resource.endsWith('.csv')) {

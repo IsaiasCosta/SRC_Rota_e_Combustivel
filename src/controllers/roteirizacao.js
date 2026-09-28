@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
     const { coordenadasValidas } = app.domain.distancia;
-    const { geocodificarOrigem, obterRotaSequencial, criarLinkRotaMulti } = app.services.mapas;
+    const { geocodificarOrigem, obterRotaSequencial, criarLinksRotaMulti, criarLinkLoja, enderecoCompleto } = app.services.mapas;
     let origem = null;
     let lojaEmEdicao = null;
 
@@ -41,7 +41,7 @@
             const deveMarcar = temCoordenadas && (usarSelecaoAnterior ? selecionadasAntes.has(loja.id) : !primeiraCoordenada);
             const marcado = deveMarcar ? 'checked' : '';
             if (marcado) primeiraCoordenada = true;
-            const link = loja.linkMaps ? `<a href="${app.utils.escaparHTML(loja.linkMaps)}" target="_blank" rel="noopener noreferrer">Maps</a>` : '';
+            const link = `<a href="${app.utils.escaparHTML(criarLinkLoja(loja))}" target="_blank" rel="noopener noreferrer">Maps</a>`;
             const podeEditar =
                 loja.usuarioId === app.services.auth.obterUsuarioId();
 
@@ -92,14 +92,14 @@
             const semCoordenadas = lojas.filter(loja => !coordenadasValidas(loja));
 
             for (const loja of semCoordenadas) {
-                const enderecoCompleto = [
+                const textoEndereco = [
                     loja.Endereço,
                     loja.Cidade,
                     loja.Estado,
                     'Brasil'
                 ].filter(Boolean).join(', ');
 
-                if (!loja.Endereço || !loja.Cidade || !loja.Estado) {
+                if (!enderecoCompleto(loja)) {
                     throw new Error(
                         `Complete o endereço, a cidade e o estado da loja ${loja.Nome}.`
                     );
@@ -108,7 +108,7 @@
                 status(`Localizando a loja ${loja.Nome} pelo endereço...`);
 
                 try {
-                    const local = await geocodificarOrigem(enderecoCompleto);
+                    const local = await geocodificarOrigem(textoEndereco);
 
                     loja.lat = local.coordenadas.lat;
                     loja.lon = local.coordenadas.lon;
@@ -134,9 +134,10 @@
         const analise = resultado.suficiente ? (resultado.dentroDaMargem ? 'status-success' : 'status-warning') : 'status-danger';
         const mensagem = !resultado.suficiente ? 'ABASTECIMENTO NECESSÁRIO ANTES DE CONCLUIR A ROTA' :
             resultado.dentroDaMargem ? 'ROTA DENTRO DA AUTONOMIA COM MARGEM' : 'ROTA POSSÍVEL, MAS FORA DA MARGEM DE SEGURANÇA';
+        const links = criarLinksRotaMulti(origem, lojas);
         container.innerHTML = `<div class="rota-resumo ${analise}"><strong>${mensagem}</strong><span>${resultado.distanciaTotalKm.toFixed(1)} km • ${resultado.consumoTotalLitros.toFixed(1)} L necessários • saldo final ${resultado.combustivelFinal.toFixed(1)} L</span></div>
         <ol class="trechos-rota">${resultado.etapas.map((etapa, indice) => `<li><div><strong>${indice + 1}. ${app.utils.escaparHTML(lojas[indice].Nome)}</strong><small>${etapa.distanciaKm.toFixed(1)} km${etapa.tempoMin ? ` • ${app.utils.formatarTempo(etapa.tempoMin)}` : ''}</small></div><span>${etapa.consumoLitros.toFixed(1)} L<br><small>saldo: ${etapa.combustivelRestante.toFixed(1)} L</small></span></li>`).join('')}</ol>
-        <a class="btn-secondary link-rota" target="_blank" rel="noopener noreferrer" href="${app.utils.escaparHTML(criarLinkRotaMulti(origem, lojas))}">Abrir rota completa no Google Maps</a>`;
+        ${links.length > 1 ? '<p>Abra as partes na ordem indicada para visitar todas as paradas.</p>' : ''}${links.map((link, indice) => `<a class="btn-secondary link-rota" target="_blank" rel="noopener noreferrer" href="${app.utils.escaparHTML(link.href)}">${links.length === 1 ? 'Abrir rota completa no Google Maps' : `Abrir parte ${indice + 1} no Google Maps (paradas ${link.primeiraParada} a ${link.ultimaParada})`}</a>`).join(' ')}`;
         container.hidden = false;
     }
     function editarLoja(id) {

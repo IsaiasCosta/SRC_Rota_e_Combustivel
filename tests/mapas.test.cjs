@@ -103,7 +103,7 @@ test('NoRoute não vira estimativa nem aviso verde, inclusive em resposta HTTP d
         const { app, elementos } = localizadorSimulado(async () => ({ ok, json: async () => ({ code: 'NoRoute' }) }));
         await app.controllers.localizador.buscarPostos();
         const html = elementos.get('resultadosPostos').innerHTML;
-        assert.equal((html.match(/ROTA NÃO ENCONTRADA/g) || []).length, 3);
+        assert.equal((html.match(/data-tipo-distancia="SEM_ROTA"/g) || []).length, 3);
         assert.doesNotMatch(html, /status-success|📏 estimativa|~[\d.]+ km|margem segura:|NaN/);
         app.controllers.localizador.atualizarResultados();
         assert.equal(elementos.get('resultadosPostos').innerHTML, html);
@@ -115,9 +115,9 @@ test('falha de conexão preserva a estimativa de distância e as regras de auton
     const { app, elementos } = localizadorSimulado(async () => { throw new Error('Sem conexão'); });
     await app.controllers.localizador.buscarPostos();
     const html = elementos.get('resultadosPostos').innerHTML;
-    assert.equal((html.match(/📏 estimativa/g) || []).length, 3);
+    assert.equal((html.match(/data-tipo-distancia="ESTIMADA"/g) || []).length, 3);
     assert.match(html, /status-success/);
-    assert.doesNotMatch(html, /ROTA NÃO ENCONTRADA/);
+    assert.doesNotMatch(html, /data-tipo-distancia="SEM_ROTA"/);
 });
 
 test('postos com trajeto precedem os resultados sem rota', async () => {
@@ -127,9 +127,9 @@ test('postos com trajeto precedem os resultados sem rota', async () => {
     }));
     await app.controllers.localizador.buscarPostos();
     const html = elementos.get('resultadosPostos').innerHTML;
-    assert.equal((html.match(/🛣️ rota rodoviária/g) || []).length, 2);
-    assert.equal((html.match(/ROTA NÃO ENCONTRADA/g) || []).length, 1);
-    assert.ok(html.indexOf('~50.0 km') < html.indexOf('Sem rota'));
+    assert.equal((html.match(/data-tipo-distancia="ROTA"/g) || []).length, 2);
+    assert.equal((html.match(/data-tipo-distancia="SEM_ROTA"/g) || []).length, 1);
+    assert.ok(html.indexOf('data-tipo-distancia="ROTA"') < html.indexOf('data-tipo-distancia="SEM_ROTA"'));
 });
 
 test('geocodificação rejeita valores ausentes, tipos indevidos e coordenadas fora dos limites', async () => {
@@ -212,7 +212,100 @@ test('busca não repete postos nem deixa duplicatas ocuparem os candidatos', asy
     ];
     await app.controllers.localizador.buscarPostos();
     assert.equal(chamadas, 3);
-    assert.equal((elementos.get('resultadosPostos').innerHTML.match(/<li style=/g) || []).length, 3);
+    assert.equal((elementos.get('resultadosPostos').innerHTML.match(/<li class="posto-card /g) || []).length, 3);
     assert.match(elementos.get('resultadosPostos').innerHTML, /Posto Vizinho/);
     assert.equal(app.postos.length, 16, 'o cadastro original continua disponível para conferência');
+});
+
+
+test('rotas com muitas paradas preservam ordem, continuidade e limites do Maps', () => {
+    const lojas = Array.from({ length: 11 }, (_, i) => ({ Nome: 'Loja ' + i, Endereço: 'Rua A, ' + i, Cidade: 'Luz', Estado: 'MG', lat: -20, lon: -44, placeId: 'teste-' + i }));
+    const links = app.services.mapas.criarLinksRotaMulti({ lat: -19, lon: -43 }, lojas);
+    assert.equal(links.length, 3);
+    const destinos = [];
+    links.forEach((link, i) => {
+        const url = new URL(link.href);
+        assert.ok(link.href.length <= 2048);
+        const intermediarios = url.searchParams.get('waypoints')?.split('|') || [];
+        assert.ok(intermediarios.length <= 3);
+        destinos.push(...intermediarios, url.searchParams.get('destination'));
+        assert.equal(url.searchParams.get('destination_place_id'), lojas[link.ultimaParada - 1].placeId);
+        if (i) {
+            const anterior = new URL(links[i - 1].href);
+            assert.equal(url.searchParams.get('origin'), anterior.searchParams.get('destination'));
+            assert.equal(url.searchParams.get('origin_place_id'), anterior.searchParams.get('destination_place_id'));
+        } else assert.equal(url.searchParams.get('origin'), '-19,-43');
+    });
+    assert.deepEqual(destinos, lojas.map(l => new URL(criarLinkPosto(l)).searchParams.get('query')));
+    const primeiro = new URL(links[0].href);
+    assert.equal(primeiro.searchParams.get('waypoint_place_ids'), 'teste-0|teste-1|teste-2');
+});
+
+test('rota unitária omite paradas vazias e rejeita origem inválida ou lista vazia', () => {
+    const { criarLinkRotaMulti, criarLinksRotaMulti } = app.services.mapas;
+    assert.equal(new URL(criarLinkRotaMulti({ lat: -20, lon: -44 }, [app.postos[0]])).searchParams.has('waypoints'), false);
+    for (const criar of [criarLinkRotaMulti, criarLinksRotaMulti]) {
+        assert.throws(() => criar({ lat: null, lon: -44 }, [app.postos[0]]), /Origem inválida/);
+        assert.throws(() => criar({ lat: -20, lon: -44 }, []), /destino/);
+    }
+});
+
+test('endereços longos dividem os links antes do limite sem cortar endereços', () => {
+    const loja = { Endereço: 'Rua ' + 'á'.repeat(100), Cidade: 'Luz', Estado: 'MG', lat: -20, lon: -44 };
+    const links = app.services.mapas.criarLinksRotaMulti({ lat: -20, lon: -44 }, Array.from({ length: 5 }, () => ({ ...loja })));
+    assert.ok(links[0].ultimaParada < 4, 'o tamanho do endereço deve reduzir o número de paradas por link');
+    assert.equal(links.at(-1).ultimaParada, 5);
+    assert.ok(links.every(l => l.href.length <= 2048));
+    assert.throws(() => app.services.mapas.criarLinksRotaMulti({ lat: -20, lon: -44 }, [{ ...loja, Endereço: 'á'.repeat(1000) }]), /limite/);
+});
+
+test('links gerados de lojas recuperam cidade e UF; links específicos são preservados', () => {
+    const loja = { Nome: 'LOJA 504 COLATINA', Endereço: 'BR-259, 175', Cidade: 'Colatina', Estado: 'ES',
+        linkMaps: 'https://www.google.com/maps/search/?api=1&query=BR-259,+175,+,+ES,+Brasil' };
+    const criar = app.services.mapas.criarLinkLoja;
+    assert.equal(new URL(criar(loja)).searchParams.get('query'), 'BR-259, 175, Colatina, ES, Brasil');
+    for (const linkMaps of ['https://maps.app.goo.gl/exemplo', 'https://www.google.com/maps/search/?api=1&query=-20,-44',
+        'https://www.google.com/maps/search/?api=1&query=Posto&query_place_id=teste']) {
+        assert.equal(criar({ ...loja, linkMaps }), new URL(linkMaps).href);
+    }
+    assert.equal(new URL(criar({ ...loja, linkMaps: 'javascript:alert(1)' })).protocol, 'https:');
+});
+
+test('texto substituto não é considerado endereço de uma loja', () => {
+    assert.equal(app.services.mapas.enderecoCompleto({ Endereço: 'Endereço não informado', Cidade: 'Viana', Estado: 'ES' }), false);
+    assert.equal(app.services.mapas.enderecoCompleto({ Endereço: ' ', Cidade: 'Viana', Estado: 'ES' }), false);
+    assert.equal(app.services.mapas.enderecoCompleto(app.postos[0]), true);
+});
+
+
+test('mapa reenquadra um novo trajeto mesmo com origem e destino iguais', () => {
+    let enquadramentos = 0;
+    const elementos = new Map(['mapaPostos', 'mapaVazio', 'statusMapa'].map(id => [id, {}]));
+    const bounds = { extend() {} };
+    const grupo = () => ({ addTo() { return this; }, clearLayers() {}, eachLayer() {}, getBounds: () => bounds });
+    const mapa = { on() {}, invalidateSize() {}, fitBounds() { enquadramentos++; },
+        latLngToContainerPoint: () => ({ x: 100, distanceTo: () => 100 }), getSize: () => ({ x: 800 }) };
+    const marker = () => ({ addTo() { return this; }, bindTooltip() { return this; }, bindPopup() {} });
+    const L = { map: () => mapa, control: { zoom: () => ({ addTo() {} }) },
+        tileLayer: () => ({ addTo() { return this; }, on() {} }), featureGroup: grupo, layerGroup: grupo,
+        marker, divIcon: x => x, polyline: marker };
+    const contexto = vm.createContext({ window: { L }, L,
+        document: { getElementById: id => elementos.get(id), createElement: () => ({ style: {}, append() {} }) },
+        ResizeObserver: class { observe() {} }, requestAnimationFrame() {}, cancelAnimationFrame() {} });
+    for (const file of ['config.js', 'domain/distancia.js', 'ui/mapa.js']) {
+        vm.runInContext(fs.readFileSync(path.join(__dirname, '../src', file), 'utf8'), contexto);
+    }
+    const a = contexto.window.RotaCombustivel;
+    a.services.mapas = { criarLinkPosto: () => 'https://www.google.com/maps/' };
+    a.domain.combustivel = { analisarAutonomia: () => ({ classe: 'status-success' }) };
+    const origem = { lat: -20, lon: -44 };
+    const posto = { Nome: 'Teste', lat: -21, lon: -45, tipoDistancia: 'ESTIMADA' };
+    a.ui.mapa.exibir([posto], origem, {});
+    assert.equal(enquadramentos, 1);
+    posto.tipoDistancia = 'ROTA';
+    posto.geometria = { type: 'LineString', coordinates: [[-44, -20], [-46, -22], [-45, -21]] };
+    a.ui.mapa.exibir([posto], origem, {});
+    assert.equal(enquadramentos, 2, 'o desvio da rota deve caber no mapa');
+    a.ui.mapa.exibir([posto], origem, {});
+    assert.equal(enquadramentos, 2, 'alterar autonomia não deve reposicionar o mapa');
 });

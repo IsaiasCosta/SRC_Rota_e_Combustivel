@@ -193,3 +193,16 @@ test('CSV que se tornou repetido após a prévia preserva toda a lista de postos
     assert.equal(resultado.postos[0].id, 41);
     assert.deepEqual(chamadas, ['GET']);
 });
+
+
+test('coordenadas ausentes no Supabase não se transformam no ponto zero', async () => {
+    for (const valor of [null, undefined, '', '  ', false, [], {}]) {
+        const { app } = ambienteSupabase([{ ...registroBarbacena, latitude: valor, longitude: valor }]);
+        await app.services.postos.carregar();
+        assert.equal(app.postos[0].lat, null);
+        assert.equal(app.postos[0].lon, null);
+    }
+    const { app } = ambienteSupabase([{ ...registroBarbacena, latitude: '-21.2161322', longitude: '-43.7697524' }]);
+    await app.services.postos.carregar();
+    assert.equal(app.postos[0].lat, -21.2161322);
+});
